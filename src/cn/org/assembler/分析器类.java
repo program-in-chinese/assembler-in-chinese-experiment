@@ -3,7 +3,7 @@ package cn.org.assembler;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class 分析器 {
+public class 分析器类 {
 
   public static 指令类 分析代码行(String 行) {
     行 = 删除注释(行).trim();

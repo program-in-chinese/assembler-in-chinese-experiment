@@ -6,7 +6,7 @@ import org.boris.pecoff4j.PE;
 import org.boris.pecoff4j.io.PEAssembler;
 import org.boris.pecoff4j.io.PEParser;
 
-public class 生成器 {
+public class 生成器类 {
 
   public static void main(String[] args) throws IOException {
 

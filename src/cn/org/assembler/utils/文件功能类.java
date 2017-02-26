@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class 文件Util {
+public class 文件功能类 {
 
   /**
    * 返回文件中的所有行
