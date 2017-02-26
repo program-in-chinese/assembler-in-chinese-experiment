@@ -5,7 +5,7 @@ import java.util.List;
 import org.junit.Test;
 
 import cn.org.assembler.分析器;
-import cn.org.assembler.指令;
+import cn.org.assembler.指令类;
 import cn.org.assembler.utils.文件Util;
 
 public class 分析器测试 {
@@ -17,8 +17,8 @@ public class 分析器测试 {
     assertTrue("测试数据为空", 行.size() > 0);
     
     for(String 单行 : 行) {
-      指令 指 = 分析器.分析代码行(单行);
-      System.out.println(指);
+      指令类 指令 = 分析器.分析代码行(单行);
+      System.out.println(指令);
     }
   }
 

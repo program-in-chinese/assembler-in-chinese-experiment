@@ -1,6 +1,6 @@
 package cn.org.assembler;
 
-public class 指令 {
+public class 指令类 {
 
 
   // Legacy Prefix
