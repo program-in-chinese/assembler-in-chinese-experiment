@@ -1,1 +1,1 @@
-小目标
+小目标![右图,左图是https://git.oschina.net/zhishi/asm_for_all/blob/master/example/x86/win32/HEX2ASCII.asm 代码段](http://git.oschina.net/uploads/images/2017/0227/080602_34511d48_384016.png "效果示意图")
