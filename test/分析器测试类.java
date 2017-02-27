@@ -14,7 +14,7 @@ public class 分析器测试类 {
   @Test
   public void test() {
     List<String> 行 = 文件功能类.读取行(测试文件路径 + "imm64.asm");
-    assertTrue("测试数据为空", 行.size() > 0);
+    assertTrue("测试数据不应为空", 行.size() > 0);
     
     for(String 单行 : 行) {
       指令类 指令 = 分析器类.分析代码行(单行);
