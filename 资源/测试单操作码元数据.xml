@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<x86reference
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="x86reference.xsd">
+
+  <one-byte>
+
+    <pri_opcd value="00">
+      <entry direction="0" op_size="0" r="yes" lock="yes">
+	<syntax><mnem>ADD</mnem><dst><a>E</a><t>b</t></dst><src><a>G</a><t>b</t></src></syntax>
+        <grp1>gen</grp1><grp2>arith</grp2><grp3>binary</grp3>
+        <modif_f>oszapc</modif_f><def_f>oszapc</def_f>
+        <note><brief>Add</brief></note>
+      </entry>
+    </pri_opcd>
+
+  </one-byte>
+
+  <two-byte xml:id="two-byte">
+
+    <pri_opcd value="FE">
+      <entry r="yes">
+        <proc_start>06</proc_start>
+        <syntax>
+          <mnem>PADDD</mnem>
+          <dst><a>P</a><t>q</t></dst>
+          <src><a>Q</a><t>q</t></src>
+        </syntax>
+        <instr_ext>mmx</instr_ext>
+	<grp1>arith</grp1>
+        <note><brief>Add Packed Integers</brief></note>
+      </entry>
+      <entry r="yes">
+	<pref>66</pref>
+        <proc_start>10</proc_start>
+        <syntax>
+          <mnem>PADDD</mnem>
+          <dst><a>V</a><t>dq</t></dst>
+          <src><a>W</a><t>dq</t></src>
+        </syntax>
+        <instr_ext>sse2</instr_ext>
+	<grp1>simdint</grp1>
+	<grp2>arith</grp2>
+        <note><brief>Add Packed Integers</brief></note>
+      </entry>
+    </pri_opcd>
+
+    <!-- 0FFF: invalid -->
+
+  </two-byte>
+
+  <!-- General and ring notes are not a part of public XML source -->
+
+  <gen_notes>
+    <gen_note id="gen_note_opcd_POP_CS_0F"/>
+    <gen_note id="gen_note_branch_prefixes"/>
+    <gen_note id="gen_note_plain_F390"/>
+    <gen_note id="gen_note_SAHF_9E_LAHF_9F"/>
+    <gen_note id="gen_note_SAL_C0_4_C1_4_D0_4_D1_4"/>
+    <gen_note id="gen_note_undefined_D6_F1"/>
+    <gen_note id="gen_note_u_SALC_D6"/>
+    <gen_note id="gen_note_FSTP1_D9_3_FSTP8_DF_2_FSTP9_DF_3"/>
+    <gen_note id="gen_note_FSTP1_D9_3_not_true_alias"/>
+    <gen_note id="gen_note_FNENI_DBE0_FNDISI_DBE1"/>
+    <gen_note id="gen_note_FNSETPM_DBE4"/>
+    <gen_note id="gen_note_FCOM2_DC_2"/>
+    <gen_note id="gen_note_FCOMP3_DC_3_FCOMP5_DE_2"/>
+    <gen_note id="gen_note_FXCH4_DD_1_FXCH7_DF_1"/>
+    <gen_note id="gen_note_FFREEP_DF_1"/>
+    <gen_note id="gen_note_x87_fpu_undoc_aliases"/>
+    <gen_note id="gen_note_u_INT1_ICEBP_F1"/>
+    <gen_note id="gen_note_REP_F2_F3"/>
+    <gen_note id="gen_note_TEST_F6_1_F7_1"/>
+    <gen_note id="gen_note_CALLF_FF_3_JMPF_FF_5"/>
+    <gen_note id="gen_note_SMSW_0F01_4"/>
+    <gen_note id="gen_note_u_LOADALL_0F05_0F07"/>
+    <gen_note id="gen_note_SYSCALL_0F05"/>
+    <gen_note id="gen_note_NOP_0F0D"/>
+    <gen_note id="gen_note_MOV_CR_0F20_0F22"/>
+    <gen_note id="gen_note_u_MOV_CR_DR_TR_0F20_0F21_0F22_0F23_0F24_0F26"/>
+    <gen_note id="gen_note_SYSENTER_0F34"/>
+    <gen_note id="gen_note_SYSEXIT_0F35"/>
+    <gen_note id="gen_note_GETSEC_0F37"/>
+    <gen_note id="gen_note_MOVQ_0F6E_660F6E_0F7E_660F7E"/>
+    <gen_note id="gen_note_SETcc_0F90-0F9F"/>
+    <gen_note id="gen_note_CMPXCHG_0FB0_0FB1"/>
+    <gen_note id="gen_note_LSS_0FB2_LFS_0FB4_LGS_0FB5"/>
+    <gen_note id="gen_note_sug_UD_0FB9"/>
+    <gen_note id="gen_note_BSF_0FBC_BSR_0FBD"/>
+    <gen_note id="gen_note_CMPXCHG8B_CMPXCHG16B_0FC7_1"/>
+    <gen_note id="gen_note_BSWAP_0FC8"/>
+    <gen_note id="gen_note_short_near_jmp"/>
+    <gen_note id="gen_note_VMX_vs_SVM"/>
+    <gen_note id="gen_note_SSE4_amd"/>
+  </gen_notes>
+
+  <ring_notes>
+    <ring_note id="rflags_iopl"/>
+    <ring_note id="cr4_tsd"/>
+    <ring_note id="cr4_pce"/>
+  </ring_notes>
+
+</x86reference>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: xml
+sgml-omittag:nil
+sgml-shorttag:nil
+sgml-namecase-general:nil
+sgml-general-insert-case:lower
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:2
+sgml-indent-data:nil
+sgml-parent-document:nil
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+-->
