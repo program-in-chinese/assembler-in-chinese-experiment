@@ -18,8 +18,8 @@ public class 操作码元数据处理类 {
   public static List<操作码元数据类> 提取操作码信息(String 文件名) {
     List<操作码元数据类> 操作码信息 = new ArrayList<>();
     try {
-      Node 根 = DocumentBuilderFactory.newInstance().newDocumentBuilder()
-          .parse(new File(文件名)).getChildNodes().item(0);
+      Node 根 = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new File(文件名))
+          .getChildNodes().item(0);
 
       Node 单字节 = 根.getFirstChild().getNextSibling();
       Node 双字节 = 单字节.getNextSibling().getNextSibling();
@@ -35,36 +35,34 @@ public class 操作码元数据处理类 {
   private static List<操作码元数据类> 提取操作码信息(Node 操作码元数据父节点, int 操作码字节数) {
     List<操作码元数据类> 操作码信息 = new ArrayList<>();
 
-    for(Node 操作码节点 : 取子节点(操作码元数据父节点, "pri_opcd")) {
-        操作码元数据类 某操作码信息 = new 操作码元数据类();
-        String 操作码值 = 操作码节点.getAttributes().item(0).getNodeValue();
-        某操作码信息.值 = Integer.parseInt(操作码值, 16);
-        某操作码信息.操作码字节数 = 操作码字节数;
+    for (Node 操作码节点 : 取子节点(操作码元数据父节点, "pri_opcd")) {
+      操作码元数据类 操作码元数据 = new 操作码元数据类();
+      String 操作码值 = 操作码节点.getAttributes().item(0).getNodeValue();
+      操作码元数据.值 = Integer.parseInt(操作码值, 16);
+      操作码元数据.操作码字节数 = 操作码字节数;
 
-        // 取所有子entry节点
-        for (Node entry节点 : 取子节点(操作码节点, "entry")) {
-          指令元数据类 指令元数据 = new 指令元数据类();
-          
-          // TODO: 06的第二个entry没有syntax节点. 暂时忽略
-          List<Node> 格式节点 = 取子节点(entry节点, "syntax");
-          if (格式节点.isEmpty()) {
-            System.out.println(某操作码信息.值);
-            continue;
-          }
-          
-          指令格式类 格式 = new 指令格式类();
+      // 取所有子entry节点
+      for (Node entry节点 : 取子节点(操作码节点, "entry")) {
+        指令元数据类 指令元数据 = new 指令元数据类();
+        指令格式类 格式 = new 指令格式类();
 
-          List<Node> 助记符节点 = 取子节点(格式节点.get(0), "mnem");
-          Node 首助记符节点 = 助记符节点.get(0);
-          格式.助记符 = 首助记符节点.getTextContent();
-          指令元数据.格式.add(格式);
-          某操作码信息.指令元数据.add(指令元数据);
+        List<Node> 助记符节点 = 取子节点(取子节点(entry节点, "syntax").get(0), "mnem");
+
+        // TODO: 部分entry没有syntax节点(如06的第二个). 暂时忽略
+        if (助记符节点.isEmpty()) {
+          System.out
+              .println("无助记符, 暂时忽略: " + Integer.toHexString(操作码元数据.值) + " " + 操作码元数据.操作码字节数 + "字节");
+          continue;
         }
-        操作码信息.add(某操作码信息);
+        格式.助记符 = 助记符节点.get(0).getTextContent();
+        指令元数据.格式.add(格式);
+        操作码元数据.指令元数据.add(指令元数据);
+      }
+      操作码信息.add(操作码元数据);
     }
     return 操作码信息;
   }
-  
+
   private static List<Node> 取子节点(Node 父节点, String 节点名) {
     List<Node> 节点 = new ArrayList<>();
     NodeList 子节点 = 父节点.getChildNodes();
