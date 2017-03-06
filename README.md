@@ -5,3 +5,6 @@
 使用外部资源:
 - x86操作码元数据: https://github.com/Barebit/x86reference
 - PE文件处理(分析/生成)库: https://github.com/kichik/pecoff4j
+- NASM源码: https://github.com/cyrillos/nasm
+- FASM: https://flatassembler.net/
+- YASM源码: https://github.com/yasm/yasm
