@@ -46,7 +46,8 @@ public class 操作码元数据处理类 {
         指令元数据类 指令元数据 = new 指令元数据类();
         指令格式类 格式 = new 指令格式类();
 
-        List<Node> 助记符节点 = 取子节点(取子节点(entry节点, "syntax").get(0), "mnem");
+        Node 语法节点 = 取子节点(entry节点, "syntax").get(0);
+        List<Node> 助记符节点 = 取子节点(语法节点, "mnem");
 
         // TODO: 部分entry没有syntax节点(如06的第二个). 暂时忽略
         if (助记符节点.isEmpty()) {
@@ -55,6 +56,25 @@ public class 操作码元数据处理类 {
           continue;
         }
         格式.助记符 = 助记符节点.get(0).getTextContent();
+        
+        List<Node> 目标操作数节点 = 取子节点(语法节点, "dst");
+        //assert(!目标操作数节点.isEmpty());
+        
+        for (Node 节点: 目标操作数节点) {
+          操作数元数据类 操作数元数据 = new 操作数元数据类();
+          操作数元数据.为源 = false;
+          
+          // TODO: 处理: <dst nr="0" group="gen" type="b">AL</dst>
+          List<Node> 寻址方式节点 = 取子节点(节点, "a");
+          if (!寻址方式节点.isEmpty()) {
+            操作数元数据.寻址方式 = 寻址方式节点.get(0).getTextContent();
+          }
+          List<Node> 类型节点 = 取子节点(节点, "t");
+          if (!类型节点.isEmpty()) {
+            操作数元数据.类型 = 类型节点.get(0).getTextContent();
+          }
+          格式.操作数.add(操作数元数据);
+        }
         指令元数据.格式.add(格式);
         操作码元数据.指令元数据.add(指令元数据);
       }

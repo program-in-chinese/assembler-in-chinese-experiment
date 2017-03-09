@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import cn.org.assembler.utils.指令元数据类;
 import cn.org.assembler.utils.指令格式类;
+import cn.org.assembler.utils.操作数元数据类;
 import cn.org.assembler.utils.操作码元数据处理类;
 import cn.org.assembler.utils.操作码元数据类;
 
@@ -38,15 +39,19 @@ public class 操作码元数据处理测试类 {
 
       List<指令元数据类> 指令元数据 = 元数据.指令元数据;
       if (指令元数据.isEmpty()) {
-        System.out.println("无指令的操作码: " + Integer.toHexString(元数据.值) + " " + 元数据.操作码字节数 + "字节");
+        调试输出("无指令的操作码: ", 元数据);
       } else {
         for (指令元数据类 某指令元数据 : 指令元数据) {
           for (指令格式类 某格式 : 某指令元数据.格式) {
             assertNotNull(某格式.助记符);
-
+            
             // TODO: 将所有待验证指令置于对应表中
             if (Integer.toHexString(元数据.值).equalsIgnoreCase("B8") && 某格式.助记符.equals("MOV")) {
               存在操作符 = true;
+            }
+            
+            if (某格式.操作数.size() == 0) {
+              调试输出("无目标操作数的操作码: ", 元数据);
             }
           }
         }
@@ -56,4 +61,7 @@ public class 操作码元数据处理测试类 {
     assertTrue(存在操作符);
   }
 
+  private void 调试输出(String 前缀, 操作码元数据类 元数据) {
+    System.out.println(前缀 + Integer.toHexString(元数据.值) + " " + 元数据.操作码字节数 + "字节");
+  }
 }
