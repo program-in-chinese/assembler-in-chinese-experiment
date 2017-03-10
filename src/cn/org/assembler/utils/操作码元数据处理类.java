@@ -51,15 +51,15 @@ public class 操作码元数据处理类 {
         指令格式类 格式 = new 指令格式类();
 
         Node 语法节点 = 取子节点(entry节点, "syntax").get(0);
-        List<Node> 助记符节点 = 取子节点(语法节点, "mnem");
-
+        String 助记符 = 取首子节点值(语法节点, "mnem");
+        
         // TODO: 部分entry没有syntax节点(如06的第二个). 暂时忽略
-        if (助记符节点.isEmpty()) {
+        if (助记符 == null) {
           System.out
               .println("无助记符, 暂时忽略: " + Integer.toHexString(操作码元数据.值) + " " + 操作码元数据.操作码字节数 + "字节");
           continue;
         }
-        格式.助记符 = 助记符节点.get(0).getTextContent();
+        格式.助记符 = 助记符;
 
         格式.操作数.addAll(取操作数元数据(语法节点, 目标操作数标签));
         格式.操作数.addAll(取操作数元数据(语法节点, 源操作数标签));
@@ -81,17 +81,17 @@ public class 操作码元数据处理类 {
       操作数元数据.为源 = 操作数标签.equals(源操作数标签);
       
       // TODO: 处理: <dst nr="0" group="gen" type="b">AL</dst>
-      List<Node> 寻址方式节点 = 取子节点(节点, "a");
-      if (!寻址方式节点.isEmpty()) {
-        操作数元数据.寻址方式 = 寻址方式节点.get(0).getTextContent();
-      }
-      List<Node> 类型节点 = 取子节点(节点, "t");
-      if (!类型节点.isEmpty()) {
-        操作数元数据.类型 = 类型节点.get(0).getTextContent();
-      }
+      操作数元数据.寻址方式 = 取首子节点值(节点, "a");
+      操作数元数据.类型 = 取首子节点值(节点, "t");
       操作数元数据表.add(操作数元数据);
     }
     return 操作数元数据表;
+  }
+
+  // 只取第一个子节点的文本值
+  private static String 取首子节点值(Node 父节点, String 子节点标签) {
+    List<Node> 子节点 = 取子节点(父节点, 子节点标签);
+    return 子节点.isEmpty() ? null : 子节点.get(0).getTextContent();
   }
 
   private static List<Node> 取子节点(Node 父节点, String 节点名) {
