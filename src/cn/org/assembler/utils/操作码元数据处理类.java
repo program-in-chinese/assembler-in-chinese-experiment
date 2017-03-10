@@ -11,8 +11,12 @@ import org.w3c.dom.NodeList;
 
 public class 操作码元数据处理类 {
 
+  private static final String 操作码元数据路径 = "资源/x86reference.xml";
+  private static final String 源操作数标签 = "src";
+  private static final String 目标操作数标签 = "dst";
+
   public static List<操作码元数据类> 提取操作码信息() {
-    return 提取操作码信息("资源/x86reference.xml");
+    return 提取操作码信息(操作码元数据路径);
   }
 
   public static List<操作码元数据类> 提取操作码信息(String 文件名) {
@@ -56,31 +60,38 @@ public class 操作码元数据处理类 {
           continue;
         }
         格式.助记符 = 助记符节点.get(0).getTextContent();
-        
-        List<Node> 目标操作数节点 = 取子节点(语法节点, "dst");
-        //assert(!目标操作数节点.isEmpty());
-        
-        for (Node 节点: 目标操作数节点) {
-          操作数元数据类 操作数元数据 = new 操作数元数据类();
-          操作数元数据.为源 = false;
-          
-          // TODO: 处理: <dst nr="0" group="gen" type="b">AL</dst>
-          List<Node> 寻址方式节点 = 取子节点(节点, "a");
-          if (!寻址方式节点.isEmpty()) {
-            操作数元数据.寻址方式 = 寻址方式节点.get(0).getTextContent();
-          }
-          List<Node> 类型节点 = 取子节点(节点, "t");
-          if (!类型节点.isEmpty()) {
-            操作数元数据.类型 = 类型节点.get(0).getTextContent();
-          }
-          格式.操作数.add(操作数元数据);
-        }
+
+        格式.操作数.addAll(取操作数元数据(语法节点, 目标操作数标签));
+        格式.操作数.addAll(取操作数元数据(语法节点, 源操作数标签));
         指令元数据.格式.add(格式);
         操作码元数据.指令元数据.add(指令元数据);
       }
       操作码信息.add(操作码元数据);
     }
     return 操作码信息;
+  }
+
+  private static List<操作数元数据类> 取操作数元数据(Node 语法节点, String 操作数标签) {
+
+    List<操作数元数据类> 操作数元数据表 = new ArrayList<>();
+    List<Node> 目标操作数节点 = 取子节点(语法节点, 操作数标签);
+    
+    for (Node 节点: 目标操作数节点) {
+      操作数元数据类 操作数元数据 = new 操作数元数据类();
+      操作数元数据.为源 = 操作数标签.equals(源操作数标签);
+      
+      // TODO: 处理: <dst nr="0" group="gen" type="b">AL</dst>
+      List<Node> 寻址方式节点 = 取子节点(节点, "a");
+      if (!寻址方式节点.isEmpty()) {
+        操作数元数据.寻址方式 = 寻址方式节点.get(0).getTextContent();
+      }
+      List<Node> 类型节点 = 取子节点(节点, "t");
+      if (!类型节点.isEmpty()) {
+        操作数元数据.类型 = 类型节点.get(0).getTextContent();
+      }
+      操作数元数据表.add(操作数元数据);
+    }
+    return 操作数元数据表;
   }
 
   private static List<Node> 取子节点(Node 父节点, String 节点名) {
