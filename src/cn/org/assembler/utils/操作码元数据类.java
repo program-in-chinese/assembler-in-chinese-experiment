@@ -8,4 +8,9 @@ public class 操作码元数据类 {
   
   public List<指令元数据类> 指令元数据 = new ArrayList<>();
   public int 操作码字节数;
+  
+  @Override
+  public String toString() {
+    return "值: " + 值 + " 操作码字节数: " + 操作码字节数;
+  }
 }

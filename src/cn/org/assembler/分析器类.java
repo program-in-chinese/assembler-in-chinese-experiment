@@ -15,7 +15,7 @@ public class 分析器类 {
     Matcher 匹配器 = 格式.matcher(行);
     if (匹配器.find()) {
       指令类 指令 = new 指令类();
-      指令.操作符 = 匹配器.group(1);
+      指令.助记符 = 匹配器.group(1);
       指令.displacement = 匹配器.group(2);
       指令.immediate = 匹配器.group(3);
       return 指令;
