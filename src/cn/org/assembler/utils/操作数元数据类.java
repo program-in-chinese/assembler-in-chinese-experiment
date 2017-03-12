@@ -3,6 +3,18 @@ package cn.org.assembler.utils;
 import java.util.Objects;
 
 public class 操作数元数据类 {
+
+  public static final 操作数元数据类 寄存器64 = new 操作数元数据类();
+  public static final 操作数元数据类 立即数64 = new 操作数元数据类();
+  
+  static {
+    立即数64.寻址方式 = "I";
+    立即数64.类型 = "vqp";
+
+    寄存器64.寻址方式 = "Z";
+    寄存器64.类型 = "vqp";
+  }
+
   public boolean 为源;
 
   // TODO: 改为ENUM
