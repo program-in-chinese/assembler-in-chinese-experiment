@@ -9,22 +9,33 @@ import org.junit.Test;
 import cn.org.assembler.分析器类;
 import cn.org.assembler.指令类;
 import cn.org.assembler.汇编器类;
+import cn.org.assembler.utils.操作数元数据类;
 import cn.org.assembler.utils.操作码元数据类;
-import cn.org.assembler.汇编器类.操作数类型;
 
 
 public class 汇编器测试类 {
+
+  private static final 操作数元数据类 寄存器64 = new 操作数元数据类();
+  private static final 操作数元数据类 立即数64 = new 操作数元数据类();
+  
+  static {
+    立即数64.寻址方式 = "I";
+    立即数64.类型 = "vqp";
+
+    寄存器64.寻址方式 = "Z";
+    寄存器64.类型 = "vqp";
+  }
 
   @Test
   public void 指令汇编() {
     指令类 指令 = 分析器类.分析代码行("mov rax, 0x1122334455667788");
     List<Integer> 二进制码 = 汇编器类.指令汇编(指令);
-    assertEquals(Arrays.asList(), 二进制码);
+    assertEquals(Arrays.asList(184), 二进制码);
   }
 
   @Test
   public void 查找操作码() {
-    List<操作码元数据类> 操作码元数据 = 汇编器类.查找操作码("MOV", 操作数类型.寄存器64, 操作数类型.立即数64);
+    List<操作码元数据类> 操作码元数据 = 汇编器类.查找操作码("MOV", 寄存器64, 立即数64);
     assertTrue(!操作码元数据.isEmpty());
   }
 }
