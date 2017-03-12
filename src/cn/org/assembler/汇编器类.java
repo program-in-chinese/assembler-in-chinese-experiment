@@ -82,13 +82,15 @@ public class 汇编器类 {
    */
   public static List<String> 生成二进制码(String 十六进制立即数) {
     List<String> 二进制码 = new ArrayList<>();
-    // 删除开头的"0x", 反序
-    String 立即数 = new StringBuilder(十六进制立即数.substring(2)).reverse().toString();
+    // 删除开头的"0x"
+    String 立即数 = 十六进制立即数.substring(2);
     if (立即数.length() % 2 == 1) {
-      立即数 += "0";
+      立即数 = "0" + 立即数;
     }
+    
+    // 反序
     for (int 索引 = 0; 索引<立即数.length()/2; 索引++) {
-      二进制码.add(立即数.substring(索引*2, 索引*2+2));
+      二进制码.add(0, 立即数.substring(索引*2, 索引*2+2));
     }
     
     // TODO: 需要补几位0?

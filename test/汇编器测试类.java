@@ -31,7 +31,7 @@ public class 汇编器测试类 {
   @Test
   public void 生成二进制码() {
     assertEquals(Arrays.asList("88", "77", "66", "55", "44", "33", "22", "11"), 汇编器类.生成二进制码("0x1122334455667788"));
-    assertEquals(Arrays.asList("21", "10"), 汇编器类.生成二进制码("0x112"));
-    assertEquals(Arrays.asList("00", "01"), 汇编器类.生成二进制码("0x1000"));
+    assertEquals(Arrays.asList("12", "01"), 汇编器类.生成二进制码("0x112"));
+    assertEquals(Arrays.asList("00", "10"), 汇编器类.生成二进制码("0x1000"));
   }
 }
