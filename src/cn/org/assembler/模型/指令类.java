@@ -1,4 +1,4 @@
-package cn.org.assembler;
+package cn.org.assembler.模型;
 
 import java.util.ArrayList;
 import java.util.List;

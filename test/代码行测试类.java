@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.junit.Test;
 
-import cn.org.assembler.代码行类;
 import cn.org.assembler.utils.文件功能类;
+import cn.org.assembler.模型.代码行类;
 
 public class 代码行测试类 {
 

@@ -8,6 +8,7 @@ import cn.org.assembler.utils.指令格式类;
 import cn.org.assembler.utils.操作数元数据类;
 import cn.org.assembler.utils.操作码元数据处理类;
 import cn.org.assembler.utils.操作码元数据类;
+import cn.org.assembler.模型.代码行类;
 
 public class 分析器类 {
 

@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.junit.Test;
 
-import cn.org.assembler.代码行类;
 import cn.org.assembler.分析器类;
 import cn.org.assembler.utils.操作码元数据类;
+import cn.org.assembler.模型.代码行类;
 
 
 public class 分析器测试类 {

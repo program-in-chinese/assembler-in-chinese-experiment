@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.junit.Test;
 
-import cn.org.assembler.代码行类;
 import cn.org.assembler.汇编器类;
+import cn.org.assembler.模型.代码行类;
 
 
 public class 汇编器测试类 {

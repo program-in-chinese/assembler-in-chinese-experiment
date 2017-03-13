@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
-import cn.org.assembler.指令类;
+import cn.org.assembler.模型.指令类;
 
 public class 指令测试类 {
 

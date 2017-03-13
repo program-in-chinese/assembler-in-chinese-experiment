@@ -5,6 +5,8 @@ import java.util.List;
 import cn.org.assembler.constants.寄存器常量;
 import cn.org.assembler.utils.操作数元数据类;
 import cn.org.assembler.utils.操作码元数据类;
+import cn.org.assembler.模型.代码行类;
+import cn.org.assembler.模型.指令类;
 
 public class 汇编器类 {
 
@@ -24,7 +26,7 @@ public class 汇编器类 {
       rex前缀 += "8";
     }
     指令.rex前缀 = rex前缀;
-    
+
     switch (操作数1类型.寻址方式) {
       case 操作数元数据类.寻址方式_寄存器:
         指令.操作码 = Integer.toHexString(操作码.值 + 寄存器常量.取寄存器码(操作数1));
