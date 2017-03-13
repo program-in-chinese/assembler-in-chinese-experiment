@@ -9,19 +9,21 @@ import cn.org.assembler.utils.操作码元数据类;
 
 public class 汇编器类 {
 
-  public static List<String> 指令汇编(代码行类 代码行) {
-    return 指令汇编(代码行.查找操作码(), 代码行.操作数1, 代码行.操作数2);
-  }
-
   // TODO: 添加intel指令文档(包含版本号)中的对应章节号,方便查询
-  private static List<String> 指令汇编(操作码元数据类 操作码, String 操作数1, String 操作数2) {
-    List<String> 二进制码 = new ArrayList<>();
+  public static List<String> 指令汇编(代码行类 代码行) {
+    操作码元数据类 操作码 = 代码行.查找操作码();
+    String 操作数1 = 代码行.操作数1;
+    String 操作数2 = 代码行.操作数2;
+    
     操作数元数据类 操作数1类型 = 操作码.指令元数据.get(0).格式.get(0).操作数.get(0);
     操作数元数据类 操作数2类型 = 操作码.指令元数据.get(0).格式.get(0).操作数.get(1);
     String rex前缀 = "4";
     if (操作数1类型.类型.equals(操作数元数据类.类型16_32_64)) {
       rex前缀 += "8";
     }
+
+    // TODO: 先生成指令类对象
+    List<String> 二进制码 = new ArrayList<>();
     二进制码.add(rex前缀);
     
     switch (操作数1类型.寻址方式) {

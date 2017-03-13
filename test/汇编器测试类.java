@@ -5,9 +5,9 @@ import java.util.List;
 
 import org.junit.Test;
 
+import cn.org.assembler.代码行类;
 import cn.org.assembler.分析器类;
 import cn.org.assembler.汇编器类;
-import cn.org.assembler.utils.操作数元数据类;
 import cn.org.assembler.utils.操作码元数据类;
 
 
@@ -22,8 +22,8 @@ public class 汇编器测试类 {
 
   @Test
   public void 查找操作码() {
-    验证操作码("b8", "MOV", 操作数元数据类.寄存器64, 操作数元数据类.立即数64);
-    验证操作码("c7", "MOV", 操作数元数据类.寄存器64, 操作数元数据类.立即数32);
+    验证操作码("b8", 代码行类.分析("mov rax, 0x1122334455667788"));
+    验证操作码("c7", 代码行类.分析("mov rax, 0x1000"));
   }
 
   @Test
@@ -35,11 +35,11 @@ public class 汇编器测试类 {
   }
 
   private void 验证二进制码(String 代码行, List<String> 二进制码) {
-    assertEquals(二进制码, 汇编器类.指令汇编(分析器类.分析代码行(代码行)));
+    assertEquals(二进制码, 汇编器类.指令汇编(代码行类.分析(代码行)));
   }
 
-  private void 验证操作码(String 操作码值, String 助记符名, 操作数元数据类 操作数1元数据, 操作数元数据类 操作数2元数据) {
-    List<操作码元数据类> 操作码元数据 = 分析器类.查找操作码(助记符名, 操作数1元数据, 操作数2元数据);
+  private void 验证操作码(String 操作码值, 代码行类 代码行) {
+    List<操作码元数据类> 操作码元数据 = 分析器类.查找操作码(代码行);
     assertEquals(1, 操作码元数据.size());
     assertEquals(操作码值, Integer.toHexString(操作码元数据.get(0).值));
   }
