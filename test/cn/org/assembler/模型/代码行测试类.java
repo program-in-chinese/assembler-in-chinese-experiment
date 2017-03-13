@@ -1,3 +1,4 @@
+package cn.org.assembler.模型;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;

@@ -1,3 +1,4 @@
+package cn.org.assembler;
 import static org.junit.Assert.assertEquals;
 
 import java.util.List;
