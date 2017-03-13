@@ -51,6 +51,8 @@ public class 指令类 {
     }
 
     // 按照立即数位数补全0
+    // 手册 2.1 INSTRUCTION FORMAT FOR PROTECTED MODE, REAL-ADDRESS MODE, AND VIRTUAL-8086 MODE
+    // Immediate data of 1, 2, or 4 bytes or none
     for (int 位数 = 立即数.length() * 4; 位数 < 立即数位数; 位数 += 8) {
       二进制码.add("00");
     }
