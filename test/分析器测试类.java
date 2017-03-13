@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.junit.Test;
 
+import cn.org.assembler.代码行类;
 import cn.org.assembler.分析器类;
-import cn.org.assembler.指令类;
 import cn.org.assembler.utils.文件功能类;
 
 public class 分析器测试类 {
@@ -17,8 +17,8 @@ public class 分析器测试类 {
     assertTrue("测试数据不应为空", 行.size() > 0);
     
     for(String 单行 : 行) {
-      指令类 指令 = 分析器类.分析代码行(单行);
-      System.out.println(指令);
+      代码行类 代码行 = 分析器类.分析代码行(单行);
+      System.out.println(代码行);
     }
   }
 

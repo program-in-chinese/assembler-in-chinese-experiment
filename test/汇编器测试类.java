@@ -39,7 +39,7 @@ public class 汇编器测试类 {
   }
 
   private void 验证操作码(String 操作码值, String 助记符名, 操作数元数据类 操作数1元数据, 操作数元数据类 操作数2元数据) {
-    List<操作码元数据类> 操作码元数据 = 汇编器类.查找操作码(助记符名, 操作数1元数据, 操作数2元数据);
+    List<操作码元数据类> 操作码元数据 = 分析器类.查找操作码(助记符名, 操作数1元数据, 操作数2元数据);
     assertEquals(1, 操作码元数据.size());
     assertEquals(操作码值, Integer.toHexString(操作码元数据.get(0).值));
   }
