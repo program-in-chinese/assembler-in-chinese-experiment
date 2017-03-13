@@ -12,7 +12,7 @@ public class 指令类 {
 
   public String 操作码;
 
-  public String modRM;
+  public ModRM modRM;
   // SIB
 
   public String displacement;
@@ -27,7 +27,7 @@ public class 指令类 {
       二进制码.add(操作码);
     }
     if (modRM != null) {
-      二进制码.add(modRM);
+      二进制码.add(modRM.生成二进制码());
     }
     二进制码.addAll(生成二进制码(立即数, 操作数元数据类.取操作数类型(立即数).equals(操作数元数据类.立即数32) ? 32 : 64));
     return 二进制码;

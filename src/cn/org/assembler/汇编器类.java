@@ -5,6 +5,7 @@ import java.util.List;
 import cn.org.assembler.constants.寄存器常量;
 import cn.org.assembler.utils.操作数元数据类;
 import cn.org.assembler.utils.操作码元数据类;
+import cn.org.assembler.模型.ModRM;
 import cn.org.assembler.模型.代码行类;
 import cn.org.assembler.模型.指令类;
 
@@ -33,8 +34,10 @@ public class 汇编器类 {
         break;
       case 操作数元数据类.寻址方式_寄存器_ModRM:
         指令.操作码 = Integer.toHexString(操作码.值);
-        // TODO: 生成ModR/M码
-        指令.modRM = "c0";
+
+        指令.modRM = new ModRM();
+        指令.modRM.mod = 0b11;
+        指令.modRM.reg = 寄存器常量.取寄存器码(操作数1);
         break;
       default:
         ;
