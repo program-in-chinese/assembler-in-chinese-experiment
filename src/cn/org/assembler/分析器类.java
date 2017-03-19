@@ -18,6 +18,7 @@ public class 分析器类 {
   // TODO: 不仅返回操作码元数据, 还有操作数的信息(立即数位数, 寄存器值, 等等)
   public static List<操作码元数据类> 查找操作码(代码行类 代码行) {
     String 助记符名 = 代码行.助记符;
+    操作数元数据类 操作数1类型 = 操作数元数据类.取操作数类型(代码行.操作数1);
     操作数元数据类 操作数2类型 = 操作数元数据类.取操作数类型(代码行.操作数2);
     List<操作码元数据类> 操作码元数据 = new ArrayList<>();
     for (操作码元数据类 某操作码元数据 : 操作码元数据表) {
@@ -28,12 +29,24 @@ public class 分析器类 {
           // TODO: 必须检查第一个操作数类型
           // TODO: 提取匹配操作数类型到单独函数
           if (助记符名.equalsIgnoreCase(格式.助记符) && 格式.操作数.size() == 2 
-              && 格式.操作数.get(1).equals(操作数2类型)) {
+              && 格式.操作数.get(1).equals(操作数2类型) && 操作数类型匹配(操作数1类型, 格式.操作数.get(0))) {
             操作码元数据.add(某操作码元数据);
           }
         }
       }
     }
     return 操作码元数据;
+  }
+
+  public static boolean 操作数类型匹配(操作数元数据类 待匹配操作数类型, 操作数元数据类 目标类型) {
+/*
+ *  A.2.3 Register Codes
+ *      When an opcode requires a specific register as an operand, the register is identified by name (for example, AX, CL,
+        or ESI). The name indicates whether the register is 64, 32, 16, or 8 bits wide.
+        A register identifier of the form eXX or rXX is used when register width depends on the operand-size attribute. eXX
+        is used when 16 or 32-bit sizes are possible; rXX is used when 16, 32, or 64-bit sizes are possible.
+ */
+    //目标类型.类型
+    return true;
   }
 }

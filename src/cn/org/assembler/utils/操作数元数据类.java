@@ -36,9 +36,18 @@ public class 操作数元数据类 {
 
   // TODO: 改为ENUM
   public String 类型; // 16/32/64
-  public String 寻址方式;
+  public String 寻址方式;  // 寄存器/立即数/内存
 
   public String 显式名称;
+
+  public 操作数元数据类() {}
+  
+  public 操作数元数据类(boolean 为源, String 类型, String 寻址方式, String 显式名称) {
+    this.为源 = 为源;
+    this.类型 = 类型;
+    this.寻址方式 = 寻址方式;
+    this.显式名称 = 显式名称;
+  }
 
   public int 取立即数位数() {
     return 类型.equals(类型16_32) ? 32 : 64;

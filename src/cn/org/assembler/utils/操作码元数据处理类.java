@@ -77,13 +77,16 @@ public class 操作码元数据处理类 {
     List<Node> 目标操作数节点 = 取子节点(语法节点, 操作数标签);
     
     for (Node 节点: 目标操作数节点) {
-      操作数元数据类 操作数元数据 = new 操作数元数据类();
-      操作数元数据.为源 = 操作数标签.equals(源操作数标签);
+      String 寻址方式 = 取首子节点值(节点, "a");
+      String 类型 = 取首子节点值(节点, "t");
       
-      // TODO: 处理: <dst nr="0" group="gen" type="b">AL</dst>
-      操作数元数据.寻址方式 = 取首子节点值(节点, "a");
-      操作数元数据.类型 = 取首子节点值(节点, "t");
-      操作数元数据表.add(操作数元数据);
+      // 处理: <dst nr="0" group="gen" type="b">AL</dst>
+      if (类型 == null && 寻址方式 == null) {
+        寻址方式 = 节点.getTextContent();
+        Node 类型节点 = 节点.getAttributes().getNamedItem("type");
+        类型 = 类型节点 == null ? null : 类型节点.getNodeValue();
+      }
+      操作数元数据表.add(new 操作数元数据类(操作数标签.equals(源操作数标签), 类型, 寻址方式, null));
     }
     return 操作数元数据表;
   }

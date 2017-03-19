@@ -33,7 +33,7 @@ public class 操作码元数据处理测试类 {
     List<操作码元数据类> 操作码元数据 = 操作码元数据处理类.提取操作码信息();
     assertEquals("指令信息不应为空", 451, 操作码元数据.size());
 
-    boolean 存在操作符 = false;
+    int 正确操作符计数 = 0;
     for (操作码元数据类 元数据 : 操作码元数据) {
       assertTrue("操作码值过小:" + 元数据.值, 元数据.值 >= 0);
       assertTrue("操作码值过大:" + 元数据.值, 元数据.值 <= 255);
@@ -48,20 +48,24 @@ public class 操作码元数据处理测试类 {
             
             // TODO: 将所有待验证指令置于对应表中
             if (Integer.toHexString(元数据.值).equalsIgnoreCase("B8") && 某格式.助记符.equals("MOV")) {
-              存在操作符 = true;
+              List<操作数元数据类> 操作数 = 某格式.操作数;
+              assertEquals(2, 操作数.size());
+              
+              assertEquals(new 操作数元数据类(false, 操作数元数据类.类型16_32_64, 操作数元数据类.寻址方式_寄存器, null), 操作数.get(0));
+              assertEquals(new 操作数元数据类(true, 操作数元数据类.类型16_32_64, 操作数元数据类.寻址方式_立即数, null), 操作数.get(1));
+              
+              正确操作符计数++;
+            }
+            if (Integer.toHexString(元数据.值).equalsIgnoreCase("5") && 某格式.助记符.equals("ADD")) {
               
               List<操作数元数据类> 操作数 = 某格式.操作数;
               assertEquals(2, 操作数.size());
               
-              assertEquals(false, 操作数.get(0).为源);
-              assertEquals("Z", 操作数.get(0).寻址方式);
-              assertEquals("vqp", 操作数.get(0).类型);
+              assertEquals(new 操作数元数据类(false, 操作数元数据类.类型16_32_64, "rAX", null), 操作数.get(0));
+              assertEquals(new 操作数元数据类(true, 操作数元数据类.类型16_32, 操作数元数据类.寻址方式_立即数, null), 操作数.get(1));
 
-              assertEquals(true, 操作数.get(1).为源);
-              assertEquals("I", 操作数.get(1).寻址方式);
-              assertEquals("vqp", 操作数.get(1).类型);
+              正确操作符计数++;
             }
-            
             if (某格式.操作数.size() == 0) {
               调试输出("无目标操作数的操作码: ", 元数据);
             }
@@ -70,7 +74,7 @@ public class 操作码元数据处理测试类 {
 
       }
     }
-    assertTrue(存在操作符);
+    assertEquals(2, 正确操作符计数);
   }
 
   private void 调试输出(String 前缀, 操作码元数据类 元数据) {
