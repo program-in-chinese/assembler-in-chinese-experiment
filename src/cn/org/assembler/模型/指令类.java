@@ -33,6 +33,10 @@ public class 指令类 {
     return 二进制码;
   }
 
+  public void set操作码(int 操作码值) {
+    this.操作码 = 生成操作码(操作码值);
+  }
+
   /**
    * @param 十六进制立即数 0x开头的十六进制数
    * @return
@@ -58,5 +62,10 @@ public class 指令类 {
     }
 
     return 二进制码;
+  }
+  
+  public static String 生成操作码(int 操作码值) {
+    String 操作码 = Integer.toHexString(操作码值);
+    return 操作码值 > 15 ? 操作码 : "0" + 操作码;
   }
 }

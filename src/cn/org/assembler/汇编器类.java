@@ -30,17 +30,19 @@ public class 汇编器类 {
 
     switch (操作数1类型.寻址方式) {
       case 操作数元数据类.寻址方式_寄存器:
-        指令.操作码 = Integer.toHexString(操作码.值 + 寄存器常量.取寄存器码(操作数1));
+        指令.set操作码(操作码.值 + 寄存器常量.取寄存器码(操作数1));
         break;
       case 操作数元数据类.寻址方式_寄存器_ModRM:
-        指令.操作码 = Integer.toHexString(操作码.值);
+        指令.set操作码(操作码.值);
 
         指令.modRM = new ModRM();
         指令.modRM.mod = 0b11;
         指令.modRM.reg = 寄存器常量.取寄存器码(操作数1);
         break;
       default:
-        ;
+        // 包括类型: rAX
+        指令.set操作码(操作码.值);
+        break;
     }
     
     if (操作数2类型.寻址方式.equals(操作数元数据类.寻址方式_立即数)) {

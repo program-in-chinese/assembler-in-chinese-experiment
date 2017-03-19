@@ -9,6 +9,7 @@ import org.junit.Test;
 import cn.org.assembler.utils.操作数元数据类;
 import cn.org.assembler.utils.操作码元数据类;
 import cn.org.assembler.模型.代码行类;
+import cn.org.assembler.模型.指令类;
 
 
 public class 分析器测试类 {
@@ -18,7 +19,7 @@ public class 分析器测试类 {
     验证操作码("b8", 代码行类.分析("mov rax, 0x1122334455667788"));
     验证操作码("c7", 代码行类.分析("mov rax, 0x1000"));
 
-    验证操作码("5", 代码行类.分析("add rax, 0x1000"));
+    验证操作码("05", 代码行类.分析("add rax, 0x1000"));
   }
 
   @Test
@@ -29,6 +30,6 @@ public class 分析器测试类 {
   private void 验证操作码(String 操作码值, 代码行类 代码行) {
     操作码元数据类 操作码元数据 = 代码行.查找操作码();
     assertNotNull(操作码元数据);
-    assertEquals(操作码值, Integer.toHexString(操作码元数据.值));
+    assertEquals(操作码值, 指令类.生成操作码(操作码元数据.值));
   }
 }

@@ -12,6 +12,7 @@ import cn.org.assembler.utils.指令格式类;
 import cn.org.assembler.utils.操作数元数据类;
 import cn.org.assembler.utils.操作码元数据处理类;
 import cn.org.assembler.utils.操作码元数据类;
+import cn.org.assembler.模型.指令类;
 
 public class 操作码元数据处理测试类 {
 
@@ -47,7 +48,7 @@ public class 操作码元数据处理测试类 {
             assertNotNull(某格式.助记符);
             
             // TODO: 将所有待验证指令置于对应表中
-            if (某指令元数据.扩展码 == -1 && Integer.toHexString(元数据.值).equalsIgnoreCase("B8") && 某格式.助记符.equals("MOV")) {
+            if (某指令元数据.扩展码 == -1 && 指令类.生成操作码(元数据.值).equals("b8") && 某格式.助记符.equals("MOV")) {
               List<操作数元数据类> 操作数 = 某格式.操作数;
               assertEquals(2, 操作数.size());
               
@@ -56,7 +57,7 @@ public class 操作码元数据处理测试类 {
               
               正确操作符计数++;
             }
-            if (某指令元数据.扩展码 == -1 && Integer.toHexString(元数据.值).equalsIgnoreCase("5") && 某格式.助记符.equals("ADD")) {
+            if (某指令元数据.扩展码 == -1 && 指令类.生成操作码(元数据.值).equals("05") && 某格式.助记符.equals("ADD")) {
               
               List<操作数元数据类> 操作数 = 某格式.操作数;
               assertEquals(2, 操作数.size());
@@ -66,7 +67,7 @@ public class 操作码元数据处理测试类 {
 
               正确操作符计数++;
             }
-            if (某指令元数据.扩展码 == 0 && Integer.toHexString(元数据.值).equalsIgnoreCase("81")
+            if (某指令元数据.扩展码 == 0 && 指令类.生成操作码(元数据.值).equals("81")
                 && 某格式.助记符.equals("ADD")) {
               
               List<操作数元数据类> 操作数 = 某格式.操作数;
