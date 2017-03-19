@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import cn.org.assembler.分析器类;
+import cn.org.assembler.utils.指令元数据类;
 import cn.org.assembler.utils.操作码元数据类;
 
 public class 代码行类 {
@@ -44,15 +45,14 @@ public class 代码行类 {
       if (操作码元数据.size() > 1) {
         List<操作码元数据类> 专用操作码 = 取专用操作码(操作码元数据);
         if (专用操作码.size() != 1) {
-        System.out.println("无法确定操作码. " + 操作码元数据.size() + "选项: "
-            + 操作码元数据.stream().map(操作码元数据类::toString).collect(Collectors.joining(", ")));
-        return null;
+          System.out.println("无法确定操作码. " + 操作码元数据.size() + "选项: "
+              + 操作码元数据.stream().map(操作码元数据类::toString).collect(Collectors.joining(", ")));
+          return null;
         } else {
           return 专用操作码.get(0);
         }
-        
       }
-    } 
+    }
     return 操作码元数据.get(0);
   }
 
@@ -61,9 +61,18 @@ public class 代码行类 {
     return "操作符: " + 助记符 + " 操作数1: " + 操作数1 + " 操作数2: " + 操作数2;
   }
 
-  // TODO: 选取无扩展码的指令
+  // 选取无扩展码的指令
   private List<操作码元数据类> 取专用操作码(List<操作码元数据类> 操作码元数据) {
-    return 操作码元数据;
+    List<操作码元数据类> 专用操作码 = new ArrayList<>();
+    for (操作码元数据类 某操作码元数据 : 操作码元数据) {
+      for (指令元数据类 指令元数据 : 某操作码元数据.指令元数据) {
+        if (指令元数据.无扩展码()) {
+          专用操作码.add(某操作码元数据);
+          break;
+        }
+      }
+    }
+    return 专用操作码;
   }
 
   private static String 删除注释(String 行) {
