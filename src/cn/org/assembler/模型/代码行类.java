@@ -1,5 +1,6 @@
 package cn.org.assembler.模型;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -37,17 +38,32 @@ public class 代码行类 {
     List<操作码元数据类> 操作码元数据 = 分析器类.查找操作码(this);
 
     // TODO: 改善反馈信息
-    if (操作码元数据.size() != 1) {
-      System.out.println("无法确定操作码. " + 操作码元数据.size() + "选项: "
-          + 操作码元数据.stream().map(操作码元数据类::toString).collect(Collectors.joining(", ")));
-      return null;
-    }
+    if (操作码元数据.isEmpty()) {
+      System.out.println("无匹配操作码");
+    } else {
+      if (操作码元数据.size() > 1) {
+        List<操作码元数据类> 专用操作码 = 取专用操作码(操作码元数据);
+        if (专用操作码.size() != 1) {
+        System.out.println("无法确定操作码. " + 操作码元数据.size() + "选项: "
+            + 操作码元数据.stream().map(操作码元数据类::toString).collect(Collectors.joining(", ")));
+        return null;
+        } else {
+          return 专用操作码.get(0);
+        }
+        
+      }
+    } 
     return 操作码元数据.get(0);
   }
 
   @Override
   public String toString() {
     return "操作符: " + 助记符 + " 操作数1: " + 操作数1 + " 操作数2: " + 操作数2;
+  }
+
+  // TODO: 选取无扩展码的指令
+  private List<操作码元数据类> 取专用操作码(List<操作码元数据类> 操作码元数据) {
+    return 操作码元数据;
   }
 
   private static String 删除注释(String 行) {
