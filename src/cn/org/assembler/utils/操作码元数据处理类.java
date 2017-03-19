@@ -48,6 +48,12 @@ public class 操作码元数据处理类 {
       // 取所有子entry节点
       for (Node entry节点 : 取子节点(操作码节点, "entry")) {
         指令元数据类 指令元数据 = new 指令元数据类();
+
+        String 扩展码字符 = 取首子节点值(entry节点, "opcd_ext");
+        if (扩展码字符 != null) {
+          指令元数据.扩展码 = Integer.parseInt(扩展码字符);
+        }
+        
         指令格式类 格式 = new 指令格式类();
 
         Node 语法节点 = 取子节点(entry节点, "syntax").get(0);
