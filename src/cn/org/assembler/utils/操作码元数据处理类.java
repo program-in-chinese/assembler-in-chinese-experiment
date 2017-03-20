@@ -59,10 +59,11 @@ public class 操作码元数据处理类 {
         Node 语法节点 = 取子节点(entry节点, "syntax").get(0);
         String 助记符 = 取首子节点值(语法节点, "mnem");
         
-        // TODO: 部分entry没有syntax节点(如06的第二个). 暂时忽略
+        // TODO: 部分entry没有syntax节点(如06的第二个). 暂时忽略.
+        // TODO: 改为logger
         if (助记符 == null) {
-          System.out
-              .println("无助记符, 暂时忽略: " + Integer.toHexString(操作码元数据.值) + " " + 操作码元数据.操作码字节数 + "字节");
+          // System.out
+          //     .println("无助记符, 暂时忽略: " + Integer.toHexString(操作码元数据.值) + " " + 操作码元数据.操作码字节数 + "字节");
           continue;
         }
         格式.助记符 = 助记符;

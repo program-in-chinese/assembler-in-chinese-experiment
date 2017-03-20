@@ -1,5 +1,6 @@
 package cn.org.assembler;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.org.assembler.constants.寄存器常量;
@@ -13,10 +14,13 @@ public class 汇编器类 {
 
   // TODO: 添加intel指令文档(包含版本号)中的对应章节号,方便查询
   public static List<String> 指令汇编(代码行类 代码行) {
-    操作码元数据类 操作码 = 代码行.查找操作码();
     String 操作数1 = 代码行.操作数1;
     String 操作数2 = 代码行.操作数2;
-    
+
+    操作码元数据类 操作码 = 代码行.查找操作码();
+    if(操作码 == null) {
+      return new ArrayList<>();
+    }
     操作数元数据类 操作数1类型 = 操作码.指令元数据.get(0).格式.get(0).操作数.get(0);
     操作数元数据类 操作数2类型 = 操作码.指令元数据.get(0).格式.get(0).操作数.get(1);
 
