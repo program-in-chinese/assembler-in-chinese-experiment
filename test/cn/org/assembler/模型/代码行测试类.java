@@ -16,6 +16,7 @@ public class 代码行测试类 {
   public void 全部指令() {
     int 已识别代码行数 = 0;
     List<String> 源码文件名列表 = 测试资源处理类.取所有测试源码文件名();
+    List<String> 编译错误代码行 = new ArrayList<>();
     List<String> 编译正确代码行 = new ArrayList<>();
     for (String 源码文件名 : 源码文件名列表) {
       System.out.println("文件:" + 源码文件名);
@@ -27,8 +28,11 @@ public class 代码行测试类 {
         if (代码行 != null) {
           List<String> 二进制码 = 汇编器类.指令汇编(代码行);
           if (!二进制码.isEmpty()) {
+            String 编译结果 = 单行 + " --> " + 二进制码;
             if (比较目标二进制码(二进制码, 源码文件名)){
-              编译正确代码行.add(单行 + " --> " + 二进制码);
+              编译正确代码行.add(编译结果);
+            } else {
+              编译错误代码行.add(编译结果);
             }
           } else {
             System.out.println(单行);
@@ -39,8 +43,13 @@ public class 代码行测试类 {
       }
     }
     assertTrue(编译正确代码行.size() > 0);
+    System.out.println("\n\n =====编译正确=======");
     for (String 编译正确结果: 编译正确代码行) {
       System.out.println(编译正确结果);
+    }
+    System.out.println("\n\n =====编译错误=======");
+    for (String 编译错误结果: 编译错误代码行) {
+      System.out.println(编译错误结果);
     }
     System.out.println("编译正确代码行数: " + 编译正确代码行.size() + " 已识别代码行数: " + 已识别代码行数);
   }
