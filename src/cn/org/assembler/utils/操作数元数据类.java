@@ -58,6 +58,8 @@ public class 操作数元数据类 {
     if (操作数.startsWith("0x")) {
       // 若十六进制数字部分超过8位字符长度, 为64位数
       return 操作数.length() > 2 + 8 ? 立即数64 : 立即数32;
+    } else if (isNumeric(操作数)) {
+      return Long.parseLong(操作数) > 4294967295L ? 立即数64 : 立即数32;
     } else {
       if (寄存器常量.为四字节寄存器(操作数)) {
         return 寄存器64;
@@ -68,7 +70,11 @@ public class 操作数元数据类 {
     }
     return 不确定;
   }
-
+  
+  public static boolean isNumeric(String s) {  
+    return s.matches("[-+]?\\d*\\.?\\d+");  
+}
+  
   @Override
   public boolean equals(Object 对象) {
     return 对象 instanceof 操作数元数据类 && Objects.equals(类型, ((操作数元数据类) 对象).类型)
