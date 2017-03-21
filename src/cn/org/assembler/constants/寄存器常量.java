@@ -78,10 +78,24 @@ public class 寄存器常量 {
   /**
    * @param 寄存器名 不区分大小写
    */
-  public static boolean 为四字节寄存器(String 寄存器名) {
+  public static boolean 为四字寄存器(String 寄存器名) {
     return 四字寄存器.contains(寄存器名.toUpperCase());
   }
-  
+
+  /**
+   * @param 寄存器名 不区分大小写
+   */
+  public static boolean 为双字寄存器(String 寄存器名) {
+    return 双字寄存器.contains(寄存器名.toUpperCase());
+  }
+
+  /**
+   * @param 寄存器名 不区分大小写
+   */
+  public static boolean 为单字寄存器(String 寄存器名) {
+    return 单字寄存器.contains(寄存器名.toUpperCase());
+  }
+
   /**
    * @param 寄存器名 不区分大小写
    */
