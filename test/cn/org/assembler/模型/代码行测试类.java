@@ -3,6 +3,7 @@ package cn.org.assembler.模型;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import org.junit.Test;
@@ -18,6 +19,8 @@ public class 代码行测试类 {
     List<String> 源码文件名列表 = 测试资源处理类.取所有测试源码文件名();
     List<String> 编译错误代码行 = new ArrayList<>();
     List<String> 编译正确代码行 = new ArrayList<>();
+    
+    HashSet<String> 所有二进制代码 = new HashSet<>();
     for (String 源码文件名 : 源码文件名列表) {
       System.out.println("文件:" + 源码文件名);
       List<String> 行 = 测试资源处理类.取源码代码行(源码文件名);
@@ -29,10 +32,15 @@ public class 代码行测试类 {
           List<String> 二进制码 = 汇编器类.指令汇编(代码行);
           if (!二进制码.isEmpty()) {
             String 编译结果 = 单行 + " --> " + 二进制码;
-            if (比较目标二进制码(二进制码, 源码文件名)){
-              编译正确代码行.add(编译结果);
+            if (所有二进制代码.contains(二进制码.toString())) {
+              编译错误代码行.add("重复: " + 编译结果);
             } else {
-              编译错误代码行.add(编译结果);
+              所有二进制代码.add(二进制码.toString());
+              if (比较目标二进制码(二进制码, 源码文件名)){
+                编译正确代码行.add(编译结果);
+              } else {
+                编译错误代码行.add(编译结果);
+              }
             }
           } else {
             System.out.println(单行);
