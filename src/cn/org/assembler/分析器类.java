@@ -52,8 +52,9 @@ public class 分析器类 {
         A register identifier of the form eXX or rXX is used when register width depends on the operand-size attribute. eXX
         is used when 16 or 32-bit sizes are possible; rXX is used when 16, 32, or 64-bit sizes are possible.
  */
+    // EAX,RAX - rAX
     if (目标操作数类型.寻址方式.startsWith("r")) {
-      return 待匹配操作数.equalsIgnoreCase(目标操作数类型.寻址方式);
+      return 待匹配操作数.substring(1).equalsIgnoreCase(目标操作数类型.寻址方式.substring(1));
     } else {
       操作数元数据类 操作数类型 = 操作数元数据类.取操作数类型(待匹配操作数);
       // TODO: 待改进

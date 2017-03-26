@@ -5,6 +5,8 @@ package cn.org.assembler.模型;
  * +---+---+---+---+---+---+---+---+
  * |  mod  |    reg    |     rm    |
  * +---+---+---+---+---+---+---+---+
+ * 
+ * 2.1.3 Vol 2
  */
 public class ModRM {
 
