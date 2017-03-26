@@ -76,6 +76,8 @@ public class 操作数元数据类 {
       String 强制类型 = 操作数后部.substring(0, 操作数后部.indexOf(" "));
       if (强制类型.equals("dword")) {
         return 立即数32;
+      } else if (强制类型.equals("byte")) {
+        return 立即数8_有符号;
       }
     } else if (isNumeric(操作数)) {
       long 数值 = Long.parseLong(操作数);
