@@ -17,6 +17,7 @@ public class 指令测试类 {
     assertEquals(Arrays.asList("00", "10", "00", "00"), 指令类.生成二进制码("0x1000", 32));
     assertEquals(Arrays.asList("04", "00", "00", "00"), 指令类.生成二进制码("4", 32));
     assertEquals(Arrays.asList("90", "01", "00", "00"), 指令类.生成二进制码("400", 32));
+    assertEquals(Arrays.asList("80"), 指令类.生成二进制码("-128", 8));
   }
 
 }
