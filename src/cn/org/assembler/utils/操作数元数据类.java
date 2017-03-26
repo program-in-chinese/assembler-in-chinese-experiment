@@ -77,8 +77,12 @@ public class 操作数元数据类 {
     }
     // TODO: 支持空格之外的间隔符
     else if (操作数.startsWith("strict ")) {
-      String 操作数后部 = 操作数.substring(7);
-      String 强制类型 = 操作数后部.substring(0, 操作数后部.indexOf(" "));
+      String[] 三段 = 操作数.split(" ");
+      // TODO: 暂不支持隐藏类型,如add rax, strict 4
+      if (三段.length!=3) {
+        return 不确定;
+      }
+      String 强制类型 = 三段[1];
       if (强制类型.equals("dword")) {
         return 立即数32;
       } else if (强制类型.equals("word")) {

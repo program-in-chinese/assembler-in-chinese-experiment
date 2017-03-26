@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import cn.org.assembler.分析器类;
 import cn.org.assembler.utils.指令元数据类;
+import cn.org.assembler.utils.操作数元数据类;
 import cn.org.assembler.utils.操作码元数据类;
 
 public class 代码行类 {
@@ -16,6 +17,8 @@ public class 代码行类 {
 
   public String 操作数1;
   public String 操作数2;
+  public 操作数元数据类 操作数1类型;
+  public 操作数元数据类 操作数2类型;
 
   public static 代码行类 分析(String 行) {
     行 = 删除注释(行).trim();
@@ -26,20 +29,26 @@ public class 代码行类 {
         Pattern.compile("^(" + 操作符格式 + ")\\s+(" + 操作数1格式 + "),\\s*(" + 操作数2格式 + ")$");
     Matcher 匹配器 = 格式.matcher(行);
     if (匹配器.find()) {
-      代码行类 代码行 = new 代码行类();
-      代码行.助记符 = 匹配器.group(1);
-      代码行.操作数1 = 匹配器.group(2);
-      代码行.操作数2 = 匹配器.group(3);
+      String 助记符 = 匹配器.group(1);
+      String 操作数1 = 匹配器.group(2);
+      String 操作数2 = 匹配器.group(3);
 
       // 语法检查
-      // 比如操作数2: strict dword 35
-      if (代码行.操作数2.startsWith("strict")) {
-        if (代码行.操作数2.split(" ").length != 3) {
-          // 暂不支持省略类型的strict,比如strict 4
-          return null;
+
+      // TODO: 查找现有助记符,如无匹配,报错
+      操作数元数据类 操作数1类型 = 操作数元数据类.取操作数类型(操作数1);
+      if (!操作数1类型.equals(操作数元数据类.不确定)) {
+        操作数元数据类 操作数2类型 = 操作数元数据类.取操作数类型(操作数2);
+        if (!操作数2类型.equals(操作数元数据类.不确定)) {
+          代码行类 代码行 = new 代码行类();
+          代码行.助记符 = 助记符;
+          代码行.操作数1 = 操作数1;
+          代码行.操作数2 = 操作数2;
+          代码行.操作数1类型 = 操作数1类型;
+          代码行.操作数2类型 = 操作数2类型;
+          return 代码行;
         }
       }
-      return 代码行;
     }
     return null;
   }
