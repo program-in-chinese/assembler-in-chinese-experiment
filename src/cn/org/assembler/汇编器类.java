@@ -41,7 +41,10 @@ public class 汇编器类 {
 
         指令.modRM = new ModRM();
         指令.modRM.mod = 0b11;
-        // TODO: 赋值reg
+        // 有扩展码时,赋值给modRM的reg部分
+        if (!操作码.指令元数据.get(0).无扩展码()) {
+          指令.modRM.reg = 操作码.指令元数据.get(0).扩展码;
+        }
         指令.modRM.rm = 寄存器常量.取寄存器码(操作数1);
         break;
       default:
