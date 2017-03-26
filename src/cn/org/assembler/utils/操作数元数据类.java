@@ -12,6 +12,7 @@ public class 操作数元数据类 {
   public static final 操作数元数据类 单字寄存器 = new 操作数元数据类();
   public static final 操作数元数据类 立即数64 = new 操作数元数据类();
   public static final 操作数元数据类 立即数32 = new 操作数元数据类();
+  public static final 操作数元数据类 单字立即数 = new 操作数元数据类();
   public static final 操作数元数据类 立即数8_有符号 = new 操作数元数据类();
   public static final 操作数元数据类 不确定 = new 操作数元数据类();
 
@@ -29,6 +30,9 @@ public class 操作数元数据类 {
     单字寄存器.寻址方式 = 寻址方式_寄存器;
     寄存器.寻址方式 = 寻址方式_寄存器;
 
+    单字立即数.寻址方式 = 寻址方式_立即数;
+    单字立即数.类型 = 类型16_32;
+    
     立即数32.寻址方式 = 寻址方式_立即数;
     立即数32.类型 = 类型16_32;
 
@@ -40,6 +44,7 @@ public class 操作数元数据类 {
     
     寄存器64.类型 = 类型16_32_64;
     双字寄存器.类型 = 类型16_32;
+    单字寄存器.类型 = 类型16_32;
   }
 
   public boolean 为源;
@@ -76,6 +81,8 @@ public class 操作数元数据类 {
       String 强制类型 = 操作数后部.substring(0, 操作数后部.indexOf(" "));
       if (强制类型.equals("dword")) {
         return 立即数32;
+      } else if (强制类型.equals("word")) {
+        return 单字立即数;
       } else if (强制类型.equals("byte")) {
         return 立即数8_有符号;
       }

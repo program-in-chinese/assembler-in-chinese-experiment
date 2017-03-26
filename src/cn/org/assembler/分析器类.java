@@ -28,8 +28,11 @@ public class 分析器类 {
           // TODO: 完全忽略大小写?
           // TODO: 提取匹配操作数类型到单独函数
           if (助记符名.equalsIgnoreCase(格式.助记符) && 格式.操作数.size() == 2 
-              && 格式.操作数.get(1).equals(操作数2类型) && 操作数类型匹配(代码行.操作数1, 格式.操作数.get(0))) {
-            匹配指令元数据.add(指令元数据);
+              // TODO: 匹配操作数2, strict word 5 匹配 Ivds
+              && 格式.操作数.get(1).equals(操作数2类型)) {
+            if (操作数类型匹配(代码行.操作数1, 格式.操作数.get(0))) {
+              匹配指令元数据.add(指令元数据);
+            }
           }
         }
       }
@@ -52,9 +55,10 @@ public class 分析器类 {
         A register identifier of the form eXX or rXX is used when register width depends on the operand-size attribute. eXX
         is used when 16 or 32-bit sizes are possible; rXX is used when 16, 32, or 64-bit sizes are possible.
  */
-    // EAX,RAX - rAX
+    // AX,EAX,RAX - rAX
     if (目标操作数类型.寻址方式.startsWith("r")) {
-      return 待匹配操作数.substring(1).equalsIgnoreCase(目标操作数类型.寻址方式.substring(1));
+      String 寄存器名 = 目标操作数类型.寻址方式.substring(1);
+      return 待匹配操作数.equalsIgnoreCase(寄存器名) || 待匹配操作数.substring(1).equalsIgnoreCase(寄存器名);
     } else {
       操作数元数据类 操作数类型 = 操作数元数据类.取操作数类型(待匹配操作数);
       // TODO: 待改进

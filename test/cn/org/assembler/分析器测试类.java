@@ -22,6 +22,7 @@ public class 分析器测试类 {
     验证操作码("05", 代码行类.分析("add rax, 0x1000"));
     验证操作码("83", 代码行类.分析("add eax, 4"));
     验证操作码("25", 代码行类.分析("and eax, 3584"));
+    验证操作码("05", 代码行类.分析("add ax,strict word 5"));
     // TODO: 需要强制汇编?
     // 验证操作码("05", 代码行类.分析("add rax, 0x1122334455667788"));
   }
@@ -29,6 +30,7 @@ public class 分析器测试类 {
   @Test
   public void 匹配操作数类型() {
     assertTrue(分析器类.操作数类型匹配("rax", new 操作数元数据类(false, "vqs", "rAX", null)));
+    assertTrue(分析器类.操作数类型匹配("ax", new 操作数元数据类(false, "vqp", "rAX", null)));
   }
 
   private void 验证操作码(String 操作码值, 代码行类 代码行) {
