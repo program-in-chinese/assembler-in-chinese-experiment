@@ -69,6 +69,12 @@ public class 操作数元数据类 {
       // 若十六进制数字部分超过8位字符长度, 为64位数
       int 数字长度 = 操作数.length() - 2;
       return 数字长度 > 8 ? 立即数64 : 数字长度 > 2 ? 立即数32 : 立即数8_有符号;
+    } else if (操作数.startsWith("strict ")) {
+      String 操作数后部 = 操作数.substring(7);
+      String 强制类型 = 操作数后部.substring(0, 操作数后部.indexOf(" "));
+      if (强制类型.equals("dword")) {
+        return 立即数32;
+      }
     } else if (isNumeric(操作数)) {
       long 数值 = Long.parseLong(操作数);
       // TODO: 数值有误
