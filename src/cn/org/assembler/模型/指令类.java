@@ -62,7 +62,7 @@ public class 指令类 {
 
     // 去除高位
     // TODO: 需要检查符号位吗? -128 => 80或FF 80
-    if (立即数.length() > 立即数位数) {
+    if (立即数.length() > 立即数位数 / 4) {
       立即数 = 立即数.substring(立即数.length() - 立即数位数 / 4, 立即数.length());
     }
     // 反序
