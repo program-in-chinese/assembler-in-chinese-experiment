@@ -2,6 +2,7 @@ package cn.org.assembler;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import cn.org.assembler.utils.指令元数据类;
 import cn.org.assembler.utils.指令格式类;
@@ -13,7 +14,7 @@ import cn.org.assembler.模型.代码行类;
 public class 分析器类 {
 
   private static final List<操作码元数据类> 操作码元数据表 = 操作码元数据处理类.提取操作码信息();
-  
+
   // TODO: 优化 - 避免线性查找
   // TODO: 不仅返回操作码元数据, 还有操作数的信息(立即数位数, 寄存器值, 等等)
   public static List<操作码元数据类> 查找操作码(代码行类 代码行) {
@@ -26,11 +27,11 @@ public class 分析器类 {
 
           // TODO: 完全忽略大小写?
           // TODO: 提取匹配操作数类型到单独函数
-          if (助记符名.equalsIgnoreCase(格式.助记符) && 格式.操作数.size() == 2 
-              // TODO: 匹配操作数2, strict word 5 匹配 Ivds
-              && 格式.操作数.get(1).equals(代码行.操作数2类型)) {
-            if (操作数类型匹配(代码行.操作数1, 代码行.操作数1类型, 格式.操作数.get(0))) {
-              匹配指令元数据.add(指令元数据);
+          if (助记符名.equalsIgnoreCase(格式.助记符) && 格式.操作数.size() == 2) {
+            if (操作数类型匹配(代码行.操作数2, 代码行.操作数2类型, 格式.操作数.get(1))) {
+              if (操作数类型匹配(代码行.操作数1, 代码行.操作数1类型, 格式.操作数.get(0))) {
+                匹配指令元数据.add(指令元数据);
+              }
             }
           }
         }
@@ -58,6 +59,14 @@ public class 分析器类 {
     if (目标操作数类型.寻址方式.startsWith("r")) {
       String 寄存器名 = 目标操作数类型.寻址方式.substring(1);
       return 待匹配操作数.equalsIgnoreCase(寄存器名) || 待匹配操作数.substring(1).equalsIgnoreCase(寄存器名);
+    } 
+    // 匹配立即数
+    else if (Objects.equals(目标操作数类型.寻址方式, 操作数元数据类.寻址方式_立即数)) {
+      return Objects.equals(待匹配操作数类型, 目标操作数类型) 
+          || (Objects.equals(待匹配操作数类型.寻址方式, 操作数元数据类.寻址方式_立即数)
+              // strict word 5 匹配 Ivds
+              && (操作数元数据类.类型16.equals(待匹配操作数类型.类型) || 操作数元数据类.类型16_32.equals(待匹配操作数类型.类型))
+              && 操作数元数据类.类型16_32.equals(目标操作数类型.类型));
     } else {
       // TODO: 待改进
       return 待匹配操作数类型.equals(目标操作数类型)

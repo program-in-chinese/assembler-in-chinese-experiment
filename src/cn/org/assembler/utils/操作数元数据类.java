@@ -17,6 +17,7 @@ public class 操作数元数据类 {
   public static final 操作数元数据类 不确定 = new 操作数元数据类();
 
   public static final String 类型8_有符号 = "bs";
+  public static final String 类型16 = "w";
   public static final String 类型16_32 = "vds";
   public static final String 类型16_32_64 = "vqp";
 
@@ -31,7 +32,7 @@ public class 操作数元数据类 {
     寄存器.寻址方式 = 寻址方式_寄存器;
 
     单字立即数.寻址方式 = 寻址方式_立即数;
-    单字立即数.类型 = 类型16_32;
+    单字立即数.类型 = 类型16;
     
     立即数32.寻址方式 = 寻址方式_立即数;
     立即数32.类型 = 类型16_32;
