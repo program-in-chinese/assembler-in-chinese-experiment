@@ -3,7 +3,6 @@ package cn.org.assembler.模型;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 import org.junit.Test;

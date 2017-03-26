@@ -29,7 +29,7 @@ public class 分析器类 {
           if (助记符名.equalsIgnoreCase(格式.助记符) && 格式.操作数.size() == 2 
               // TODO: 匹配操作数2, strict word 5 匹配 Ivds
               && 格式.操作数.get(1).equals(代码行.操作数2类型)) {
-            if (操作数类型匹配(代码行.操作数1, 格式.操作数.get(0))) {
+            if (操作数类型匹配(代码行.操作数1, 代码行.操作数1类型, 格式.操作数.get(0))) {
               匹配指令元数据.add(指令元数据);
             }
           }
@@ -46,7 +46,7 @@ public class 分析器类 {
     return 操作码元数据;
   }
 
-  public static boolean 操作数类型匹配(String 待匹配操作数, 操作数元数据类 目标操作数类型) {
+  public static boolean 操作数类型匹配(String 待匹配操作数, 操作数元数据类 待匹配操作数类型, 操作数元数据类 目标操作数类型) {
 /*
  *  A.2.3 Register Codes
  *      When an opcode requires a specific register as an operand, the register is identified by name (for example, AX, CL,
@@ -59,10 +59,9 @@ public class 分析器类 {
       String 寄存器名 = 目标操作数类型.寻址方式.substring(1);
       return 待匹配操作数.equalsIgnoreCase(寄存器名) || 待匹配操作数.substring(1).equalsIgnoreCase(寄存器名);
     } else {
-      操作数元数据类 操作数类型 = 操作数元数据类.取操作数类型(待匹配操作数);
       // TODO: 待改进
-      return 操作数类型.equals(目标操作数类型)
-          || (操作数类型.寻址方式 != null && 操作数类型.寻址方式.equals(操作数元数据类.寻址方式_寄存器) && 目标操作数类型.寻址方式
+      return 待匹配操作数类型.equals(目标操作数类型)
+          || (待匹配操作数类型.寻址方式 != null && 待匹配操作数类型.寻址方式.equals(操作数元数据类.寻址方式_寄存器) && 目标操作数类型.寻址方式
               .equals(操作数元数据类.寻址方式_寄存器_ModRM));
     }
   }
