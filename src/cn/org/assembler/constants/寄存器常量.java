@@ -32,9 +32,19 @@ public class 寄存器常量 {
   public static final String 单字SI寄存器名 = "SI";
   public static final String 单字目标地址寄存器名 = "DI";
   
+  public static final String 单字节累加寄存器名 = "AL";
+  public static final String 单字节计数寄存器名 = "CL";
+  public static final String 单字节数据寄存器名 = "DL";
+  public static final String 单字节BX寄存器名 = "BL";
+  public static final String 单字节SP寄存器名 = "SPL";
+  public static final String 单字节BP寄存器名 = "BPL";
+  public static final String 单字节SI寄存器名 = "SIL";
+  public static final String 单字节目标地址寄存器名 = "DIL";
+  
   public static final HashSet<String> 四字寄存器 = new HashSet<>();
   public static final HashSet<String> 双字寄存器 = new HashSet<>();
   public static final HashSet<String> 单字寄存器 = new HashSet<>();
+  public static final HashSet<String> 单字节寄存器 = new HashSet<>();
   
   private static final HashMap<String, Integer> 寄存器对应码 = new HashMap<>();
   
@@ -66,6 +76,15 @@ public class 寄存器常量 {
     寄存器对应码.put(单字BP寄存器名, 5);
     寄存器对应码.put(单字SI寄存器名, 6);
     寄存器对应码.put(单字目标地址寄存器名, 7);
+
+    寄存器对应码.put(单字节累加寄存器名, 0);
+    寄存器对应码.put(单字节计数寄存器名, 1);
+    寄存器对应码.put(单字节数据寄存器名, 2);
+    寄存器对应码.put(单字节BX寄存器名, 3);
+    寄存器对应码.put(单字节SP寄存器名, 4);
+    寄存器对应码.put(单字节BP寄存器名, 5);
+    寄存器对应码.put(单字节SI寄存器名, 6);
+    寄存器对应码.put(单字节目标地址寄存器名, 7);
     
     四字寄存器.addAll(Arrays.asList(四字累加寄存器名, 四字计数寄存器名, 四字数据寄存器名, 四字BX寄存器名, 四字SP寄存器名, 四字BP寄存器名,
         四字SI寄存器名, 四字目标地址寄存器名));
@@ -73,6 +92,8 @@ public class 寄存器常量 {
         双字SI寄存器名, 双字目标地址寄存器名));
     单字寄存器.addAll(Arrays.asList(单字累加寄存器名, 单字计数寄存器名, 单字数据寄存器名, 单字BX寄存器名, 单字SP寄存器名, 单字BP寄存器名,
         单字SI寄存器名, 单字目标地址寄存器名));
+    单字节寄存器.addAll(Arrays.asList(单字节累加寄存器名, 单字节计数寄存器名, 单字节数据寄存器名, 单字节BX寄存器名, 单字节SP寄存器名, 单字节BP寄存器名,
+        单字节SI寄存器名, 单字节目标地址寄存器名));
   }
 
   /**
@@ -94,6 +115,13 @@ public class 寄存器常量 {
    */
   public static boolean 为单字寄存器(String 寄存器名) {
     return 单字寄存器.contains(寄存器名.toUpperCase());
+  }
+
+  /**
+   * @param 寄存器名 不区分大小写
+   */
+  public static boolean 为单字节寄存器(String 寄存器名) {
+    return 单字节寄存器.contains(寄存器名.toUpperCase());
   }
 
   /**

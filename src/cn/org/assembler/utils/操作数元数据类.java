@@ -10,12 +10,14 @@ public class 操作数元数据类 {
   public static final 操作数元数据类 寄存器64 = new 操作数元数据类();
   public static final 操作数元数据类 双字寄存器 = new 操作数元数据类();
   public static final 操作数元数据类 单字寄存器 = new 操作数元数据类();
+  public static final 操作数元数据类 单字节寄存器 = new 操作数元数据类();
   public static final 操作数元数据类 立即数64 = new 操作数元数据类();
   public static final 操作数元数据类 立即数32 = new 操作数元数据类();
   public static final 操作数元数据类 单字立即数 = new 操作数元数据类();
   public static final 操作数元数据类 立即数8_有符号 = new 操作数元数据类();
   public static final 操作数元数据类 不确定 = new 操作数元数据类();
 
+  public static final String 类型8 = "b";
   public static final String 类型8_有符号 = "bs";
   public static final String 类型16 = "w";
   public static final String 类型16_32 = "vds";
@@ -30,6 +32,7 @@ public class 操作数元数据类 {
     双字寄存器.寻址方式 = 寻址方式_寄存器;
     单字寄存器.寻址方式 = 寻址方式_寄存器;
     寄存器.寻址方式 = 寻址方式_寄存器;
+    单字节寄存器.寻址方式 = 寻址方式_寄存器;
 
     单字立即数.寻址方式 = 寻址方式_立即数;
     单字立即数.类型 = 类型16;
@@ -45,7 +48,8 @@ public class 操作数元数据类 {
 
     寄存器64.类型 = 类型16_32_64;
     双字寄存器.类型 = 类型16_32;
-    单字寄存器.类型 = 类型16_32;
+    单字寄存器.类型 = 类型16;
+    单字节寄存器.类型 = 类型8;
   }
 
   public boolean 为源;
