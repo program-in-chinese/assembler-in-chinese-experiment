@@ -1,5 +1,6 @@
 package cn.org.assembler.模型;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -11,6 +12,12 @@ import cn.org.assembler.汇编器类;
 import cn.org.assembler.测试资源.测试资源处理类;
 
 public class 代码行测试类 {
+
+  @Test
+  public void 行分析() {
+    代码行类 代码行 = 代码行类.分析("mov al, 0");
+    assertEquals("mov", 代码行.助记符);
+  }
 
   @Test
   public void 全部指令() {

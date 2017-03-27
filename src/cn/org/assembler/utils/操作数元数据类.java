@@ -106,6 +106,8 @@ public class 操作数元数据类 {
         return 双字寄存器;
       } else if (寄存器常量.为单字寄存器(操作数)) {
         return 单字寄存器;
+      } else if (寄存器常量.为单字节寄存器(操作数)) {
+        return 单字节寄存器;
       } else if (寄存器常量.取寄存器码(操作数) != null) {
         return 寄存器;
       }
