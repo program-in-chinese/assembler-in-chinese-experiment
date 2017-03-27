@@ -58,7 +58,7 @@ public class 代码行类 {
 
     // TODO: 改善反馈信息
     if (操作码元数据.isEmpty()) {
-      //System.out.println("无匹配操作码: " + this);
+      System.out.println("无匹配操作码: " + this);
       return null;
     } else if (操作码元数据.size() > 1) {
       List<操作码元数据类> 专用操作码 = 取专用操作码(操作码元数据);

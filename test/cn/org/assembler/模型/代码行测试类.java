@@ -78,6 +78,10 @@ public class 代码行测试类 {
    */
   private int 比较目标二进制码(List<String> 二进制码, String 源码文件名, int 二进制文件行号) {
     List<String> 所有二进制码 = 测试资源处理类.读hex文件行(源码文件名);
+    if (所有二进制码.isEmpty()) {
+      System.out.println(源码文件名 + ".hex不存在或为空");
+      return -1;
+    }
     for (int 二进制码索引 = 0; 二进制码索引 < 二进制码.size(); 二进制码索引++) {
       int 二进制码行号 = 二进制文件行号 + 二进制码索引;
       if (!所有二进制码.get(二进制码行号).trim().equals(二进制码.get(二进制码索引))) {

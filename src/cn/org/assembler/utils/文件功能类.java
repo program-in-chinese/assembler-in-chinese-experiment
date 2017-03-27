@@ -15,7 +15,11 @@ public class 文件功能类 {
    */
   public static List<String> 读取行(String 文件名) {
     List<String> 行 = new ArrayList<>();
-    try (Scanner 扫描器 = new Scanner(new File(文件名))) {
+    File 文件 = new File(文件名);
+    if (!文件.exists()) {
+      return new ArrayList<>();
+    }
+    try (Scanner 扫描器 = new Scanner(文件)) {
 
       while (扫描器.hasNext()) {
         行.add(扫描器.nextLine());
