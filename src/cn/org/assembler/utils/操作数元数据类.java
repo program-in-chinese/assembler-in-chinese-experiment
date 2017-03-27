@@ -24,7 +24,7 @@ public class 操作数元数据类 {
   public static final String 寻址方式_寄存器_ModRM = "E";
   public static final String 寻址方式_寄存器 = "Z";
   public static final String 寻址方式_立即数 = "I";
-  
+
   static {
     寄存器64.寻址方式 = 寻址方式_寄存器;
     双字寄存器.寻址方式 = 寻址方式_寄存器;
@@ -33,7 +33,7 @@ public class 操作数元数据类 {
 
     单字立即数.寻址方式 = 寻址方式_立即数;
     单字立即数.类型 = 类型16;
-    
+
     立即数32.寻址方式 = 寻址方式_立即数;
     立即数32.类型 = 类型16_32;
 
@@ -42,7 +42,7 @@ public class 操作数元数据类 {
 
     立即数8_有符号.寻址方式 = 寻址方式_立即数;
     立即数8_有符号.类型 = 类型8_有符号;
-    
+
     寄存器64.类型 = 类型16_32_64;
     双字寄存器.类型 = 类型16_32;
     单字寄存器.类型 = 类型16_32;
@@ -52,12 +52,12 @@ public class 操作数元数据类 {
 
   // TODO: 改为ENUM
   public String 类型; // 16/32/64
-  public String 寻址方式;  // 寄存器/立即数/内存
+  public String 寻址方式; // 寄存器/立即数/内存
 
   public String 显式名称;
 
   public 操作数元数据类() {}
-  
+
   public 操作数元数据类(boolean 为源, String 类型, String 寻址方式, String 显式名称) {
     this.为源 = 为源;
     this.类型 = 类型;
@@ -72,15 +72,15 @@ public class 操作数元数据类 {
   // TODO: 仅作演示用. 需更精细的模式匹配
   public static 操作数元数据类 取操作数类型(String 操作数) {
     if (操作数.startsWith("0x")) {
-      // 若十六进制数字部分超过8位字符长度, 为64位数
-      int 数字长度 = 操作数.length() - 2;
-      return 数字长度 > 8 ? 立即数64 : 数字长度 > 2 ? 立即数32 : 立即数8_有符号;
+      long 数值 = Long.parseLong(操作数.substring(2), 16);
+      return 数值 > 4294967295L ? 立即数64 : (数值 > 32767 || 数值 < -32768) ? 立即数32
+          : (数值 > 127 || 数值 < -128) ? 单字立即数 : 立即数8_有符号;
     }
     // TODO: 支持空格之外的间隔符
     else if (操作数.startsWith("strict ")) {
       String[] 三段 = 操作数.split(" ");
       // TODO: 暂不支持隐藏类型,如add rax, strict 4
-      if (三段.length!=3) {
+      if (三段.length != 3) {
         return 不确定;
       }
       String 强制类型 = 三段[1];
@@ -108,11 +108,11 @@ public class 操作数元数据类 {
     }
     return 不确定;
   }
-  
-  public static boolean isNumeric(String s) {  
-    return s.matches("[-+]?\\d*\\.?\\d+");  
-}
-  
+
+  public static boolean isNumeric(String s) {
+    return s.matches("[-+]?\\d*\\.?\\d+");
+  }
+
   @Override
   public boolean equals(Object 对象) {
     return 对象 instanceof 操作数元数据类 && Objects.equals(类型, ((操作数元数据类) 对象).类型)

@@ -18,6 +18,9 @@ public class 指令类 {
   public String displacement;
   public String 立即数;
   public 操作数元数据类 立即数类型;
+  
+  // 16/32/64
+  public int 模式 = 32;
 
   public List<String> 生成二进制码() {
     List<String> 二进制码 = new ArrayList<>();
@@ -31,8 +34,13 @@ public class 指令类 {
       二进制码.add(modRM.生成二进制码());
     }
     if (立即数 != null && 立即数类型 != null) {
-      二进制码.addAll(生成二进制码(立即数, 立即数类型.equals(操作数元数据类.立即数8_有符号) ? 8 : 立即数类型.equals(操作数元数据类.单字立即数) ? 16
-          : 立即数类型.equals(操作数元数据类.立即数32) ? 32 : 64));
+      int 立即数位数 = 立即数类型.equals(操作数元数据类.立即数8_有符号) ? 8 : 立即数类型.equals(操作数元数据类.单字立即数) ? 16
+          : 立即数类型.equals(操作数元数据类.立即数32) ? 32 : 64;
+      if (立即数位数 == 16 && 模式 == 64) {
+        立即数位数 = 32;
+      }
+      二进制码.addAll(生成二进制码(立即数, 立即数位数));
+      
     }
     return 二进制码;
   }

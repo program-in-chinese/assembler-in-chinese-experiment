@@ -22,6 +22,8 @@ public class 汇编器测试类 {
     验证二进制码("add eax, 4", Arrays.asList("83", "c0", "04"));
     验证二进制码("add ebx, 4", Arrays.asList("83", "c3", "04"));
     验证二进制码("add ax,-128", Arrays.asList("83", "c0", "80"));
+    验证二进制码("and eax, 35", Arrays.asList("83", "e0", "23"));
+    验证二进制码("add ax,0x80", Arrays.asList("05", "80", "00"));
     //验证二进制码("add rax, 0x1122334455667788", Arrays.asList("48", "05", "88", "77", "66", "55")); 
   }
 
