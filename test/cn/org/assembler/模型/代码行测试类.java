@@ -19,6 +19,8 @@ public class 代码行测试类 {
     assertEquals("mov", 代码行.助记符);
     代码行 = 代码行类.分析("mov byte al, 0");
     assertEquals("mov", 代码行.助记符);
+    代码行 = 代码行类.分析("xchg ax, ax");
+    assertEquals("xchg", 代码行.助记符);
   }
 
   @Test
