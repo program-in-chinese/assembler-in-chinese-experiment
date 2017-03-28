@@ -13,6 +13,8 @@ import cn.org.assembler.utils.操作码元数据类;
 
 public class 代码行类 {
 
+  // 只有注释
+  public boolean 为空 = false;
   public String 助记符;
 
   public String 操作数1;
@@ -22,6 +24,11 @@ public class 代码行类 {
 
   public static 代码行类 分析(String 行) {
     行 = 删除注释(行).trim();
+    if (行.isEmpty()) {
+      代码行类 代码行 = new 代码行类();
+      代码行.为空 = true;
+      return 代码行;
+    }
     String 操作符格式 = "[A-Za-z]+";
     String 操作数1格式 = "[A-Za-z]+";
     String 操作数2格式 = "[\\-A-Za-z0-9\\s]+";
