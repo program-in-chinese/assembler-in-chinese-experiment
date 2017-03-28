@@ -36,6 +36,7 @@ public class 指令类 {
     if (立即数 != null && 立即数类型 != null) {
       int 立即数位数 = 立即数类型.equals(操作数元数据类.立即数8_有符号) ? 8 : 立即数类型.equals(操作数元数据类.单字立即数) ? 16
           : 立即数类型.equals(操作数元数据类.立即数32) ? 32 : 64;
+      // TODO: 待考证 - 64模式下, 只支持32/64两种立即数位数?
       if (立即数位数 == 16 && 模式 == 64) {
         立即数位数 = 32;
       }
@@ -56,13 +57,28 @@ public class 指令类 {
   public static List<String> 生成二进制码(String 立即数字符, int 立即数位数) {
     List<String> 二进制码 = new ArrayList<>();
     String 立即数 = 立即数字符;
-    if (立即数字符.startsWith("strict")) {
-      立即数 = 立即数.split(" ")[2];
+    // TODO: 与 取操作数类型 重复
+    if (立即数.indexOf(" ") > 0) {
+      String[] 三段 = 立即数.split(" ");
+      if (三段.length == 3 && 三段[0].equals("strict")) {
+        立即数 = 三段[2];
+      } else if (三段.length == 2) {
+        立即数 = 三段[1];
+      }
+    }
+    // TODO: 暂不支持-0x80000000
+    if (立即数.startsWith("-0x")) {
+      立即数 = 立即数.substring(1);
     }
     if (立即数.startsWith("0x")) {
       立即数 = 立即数.substring(2);
     } else {
-      立即数 = Long.toHexString(Long.parseLong(立即数));
+      // TODO: 不支持变量名
+      if (操作数元数据类.isNumeric(立即数)) {
+        立即数 = Long.toHexString(Long.parseLong(立即数));
+      } else {
+        return 二进制码;
+      }
     }
     if (立即数.length() % 2 == 1) {
       立即数 = "0" + 立即数;

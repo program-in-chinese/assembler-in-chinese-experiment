@@ -81,19 +81,27 @@ public class 操作数元数据类 {
           : (数值 > 127 || 数值 < -128) ? 单字立即数 : 立即数8_有符号;
     }
     // TODO: 支持空格之外的间隔符
-    else if (操作数.startsWith("strict ")) {
+    else if (操作数.indexOf(" ") > 0) {
       String[] 三段 = 操作数.split(" ");
+      String 强制类型 = "";
+      String 操作对象 = "";
       // TODO: 暂不支持隐藏类型,如add rax, strict 4
-      if (三段.length != 3) {
+      if (三段.length == 2) {
+        强制类型 = 三段[0];
+        操作对象 = 三段[1];
+      } else if (三段.length == 3 && 三段[0].equals("strict")) {
+        强制类型 = 三段[1];
+        操作对象 = 三段[2];
+      } else {
         return 不确定;
       }
-      String 强制类型 = 三段[1];
+      boolean 为寄存器 = 寄存器常量.取寄存器码(操作对象) != null;
       if (强制类型.equals("dword")) {
-        return 立即数32;
+        return 为寄存器 ? 双字寄存器 : 立即数32;
       } else if (强制类型.equals("word")) {
-        return 单字立即数;
+        return 为寄存器 ? 单字寄存器 : 单字立即数;
       } else if (强制类型.equals("byte")) {
-        return 立即数8_有符号;
+        return 为寄存器 ? 单字节寄存器 : 立即数8_有符号;
       }
     } else if (isNumeric(操作数)) {
       long 数值 = Long.parseLong(操作数);
