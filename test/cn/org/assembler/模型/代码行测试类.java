@@ -17,6 +17,8 @@ public class 代码行测试类 {
   public void 行分析() {
     代码行类 代码行 = 代码行类.分析("mov al, 0");
     assertEquals("mov", 代码行.助记符);
+    代码行 = 代码行类.分析("mov byte al, 0");
+    assertEquals("mov", 代码行.助记符);
   }
 
   @Test
