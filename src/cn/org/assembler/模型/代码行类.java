@@ -81,6 +81,12 @@ public class 代码行类 {
     }
   }
 
+  public int 取有效操作码长度() {
+    int 操作数1长度 = 操作数1类型.取位数();
+    int 操作数2长度 = 操作数2类型.取位数();
+    return 操作数1长度 > 操作数2长度 ? 操作数1长度 : 操作数2长度;
+  }
+
   @Override
   public String toString() {
     return "操作符: " + 助记符 + " 操作数1: " + 操作数1 + " 操作数2: " + 操作数2;

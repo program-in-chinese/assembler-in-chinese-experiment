@@ -13,6 +13,14 @@ import cn.org.assembler.模型.指令类;
 public class 汇编器类 {
 
   // TODO: 添加intel指令文档(包含版本号)中的对应章节号,方便查询
+  public static List<String> 指令汇编(代码行类 代码行, int 默认操作数长度) {
+    List<String> 二进制码 = 汇编器类.指令汇编(代码行);
+    if (默认操作数长度 == 64 && 代码行.取有效操作码长度() == 16) {
+      二进制码.add(0, "66");
+    }
+    return 二进制码;
+  }
+
   public static List<String> 指令汇编(代码行类 代码行) {
     String 操作数1 = 代码行.操作数1;
     String 操作数2 = 代码行.操作数2;

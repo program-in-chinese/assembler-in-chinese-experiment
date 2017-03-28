@@ -69,8 +69,8 @@ public class 操作数元数据类 {
     this.显式名称 = 显式名称;
   }
 
-  public int 取立即数位数() {
-    return 类型.equals(类型16_32) ? 32 : 64;
+  public int 取位数() {
+    return 类型.equals(类型8) || 类型.equals(类型8) ? 8 : 类型.equals(类型16) ? 16 : 类型.equals(类型16_32) ? 32 : 64;
   }
 
   // TODO: 仅作演示用. 需更精细的模式匹配
