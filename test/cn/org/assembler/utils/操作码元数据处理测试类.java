@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import cn.org.assembler.分析器类;
 import cn.org.assembler.utils.指令元数据类;
 import cn.org.assembler.utils.指令格式类;
 import cn.org.assembler.utils.操作数元数据类;
@@ -32,7 +33,7 @@ public class 操作码元数据处理测试类 {
 
   @Test
   public void 全部操作码() {
-    List<操作码元数据类> 操作码元数据 = 操作码元数据处理类.提取操作码信息();
+    List<操作码元数据类> 操作码元数据 = 操作码元数据处理类.操作码元数据表;
     assertEquals("指令信息不应为空", 451, 操作码元数据.size());
 
     int 正确操作符计数 = 0;

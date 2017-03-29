@@ -2,6 +2,7 @@ package cn.org.assembler.utils;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -14,6 +15,29 @@ public class 操作码元数据处理类 {
   private static final String 操作码元数据路径 = "资源/x86reference.xml";
   private static final String 源操作数标签 = "src";
   private static final String 目标操作数标签 = "dst";
+
+  private static final HashMap<String, List<操作码元数据类>> 按助记符分组操作码 = new HashMap<>();
+  
+  public static final List<操作码元数据类> 操作码元数据表 = 操作码元数据处理类.提取操作码信息();
+
+  static {
+    for (操作码元数据类 某操作码元数据 : 操作码元数据表) {
+      for (指令元数据类 指令元数据 : 某操作码元数据.指令元数据) {
+        for (指令格式类 格式 : 指令元数据.格式) {
+          String 助记符 = 格式.助记符.toUpperCase();
+          if (按助记符分组操作码.containsKey(助记符)) {
+            按助记符分组操作码.get(助记符).add(某操作码元数据);
+          } else {
+            按助记符分组操作码.put(助记符, new ArrayList<>());
+          }
+        }
+      }
+    }
+  }
+
+  public static List<操作码元数据类> 按助记符查找操作码(String 助记符) {
+    return 按助记符分组操作码.get(助记符.toUpperCase());
+  }
 
   public static List<操作码元数据类> 提取操作码信息() {
     return 提取操作码信息(操作码元数据路径);
