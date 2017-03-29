@@ -65,7 +65,7 @@ public class 指令类 {
       立即数 = 立即数.substring(2);
     } else {
       // TODO: 不支持变量名
-      if (操作数元数据类.isNumeric(立即数)) {
+      if (操作数元数据类.为数值(立即数)) {
         立即数 = Long.toHexString(Long.parseLong(立即数));
       } else {
         return 二进制码;

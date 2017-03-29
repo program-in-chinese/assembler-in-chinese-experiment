@@ -103,7 +103,7 @@ public class 操作数元数据类 {
       } else if (强制类型.equals("byte")) {
         return 为寄存器 ? 单字节寄存器 : 立即数8_有符号;
       }
-    } else if (isNumeric(操作数)) {
+    } else if (为数值(操作数)) {
       long 数值 = Long.parseLong(操作数);
       // TODO: 数值有误
       return 数值 > 4294967295L ? 立即数64 : 数值 > 255 ? 立即数32 : 立即数8_有符号;
@@ -123,8 +123,11 @@ public class 操作数元数据类 {
     return 不确定;
   }
 
-  public static boolean isNumeric(String s) {
-    return s.matches("[-+]?\\d*\\.?\\d+");
+  /**
+   * 正负十进制数,不包含小数点
+   */
+  public static boolean 为数值(String 字符串) {
+    return 字符串.matches("[-+]?\\d+");
   }
 
   @Override
