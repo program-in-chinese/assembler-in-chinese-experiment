@@ -69,14 +69,19 @@ public class 代码行类 {
       return null;
     } else if (操作码元数据.size() > 1) {
       List<操作码元数据类> 专用操作码 = 取专用操作码(操作码元数据);
-      if (专用操作码.size() != 1) {
-        System.out.println("无法确定操作码. " + 操作码元数据.size() + "选项: "
+      if (专用操作码.size() > 1) {
+        System.out.println(操作码元数据.size() + "个匹配的操作码: "
             + 操作码元数据.stream().map(操作码元数据类::toString).collect(Collectors.joining(", ")));
-        return null;
-      } else {
+        // TODO: 暂时取第一个匹配的专用操作数,无任何优先
         return 专用操作码.get(0);
+      } else if (专用操作码.size() == 1) {
+        return 专用操作码.get(0);
+      } else {
+        // TODO: 暂时取第一个匹配的操作数,无任何优先
+        return 操作码元数据.get(0);
       }
     } else {
+      // TODO: shl rax, 5 有c1中两种格式,扩展码为4/6. 在确定区别之前,暂时取第一个
       return 操作码元数据.get(0);
     }
   }

@@ -5,15 +5,10 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.junit.Test;
 
-import cn.org.assembler.分析器类;
-import cn.org.assembler.utils.指令元数据类;
-import cn.org.assembler.utils.指令格式类;
-import cn.org.assembler.utils.操作数元数据类;
-import cn.org.assembler.utils.操作码元数据处理类;
-import cn.org.assembler.utils.操作码元数据类;
 import cn.org.assembler.模型.指令类;
 
 public class 操作码元数据处理测试类 {
@@ -105,6 +100,16 @@ public class 操作码元数据处理测试类 {
 
               正确操作符计数++;
             }
+            if (某指令元数据.扩展码 == -1
+                && 指令类.生成操作码(元数据.值).equals("02")
+                && 某格式.助记符.equals("LAR")
+                && 某格式.操作数.size() == 2
+                && Objects.equals(new 操作数元数据类(false, 操作数元数据类.类型16_32_64,
+                    操作数元数据类.寻址方式_寄存器_ModRM_reg_通用寄存器, null), 某格式.操作数.get(0))
+                && Objects.equals(new 操作数元数据类(true, 操作数元数据类.类型16_32,
+                    操作数元数据类.寻址方式_寄存器_ModRM_mod_通用寄存器, null), 某格式.操作数.get(1))) {
+              正确操作符计数++;
+            }
             // TODO: 确认是否有用
             if (某格式.操作数.size() == 0) {
               // 调试输出("无目标操作数的操作码: ", 元数据);
@@ -114,7 +119,7 @@ public class 操作码元数据处理测试类 {
 
       }
     }
-    assertEquals(5, 正确操作符计数);
+    assertEquals(6, 正确操作符计数);
   }
 
   private void 调试输出(String 前缀, 操作码元数据类 元数据) {
