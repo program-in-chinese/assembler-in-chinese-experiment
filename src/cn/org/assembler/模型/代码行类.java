@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import cn.org.assembler.分析器类;
 import cn.org.assembler.utils.指令元数据类;
+import cn.org.assembler.utils.指令格式类;
 import cn.org.assembler.utils.操作数元数据类;
 import cn.org.assembler.utils.操作码元数据类;
 
@@ -72,18 +73,34 @@ public class 代码行类 {
       if (专用操作码.size() > 1) {
         System.out.println(操作码元数据.size() + "个匹配的操作码: "
             + 操作码元数据.stream().map(操作码元数据类::toString).collect(Collectors.joining(", ")));
-        // TODO: 暂时取第一个匹配的专用操作数,无任何优先
-        return 专用操作码.get(0);
+        return 选取最佳操作码(专用操作码);
       } else if (专用操作码.size() == 1) {
         return 专用操作码.get(0);
       } else {
-        // TODO: 暂时取第一个匹配的操作数,无任何优先
-        return 操作码元数据.get(0);
+        return 选取最佳操作码(操作码元数据);
       }
     } else {
       // TODO: shl rax, 5 有c1中两种格式,扩展码为4/6. 在确定区别之前,暂时取第一个
       return 操作码元数据.get(0);
     }
+  }
+
+  private 操作码元数据类 选取最佳操作码(List<操作码元数据类> 操作码元数据) {
+    for (操作码元数据类 某操作码元数据 : 操作码元数据) {
+      for (指令元数据类 指令元数据 : 某操作码元数据.指令元数据) {
+        for (指令格式类 格式 : 指令元数据.格式) {
+          // TODO: 假设有一个操作数
+          操作数元数据类 操作数类型 = 格式.操作数.get(0);
+          // 返回第一个不需mod位的
+          if (!(操作数类型.寻址方式.equals(操作数元数据类.寻址方式_寄存器_ModRM)
+              || 操作数类型.寻址方式.equals(操作数元数据类.寻址方式_寄存器_ModRM_mod_通用寄存器) 
+              || 操作数类型.寻址方式.equals(操作数元数据类.寻址方式_寄存器_ModRM_reg_通用寄存器))) {
+            return 某操作码元数据;
+          }
+        }
+      }
+    }
+    return 操作码元数据.get(0);
   }
 
   public int 取有效操作码长度() {
