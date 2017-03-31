@@ -21,6 +21,8 @@ public class 代码行测试类 {
     assertEquals("mov", 代码行.助记符);
     代码行 = 代码行类.分析("xchg ax, ax");
     assertEquals("xchg", 代码行.助记符);
+    代码行 = 代码行类.分析("lar ax, bx");
+    assertEquals("lar", 代码行.助记符);
   }
 
   @Test
@@ -60,7 +62,7 @@ public class 代码行测试类 {
               比较中止 = true;
             }
           } else {
-            System.out.println(单行);
+            //System.out.println(单行);
             比较中止 = true;
           }
 

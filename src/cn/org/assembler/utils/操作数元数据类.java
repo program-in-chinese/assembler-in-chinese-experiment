@@ -20,10 +20,13 @@ public class 操作数元数据类 {
   public static final String 类型8 = "b";
   public static final String 类型8_有符号 = "bs";
   public static final String 类型16 = "w";
-  public static final String 类型16_32 = "vds";
+  public static final String 类型16_32 = "v";
+  public static final String 类型16_32_可扩展到64 = "vds";
   public static final String 类型16_32_64 = "vqp";
 
   public static final String 寻址方式_寄存器_ModRM = "E";
+  public static final String 寻址方式_寄存器_ModRM_reg_通用寄存器 = "G";
+  public static final String 寻址方式_寄存器_ModRM_mod_通用寄存器 = "R";
   public static final String 寻址方式_寄存器 = "Z";
   public static final String 寻址方式_立即数 = "I";
 
@@ -38,7 +41,7 @@ public class 操作数元数据类 {
     单字立即数.类型 = 类型16;
 
     立即数32.寻址方式 = 寻址方式_立即数;
-    立即数32.类型 = 类型16_32;
+    立即数32.类型 = 类型16_32_可扩展到64;
 
     立即数64.寻址方式 = 寻址方式_立即数;
     立即数64.类型 = 类型16_32_64;
@@ -47,7 +50,7 @@ public class 操作数元数据类 {
     立即数8_有符号.类型 = 类型8_有符号;
 
     寄存器64.类型 = 类型16_32_64;
-    双字寄存器.类型 = 类型16_32;
+    双字寄存器.类型 = 类型16_32_可扩展到64;
     单字寄存器.类型 = 类型16;
     单字节寄存器.类型 = 类型8;
   }
@@ -70,7 +73,7 @@ public class 操作数元数据类 {
   }
 
   public int 取位数() {
-    return 类型.equals(类型8) || 类型.equals(类型8) ? 8 : 类型.equals(类型16) ? 16 : 类型.equals(类型16_32) ? 32 : 64;
+    return 类型.equals(类型8) || 类型.equals(类型8) ? 8 : 类型.equals(类型16) ? 16 : 类型.equals(类型16_32_可扩展到64) ? 32 : 64;
   }
 
   // TODO: 仅作演示用. 需更精细的模式匹配

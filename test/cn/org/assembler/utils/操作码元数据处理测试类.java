@@ -69,7 +69,7 @@ public class 操作码元数据处理测试类 {
               assertEquals(2, 操作数.size());
 
               assertEquals(new 操作数元数据类(false, 操作数元数据类.类型16_32_64, "rAX", null), 操作数.get(0));
-              assertEquals(new 操作数元数据类(true, 操作数元数据类.类型16_32, 操作数元数据类.寻址方式_立即数, null), 操作数.get(1));
+              assertEquals(new 操作数元数据类(true, 操作数元数据类.类型16_32_可扩展到64, 操作数元数据类.寻址方式_立即数, null), 操作数.get(1));
 
               正确操作符计数++;
             }
@@ -79,7 +79,7 @@ public class 操作码元数据处理测试类 {
               assertEquals(2, 操作数.size());
 
               assertEquals(new 操作数元数据类(false, 操作数元数据类.类型16_32_64, "rAX", null), 操作数.get(0));
-              assertEquals(new 操作数元数据类(true, 操作数元数据类.类型16_32, 操作数元数据类.寻址方式_立即数, null), 操作数.get(1));
+              assertEquals(new 操作数元数据类(true, 操作数元数据类.类型16_32_可扩展到64, 操作数元数据类.寻址方式_立即数, null), 操作数.get(1));
 
               正确操作符计数++;
             }
@@ -90,7 +90,7 @@ public class 操作码元数据处理测试类 {
 
               assertEquals(new 操作数元数据类(false, 操作数元数据类.类型16_32_64, 操作数元数据类.寻址方式_寄存器_ModRM, null),
                   操作数.get(0));
-              assertEquals(new 操作数元数据类(true, 操作数元数据类.类型16_32, 操作数元数据类.寻址方式_立即数, null), 操作数.get(1));
+              assertEquals(new 操作数元数据类(true, 操作数元数据类.类型16_32_可扩展到64, 操作数元数据类.寻址方式_立即数, null), 操作数.get(1));
 
               正确操作符计数++;
             }
@@ -101,7 +101,7 @@ public class 操作码元数据处理测试类 {
 
               assertEquals(new 操作数元数据类(false, 操作数元数据类.类型16_32_64, 操作数元数据类.寻址方式_寄存器_ModRM, null),
                   操作数.get(0));
-              assertEquals(new 操作数元数据类(true, 操作数元数据类.类型16_32, 操作数元数据类.寻址方式_立即数, null), 操作数.get(1));
+              assertEquals(new 操作数元数据类(true, 操作数元数据类.类型16_32_可扩展到64, 操作数元数据类.寻址方式_立即数, null), 操作数.get(1));
 
               正确操作符计数++;
             }
