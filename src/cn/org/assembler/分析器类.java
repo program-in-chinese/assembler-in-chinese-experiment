@@ -61,7 +61,11 @@ public class 分析器类 {
       String 寄存器名 = 目标操作数类型.寻址方式.substring(1);
       return 待匹配操作数.equalsIgnoreCase(寄存器名) || 待匹配操作数.substring(1).equalsIgnoreCase(寄存器名);
     } else {
-      return Objects.equals(待匹配操作数类型, 目标操作数类型) || 待匹配操作数类型.匹配(目标操作数类型);
-    }
+      if( Objects.equals(待匹配操作数类型, 目标操作数类型) || 待匹配操作数类型.匹配(目标操作数类型)) {
+        return true;
+      } else {
+        return 待匹配操作数.equals(目标操作数类型.显式名称);
+      }
+    } 
   }
 }
