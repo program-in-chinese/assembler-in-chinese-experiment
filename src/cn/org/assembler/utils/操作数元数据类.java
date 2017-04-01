@@ -1,6 +1,8 @@
 package cn.org.assembler.utils;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import cn.org.assembler.constants.寄存器常量;
 
@@ -29,8 +31,15 @@ public class 操作数元数据类 {
   public static final String 寻址方式_寄存器_ModRM_mod_通用寄存器 = "R";
   public static final String 寻址方式_寄存器 = "Z";
   public static final String 寻址方式_立即数 = "I";
+  
+  private static final Set<String> 寄存器寻址方式 = new HashSet<>();
 
   static {
+    寄存器寻址方式.add(寻址方式_寄存器);
+    寄存器寻址方式.add(寻址方式_寄存器_ModRM);
+    寄存器寻址方式.add(寻址方式_寄存器_ModRM_reg_通用寄存器);
+    寄存器寻址方式.add(寻址方式_寄存器_ModRM_mod_通用寄存器);
+    
     寄存器64.寻址方式 = 寻址方式_寄存器;
     双字寄存器.寻址方式 = 寻址方式_寄存器;
     单字寄存器.寻址方式 = 寻址方式_寄存器;
@@ -131,6 +140,30 @@ public class 操作数元数据类 {
    */
   public static boolean 为数值(String 字符串) {
     return 字符串.matches("[-+]?\\d+");
+  }
+
+  /**
+   * 将分析得到的操作数类型与指令元数据中的操作数类型进行匹配
+   */
+  public boolean 匹配(操作数元数据类 目标操作数类型) {
+    // 匹配立即数
+    if (Objects.equals(目标操作数类型.寻址方式, 操作数元数据类.寻址方式_立即数)) {
+      return (Objects.equals(寻址方式, 操作数元数据类.寻址方式_立即数)
+      // strict word 5 匹配 Ivds
+      && ((操作数元数据类.类型16.equals(类型) && 操作数元数据类.类型16_32_可扩展到64.equals(目标操作数类型.类型))
+      // 0 匹配 Ib
+      || (操作数元数据类.类型8_有符号.equals(类型) && 操作数元数据类.类型8.equals(目标操作数类型.类型))));
+    } else {
+      boolean 类型匹配 =
+          Objects.equals(类型, 目标操作数类型.类型)
+              || ((操作数元数据类.类型16.equals(类型) || 操作数元数据类.类型16_32_可扩展到64.equals(类型)) 
+                  && 操作数元数据类.类型16_32_64.equals(目标操作数类型.类型))
+              || (操作数元数据类.类型16.equals(类型) && 操作数元数据类.类型16_32.equals(目标操作数类型.类型));
+      boolean 寻址方式匹配 =
+          Objects.equals(寻址方式, 目标操作数类型.寻址方式)
+              || (操作数元数据类.寻址方式_寄存器.equals(寻址方式) && 寄存器寻址方式.contains(目标操作数类型.寻址方式));
+      return 寻址方式匹配 && 类型匹配;
+    }
   }
 
   @Override
