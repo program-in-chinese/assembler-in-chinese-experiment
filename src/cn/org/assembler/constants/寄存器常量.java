@@ -70,8 +70,6 @@ public class 寄存器常量 {
       return 操作数元数据类.单字寄存器;
     } else if (单字节寄存器.contains(寄存器名)) {
       return 操作数元数据类.单字节寄存器;
-    } else if (取寄存器码(寄存器名) != null) {
-      return 操作数元数据类.寄存器;
     }
     return 操作数元数据类.不确定;
   }

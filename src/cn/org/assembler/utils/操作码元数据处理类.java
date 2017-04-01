@@ -112,14 +112,22 @@ public class 操作码元数据处理类 {
     for (Node 节点: 目标操作数节点) {
       String 寻址方式 = 取首子节点值(节点, "a");
       String 类型 = 取首子节点值(节点, "t");
+      String 显式名称 = null;
       
-      // 处理: <dst nr="0" group="gen" type="b">AL</dst>
       if (类型 == null && 寻址方式 == null) {
-        寻址方式 = 节点.getTextContent();
-        Node 类型节点 = 节点.getAttributes().getNamedItem("type");
-        类型 = 类型节点 == null ? null : 类型节点.getNodeValue();
+        // <src address="I">1</src>
+        Node 类型节点 = 节点.getAttributes().getNamedItem("address");
+        if (类型节点 != null) {
+          显式名称 = 节点.getTextContent();
+          寻址方式 = 类型节点.getNodeValue();
+        } else {
+          // 处理: <dst nr="0" group="gen" type="b">AL</dst>
+          类型节点 = 节点.getAttributes().getNamedItem("type");
+          寻址方式 = 节点.getTextContent();
+          类型 = 类型节点 == null ? null : 类型节点.getNodeValue();
+        }
       }
-      操作数元数据表.add(new 操作数元数据类(操作数标签.equals(源操作数标签), 类型, 寻址方式, null));
+      操作数元数据表.add(new 操作数元数据类(操作数标签.equals(源操作数标签), 类型, 寻址方式, 显式名称));
     }
     return 操作数元数据表;
   }

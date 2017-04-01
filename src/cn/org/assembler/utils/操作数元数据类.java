@@ -70,7 +70,7 @@ public class 操作数元数据类 {
   public String 类型; // 16/32/64
   public String 寻址方式; // 寄存器/立即数/内存
 
-  public String 显式名称;
+  public String 显式名称; // 如: <src address="I">1</src>
 
   public 操作数元数据类() {}
 
