@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import cn.org.assembler.utils.操作数元数据类;
+
 public class 寄存器常量 {
 
   private static final String 四字寄存器前缀 = "R";
@@ -58,36 +60,21 @@ public class 寄存器常量 {
         单字节SI寄存器名, 单字节目标地址寄存器名));
   }
 
-  /**
-   * @param 寄存器名 不区分大小写
-   */
-  public static boolean 为四字寄存器(String 寄存器名) {
+  public static 操作数元数据类 取寄存器类型(String 寄存器名) {
     寄存器名 = 寄存器名.toUpperCase();
-    return 寄存器名.startsWith(四字寄存器前缀) && 单字寄存器.contains(寄存器名.substring(1));
+    if (寄存器名.startsWith(四字寄存器前缀) && 单字寄存器.contains(寄存器名.substring(1))) {
+      return 操作数元数据类.寄存器64;
+    } else if (寄存器名.startsWith(双字寄存器前缀) && 单字寄存器.contains(寄存器名.substring(1))) {
+      return 操作数元数据类.双字寄存器;
+    } else if (单字寄存器.contains(寄存器名)) {
+      return 操作数元数据类.单字寄存器;
+    } else if (单字节寄存器.contains(寄存器名)) {
+      return 操作数元数据类.单字节寄存器;
+    } else if (取寄存器码(寄存器名) != null) {
+      return 操作数元数据类.寄存器;
+    }
+    return 操作数元数据类.不确定;
   }
-
-  /**
-   * @param 寄存器名 不区分大小写
-   */
-  public static boolean 为双字寄存器(String 寄存器名) {
-    寄存器名 = 寄存器名.toUpperCase();
-    return 寄存器名.startsWith(双字寄存器前缀) && 单字寄存器.contains(寄存器名.substring(1));
-  }
-
-  /**
-   * @param 寄存器名 不区分大小写
-   */
-  public static boolean 为单字寄存器(String 寄存器名) {
-    return 单字寄存器.contains(寄存器名.toUpperCase());
-  }
-
-  /**
-   * @param 寄存器名 不区分大小写
-   */
-  public static boolean 为单字节寄存器(String 寄存器名) {
-    return 单字节寄存器.contains(寄存器名.toUpperCase());
-  }
-
   /**
    * @param 寄存器名 不区分大小写
    */
