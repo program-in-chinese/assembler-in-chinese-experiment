@@ -31,8 +31,8 @@ public class 代码行类 {
       return 代码行;
     }
     String 操作符格式 = "[A-Za-z]+";
-    String 操作数1格式 = "[A-Za-z\\s]+";
-    String 操作数2格式 = "[\\-A-Za-z0-9\\s]+";
+    String 操作数1格式 = "[A-Za-z0-9\\s\\[\\]]+";
+    String 操作数2格式 = "[\\-A-Za-z0-9\\s\\[\\]]+";
     Pattern 格式 =
         Pattern.compile("^(" + 操作符格式 + ")\\s+(" + 操作数1格式 + "),\\s*(" + 操作数2格式 + ")$");
     Matcher 匹配器 = 格式.matcher(行);

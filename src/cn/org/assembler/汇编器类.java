@@ -48,12 +48,20 @@ public class 汇编器类 {
         指令.set操作码(操作码.值);
 
         指令.modRM = new ModRM();
-        指令.modRM.mod = 0b11;
-        // 有扩展码时,赋值给modRM的reg部分
-        if (!操作码.指令元数据.get(0).无扩展码()) {
-          指令.modRM.reg = 操作码.指令元数据.get(0).扩展码;
+        // TODO: 避免重复词法分析
+        if (操作数1.startsWith("[") && 操作数1.endsWith("]")) {
+          指令.modRM.mod = 0b00;
+          操作数1 = 操作数1.substring(1, 操作数1.length() - 1);
+          // TODO: 仅支持直接寻址
+          指令.modRM.rm = 0b110;
+        } else {
+          指令.modRM.mod = 0b11;
+          // 有扩展码时,赋值给modRM的reg部分
+          if (!操作码.指令元数据.get(0).无扩展码()) {
+            指令.modRM.reg = 操作码.指令元数据.get(0).扩展码;
+          }
+          指令.modRM.rm = 寄存器常量.取寄存器码(操作数1);
         }
-        指令.modRM.rm = 寄存器常量.取寄存器码(操作数1);
         指令.模式 = 代码行.操作数1类型.取位数();
         break;
       default:

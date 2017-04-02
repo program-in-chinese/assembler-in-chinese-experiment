@@ -23,6 +23,8 @@ public class 代码行测试类 {
     assertEquals("xchg", 代码行.助记符);
     代码行 = 代码行类.分析("lar ax, bx");
     assertEquals("lar", 代码行.助记符);
+    代码行 = 代码行类.分析("mov byte [0], 0");
+    assertEquals("mov", 代码行.助记符);
   }
 
   @Test
