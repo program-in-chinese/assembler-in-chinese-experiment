@@ -13,7 +13,7 @@ public class 指令类 {
   public String 操作码;
 
   public ModRM modRM;
-  // SIB
+  public SIB sib;
 
   public String displacement;
   public String 立即数;
@@ -32,6 +32,9 @@ public class 指令类 {
     }
     if (modRM != null) {
       二进制码.add(modRM.生成二进制码());
+    }
+    if (sib != null) {
+      二进制码.add(sib.生成二进制码());
     }
     if (立即数 != null && 立即数类型 != null) {
       int 立即数位数 = 立即数类型.equals(操作数元数据类.立即数8_有符号) ? 8 : 立即数类型.equals(操作数元数据类.单字立即数) ? 16

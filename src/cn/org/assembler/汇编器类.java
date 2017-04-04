@@ -7,6 +7,7 @@ import cn.org.assembler.constants.寄存器常量;
 import cn.org.assembler.utils.操作数元数据类;
 import cn.org.assembler.utils.操作码元数据类;
 import cn.org.assembler.模型.ModRM;
+import cn.org.assembler.模型.SIB;
 import cn.org.assembler.模型.代码行类;
 import cn.org.assembler.模型.指令类;
 
@@ -54,6 +55,8 @@ public class 汇编器类 {
           操作数1 = 操作数1.substring(1, 操作数1.length() - 1);
           // TODO: 仅支持直接寻址
           指令.modRM.rm = 0b110;
+          
+          指令.sib = new SIB();
         } else {
           指令.modRM.mod = 0b11;
           // 有扩展码时,赋值给modRM的reg部分
