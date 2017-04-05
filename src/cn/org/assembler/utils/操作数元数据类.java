@@ -86,7 +86,7 @@ public class 操作数元数据类 {
   }
 
   public int 取位数() {
-    return 类型.equals(类型8) || 类型.equals(类型8) ? 8 : 类型.equals(类型16) ? 16 : 类型.equals(类型16_32_可扩展到64) ? 32 : 64;
+    return 类型.equals(类型8) || 类型.equals(类型8_有符号) ? 8 : 类型.equals(类型16) ? 16 : 类型.equals(类型16_32_可扩展到64) ? 32 : 64;
   }
 
   // TODO: 仅作演示用. 需更精细的模式匹配

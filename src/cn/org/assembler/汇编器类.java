@@ -55,7 +55,8 @@ public class 汇编器类 {
           操作数1 = 操作数1.substring(1, 操作数1.length() - 1);
           // TODO: 仅支持直接寻址
           指令.modRM.rm = 0b110;
-          
+          指令.displacement = 操作数1;
+          指令.displacement类型 = 代码行.操作数1类型;
           指令.sib = new SIB();
         } else {
           指令.modRM.mod = 0b11;

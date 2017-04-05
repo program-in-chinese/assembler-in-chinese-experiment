@@ -16,6 +16,7 @@ public class 指令类 {
   public SIB sib;
 
   public String displacement;
+  public 操作数元数据类 displacement类型;
   public String 立即数;
   public 操作数元数据类 立即数类型;
   
@@ -36,9 +37,11 @@ public class 指令类 {
     if (sib != null) {
       二进制码.add(sib.生成二进制码());
     }
+    if (displacement !=null) {
+      二进制码.addAll(生成二进制码(displacement, displacement类型.取位数()));
+    }
     if (立即数 != null && 立即数类型 != null) {
-      int 立即数位数 = 立即数类型.equals(操作数元数据类.立即数8_有符号) ? 8 : 立即数类型.equals(操作数元数据类.单字立即数) ? 16
-          : 立即数类型.equals(操作数元数据类.立即数32) ? 32 : 64;
+      int 立即数位数 = 立即数类型.取位数();
       // TODO: 待考证 - 64模式下, 只支持32/64两种立即数位数?
       if (立即数位数 == 16 && 模式 == 64) {
         立即数位数 = 32;
