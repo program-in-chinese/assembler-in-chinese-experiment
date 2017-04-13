@@ -120,6 +120,9 @@ public class 操作数元数据类 {
       } else if (强制类型.equals("byte")) {
         return 为寄存器 ? 单字节寄存器 : 为内存 ? 单字节内存 : 立即数8_有符号;
       }
+    } // TODO: 避免与上重复
+      else if (操作数.startsWith("[") && 操作数.endsWith("]")) {
+        return 单字节内存;
     } else if (为数值(操作数)) {
       long 数值 = Long.parseLong(操作数);
       // TODO: 数值有误
