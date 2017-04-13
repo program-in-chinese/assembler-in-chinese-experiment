@@ -18,6 +18,7 @@ public class 操作数元数据类 {
   public static final 操作数元数据类 单字立即数 = new 操作数元数据类();
   public static final 操作数元数据类 立即数8_有符号 = new 操作数元数据类();
   public static final 操作数元数据类 单字节内存 = new 操作数元数据类();
+  public static final 操作数元数据类 内存 = new 操作数元数据类();
   public static final 操作数元数据类 不确定 = new 操作数元数据类();
 
   public static final String 类型8 = "b";
@@ -66,6 +67,8 @@ public class 操作数元数据类 {
     
     单字节内存.寻址方式 = 寻址方式_寄存器_ModRM;
     单字节内存.类型 = 类型8;
+    
+    内存.寻址方式 = 寻址方式_寄存器_ModRM;
   }
 
   public boolean 为源;
@@ -122,7 +125,7 @@ public class 操作数元数据类 {
       }
     } // TODO: 避免与上重复
       else if (操作数.startsWith("[") && 操作数.endsWith("]")) {
-        return 单字节内存;
+        return 内存;
     } else if (为数值(操作数)) {
       long 数值 = Long.parseLong(操作数);
       // TODO: 数值有误
