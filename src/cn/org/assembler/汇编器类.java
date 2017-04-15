@@ -14,9 +14,14 @@ import cn.org.assembler.模型.指令类;
 public class 汇编器类 {
 
   // TODO: 添加intel指令文档(包含版本号)中的对应章节号,方便查询
+  /**
+   * vol2, 2.1.1 group 3. Operand-size override prefix is encoded using 66H (66H is also used as a
+   * mandatory prefix for some instructions).
+   */
   public static List<String> 指令汇编(代码行类 代码行, int 默认操作数长度) {
     List<String> 二进制码 = 汇编器类.指令汇编(代码行);
-    if (默认操作数长度 == 64 && 代码行.取有效操作码长度() == 16) {
+    int 有效操作码长度 = 代码行.取有效操作码长度();
+    if (默认操作数长度 != 有效操作码长度 && 有效操作码长度 != 8) {
       二进制码.add(0, "66");
     }
     return 二进制码;
