@@ -18,6 +18,8 @@ public class 操作数元数据类 {
   public static final 操作数元数据类 单字立即数 = new 操作数元数据类();
   public static final 操作数元数据类 立即数8_有符号 = new 操作数元数据类();
   public static final 操作数元数据类 单字节内存 = new 操作数元数据类();
+  public static final 操作数元数据类 单字内存 = new 操作数元数据类();
+  public static final 操作数元数据类 双字内存 = new 操作数元数据类();
   public static final 操作数元数据类 内存 = new 操作数元数据类();
   public static final 操作数元数据类 不确定 = new 操作数元数据类();
 
@@ -67,6 +69,10 @@ public class 操作数元数据类 {
     
     单字节内存.寻址方式 = 寻址方式_寄存器_ModRM;
     单字节内存.类型 = 类型8;
+    单字内存.寻址方式 = 寻址方式_寄存器_ModRM;
+    单字内存.类型 = 类型16;
+    双字内存.寻址方式 = 寻址方式_寄存器_ModRM;
+    双字内存.类型 = 类型16_32_可扩展到64;
     
     内存.寻址方式 = 寻址方式_寄存器_ModRM;
   }
@@ -117,9 +123,9 @@ public class 操作数元数据类 {
       boolean 为寄存器 = 寄存器常量.取寄存器码(操作对象) != null;
       boolean 为内存 = 操作对象.startsWith("[") && 操作对象.endsWith("]");
       if (强制类型.equals("dword")) {
-        return 为寄存器 ? 双字寄存器 : 立即数32;
+        return 为寄存器 ? 双字寄存器 : 为内存 ? 双字内存 : 立即数32;
       } else if (强制类型.equals("word")) {
-        return 为寄存器 ? 单字寄存器 : 单字立即数;
+        return 为寄存器 ? 单字寄存器 : 为内存 ? 单字内存 : 单字立即数;
       } else if (强制类型.equals("byte")) {
         return 为寄存器 ? 单字节寄存器 : 为内存 ? 单字节内存 : 立即数8_有符号;
       }
