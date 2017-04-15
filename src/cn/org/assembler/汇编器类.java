@@ -56,7 +56,8 @@ public class 汇编器类 {
           // TODO: 仅支持直接寻址
           指令.modRM.rm = 0b110;
           指令.displacement = 操作数1;
-          指令.displacement类型 = 代码行.操作数1类型;
+          // TODO: 确认displacement是否允许超过单字节
+          指令.displacement类型 = 操作数元数据类.单字节内存;
           指令.sib = new SIB();
         } else {
           指令.modRM.mod = 0b11;
