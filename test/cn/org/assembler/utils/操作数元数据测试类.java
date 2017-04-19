@@ -16,6 +16,7 @@ public class 操作数元数据测试类 {
     assertTrue(操作数元数据类.单字节寄存器.equals(操作数元数据类.取操作数类型("al")));
     assertTrue(操作数元数据类.单字节寄存器.equals(操作数元数据类.取操作数类型("byte al")));
     assertTrue(操作数元数据类.单字节内存.equals(操作数元数据类.取操作数类型("byte [0]")));
+    assertTrue(操作数元数据类.立即数8_有符号.equals(操作数元数据类.取操作数类型("1h")));
   }
 
 }

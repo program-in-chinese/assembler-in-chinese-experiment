@@ -131,8 +131,4 @@ public class 操作码元数据处理测试类 {
     }
     assertEquals(7, 正确操作符计数);
   }
-
-  private void 调试输出(String 前缀, 操作码元数据类 元数据) {
-    System.out.println(前缀 + Integer.toHexString(元数据.值) + " " + 元数据.操作码字节数 + "字节");
-  }
 }

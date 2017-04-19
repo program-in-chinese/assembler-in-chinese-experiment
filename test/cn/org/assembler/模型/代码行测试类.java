@@ -28,6 +28,7 @@ public class 代码行测试类 {
     assertEquals("mov", 代码行类.分析("mov [0], word 0").助记符);
     assertEquals("mov", 代码行类.分析("mov dword [0], dword 0").助记符);
     assertEquals("mov", 代码行类.分析("mov eax, 0").助记符);
+    assertEquals("mov", 代码行类.分析("mov bx, 1h").助记符);
   }
 
   @Test

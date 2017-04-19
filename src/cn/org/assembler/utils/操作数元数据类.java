@@ -98,12 +98,13 @@ public class 操作数元数据类 {
     return 类型.equals(类型8) || 类型.equals(类型8_有符号) ? 8 : 类型.equals(类型16) ? 16 : 类型.equals(类型16_32_可扩展到64) ? 32 : 64;
   }
 
-  // TODO: 仅作演示用. 需更精细的模式匹配
   public static 操作数元数据类 取操作数类型(String 操作数) {
-    if (操作数.startsWith("0x")) {
-      long 数值 = Long.parseLong(操作数.substring(2), 16);
-      return 数值 > 4294967295L ? 立即数64 : (数值 > 32767 || 数值 < -32768) ? 立即数32
-          : (数值 > 127 || 数值 < -128) ? 单字立即数 : 立即数8_有符号;
+    if (为数值(操作数)) {
+      return 取操作数类型(Long.parseLong(操作数));
+    } else if (操作数.startsWith("0x")) {
+      return 取操作数类型(Long.parseLong(操作数.substring(2), 16));
+    } else if (操作数.endsWith("h") && 为数值(操作数.substring(0, 操作数.length() - 1))) {
+      return 取操作数类型(Long.parseLong(操作数.substring(0, 操作数.length() - 1), 16));
     }
     // TODO: 支持空格之外的间隔符
     else if (操作数.indexOf(" ") > 0) {
@@ -132,10 +133,6 @@ public class 操作数元数据类 {
     } // TODO: 避免与上重复
       else if (操作数.startsWith("[") && 操作数.endsWith("]")) {
         return 内存;
-    } else if (为数值(操作数)) {
-      long 数值 = Long.parseLong(操作数);
-      // TODO: 数值有误
-      return 数值 > 4294967295L ? 立即数64 : 数值 > 255 ? 立即数32 : 立即数8_有符号;
     } else {
       return 寄存器常量.取寄存器类型(操作数);
     }
@@ -184,4 +181,8 @@ public class 操作数元数据类 {
         && Objects.equals(寻址方式, ((操作数元数据类) 对象).寻址方式);
   }
 
+  private static 操作数元数据类 取操作数类型(long 数值) {
+    return 数值 > 4294967295L ? 立即数64 : (数值 > 32767 || 数值 < -32768) ? 立即数32
+        : (数值 > 127 || 数值 < -128) ? 单字立即数 : 立即数8_有符号;
+  }
 }
