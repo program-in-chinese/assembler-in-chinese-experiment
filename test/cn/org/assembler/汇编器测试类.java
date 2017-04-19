@@ -29,6 +29,8 @@ public class 汇编器测试类 {
     验证二进制码("mov byte [0], 0", Arrays.asList("c6", "06", "00", "00", "00"));
     验证二进制码("mov [0], word 0", Arrays.asList("c7", "06", "00", "00", "00", "00"));
     验证二进制码("mov eax, 0", 16, Arrays.asList("66", "b8", "00", "00", "00", "00"));
+    验证二进制码("mov bx, 1h", Arrays.asList("bb", "01", "00"));
+    //验证二进制码("mov cr0, eax", Arrays.asList("0f", "22", "c0"));
     //验证二进制码("lar ax, bx", Arrays.asList("0f", "02", "c3"));
     
     // 强制操作数长度

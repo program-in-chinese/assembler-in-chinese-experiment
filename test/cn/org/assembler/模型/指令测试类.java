@@ -20,6 +20,7 @@ public class 指令测试类 {
     assertEquals(Arrays.asList("80"), 指令类.生成二进制码("-128", 8));
     assertEquals(Arrays.asList("80", "ff"), 指令类.生成二进制码("-128", 16));
     assertEquals(Arrays.asList("00"), 指令类.生成二进制码("0", 8));
+    assertEquals(Arrays.asList("01", "00"), 指令类.生成二进制码("1h", 16));
   }
 
 }
