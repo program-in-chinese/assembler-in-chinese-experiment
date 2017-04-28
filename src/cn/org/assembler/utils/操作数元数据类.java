@@ -192,7 +192,7 @@ public class 操作数元数据类 {
     int 位数 = 待操作数信息.位数;
     操作数类型 待操作数类型 = 待操作数信息.类型;
  // 匹配立即数
-    if (Objects.equals(寻址方式, 操作数元数据类.寻址方式_立即数)) {
+    if (Objects.equals(寻址方式, 操作数元数据类.寻址方式_立即数) && 类型 != null) {
       return (Objects.equals(待操作数类型, 操作数类型.立即数)
       // strict word 5 匹配 Ivds
       && (位数 == 取位数()
@@ -204,7 +204,8 @@ public class 操作数元数据类 {
               // 0 匹配 Ivqp
               || 操作数元数据类.类型16_32_64.equals(类型)))
       || (位数 == 32 && 操作数元数据类.类型16_32_64.equals(类型))));
-    } else if (操作数类型.寄存器.equals(待操作数类型) && 寄存器寻址方式.contains(寻址方式)){
+    } else if ((操作数类型.内存.equals(待操作数类型) && 寻址方式_寄存器_ModRM.equals(寻址方式)) 
+        || (操作数类型.寄存器.equals(待操作数类型) && 寄存器寻址方式.contains(寻址方式))){
       return 位数 <= 取位数();
     } else {
       return Objects.equals(待操作数信息.值, 显式名称);
