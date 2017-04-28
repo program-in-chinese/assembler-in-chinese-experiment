@@ -2,7 +2,6 @@ package cn.org.assembler;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import cn.org.assembler.utils.指令元数据类;
 import cn.org.assembler.utils.指令格式类;
@@ -49,28 +48,15 @@ public class 分析器类 {
     return 操作码元数据;
   }
 
-  public static boolean 操作数类型匹配(String 待匹配操作数, 操作数元数据类 待匹配操作数类型, 操作数元数据类 目标操作数类型) {
-/*
- *  A.2.3 Register Codes
- *      When an opcode requires a specific register as an operand, the register is identified by name (for example, AX, CL,
-        or ESI). The name indicates whether the register is 64, 32, 16, or 8 bits wide.
-        A register identifier of the form eXX or rXX is used when register width depends on the operand-size attribute. eXX
-        is used when 16 or 32-bit sizes are possible; rXX is used when 16, 32, or 64-bit sizes are possible.
- */
-    // AX,EAX,RAX - rAX
-    if (目标操作数类型.寻址方式.startsWith("r")) {
-      String 寄存器名 = 目标操作数类型.寻址方式.substring(1);
-      return 待匹配操作数.equalsIgnoreCase(寄存器名) || 待匹配操作数.substring(1).equalsIgnoreCase(寄存器名);
-    } else {
-      if( Objects.equals(待匹配操作数类型, 目标操作数类型) || 待匹配操作数类型.匹配(目标操作数类型)) {
-        return true;
-      } else {
-        return 待匹配操作数.equals(目标操作数类型.显式名称);
-      }
-    } 
-  }
-
   public static boolean 操作数类型匹配(操作数信息 待操作数信息, 操作数元数据类 目标操作数类型) {
+    /*
+     *  A.2.3 Register Codes
+     *      When an opcode requires a specific register as an operand, the register is identified by name (for example, AX, CL,
+            or ESI). The name indicates whether the register is 64, 32, 16, or 8 bits wide.
+            A register identifier of the form eXX or rXX is used when register width depends on the operand-size attribute. eXX
+            is used when 16 or 32-bit sizes are possible; rXX is used when 16, 32, or 64-bit sizes are possible.
+     */
+        // AX,EAX,RAX - rAX
     String 操作数值 = 待操作数信息.值;
     if (目标操作数类型.寻址方式.startsWith("r")) {
       String 寄存器名 = 目标操作数类型.寻址方式.substring(1);

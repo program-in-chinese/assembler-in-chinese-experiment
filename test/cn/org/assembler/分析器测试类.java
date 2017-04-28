@@ -44,12 +44,6 @@ public class 分析器测试类 {
   }
 
   @Test
-  public void 匹配操作数类型() {
-    assertTrue(分析器类.操作数类型匹配("rax", 操作数元数据类.寄存器64, new 操作数元数据类(false, "vqs", "rAX", null)));
-    assertTrue(分析器类.操作数类型匹配("ax", 操作数元数据类.单字寄存器, new 操作数元数据类(false, "vqp", "rAX", null)));
-  }
-
-  @Test
   public void 匹配操作数信息() {
     assertTrue(分析器类.操作数类型匹配(new 操作数信息(操作数类型.寄存器, 64, "RAX"), new 操作数元数据类(false, "vqs", "rAX", null)));
     assertTrue(分析器类.操作数类型匹配(new 操作数信息(操作数类型.寄存器, 16, "AX"), new 操作数元数据类(false, "vqp", "rAX", null)));
