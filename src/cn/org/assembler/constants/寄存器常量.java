@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 import cn.org.assembler.utils.操作数元数据类;
+import cn.org.assembler.模型.代码行类.操作数类型;
+import cn.org.assembler.模型.操作数信息;
 
 public class 寄存器常量 {
 
@@ -73,6 +75,26 @@ public class 寄存器常量 {
     }
     return 操作数元数据类.不确定;
   }
+
+  public static 操作数信息 取寄存器信息(String 寄存器名) {
+    寄存器名 = 寄存器名.toUpperCase();
+    操作数信息 信息 = new 操作数信息();
+    信息.类型 = 操作数类型.寄存器;
+    信息.值 = 寄存器名;
+    if (寄存器名.startsWith(四字寄存器前缀) && 单字寄存器.contains(寄存器名.substring(1))) {
+      信息.位数 = 64;
+    } else if (寄存器名.startsWith(双字寄存器前缀) && 单字寄存器.contains(寄存器名.substring(1))) {
+      信息.位数 = 32;
+    } else if (单字寄存器.contains(寄存器名)) {
+      信息.位数 = 16;
+    } else if (单字节寄存器.contains(寄存器名)) {
+      信息.位数 = 8;
+    } else {
+      return null;
+    }
+    return 信息;
+  }
+
   /**
    * @param 寄存器名 不区分大小写
    */

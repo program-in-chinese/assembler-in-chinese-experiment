@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import cn.org.assembler.分析器类;
+import cn.org.assembler.constants.寄存器常量;
 import cn.org.assembler.utils.指令元数据类;
 import cn.org.assembler.utils.指令格式类;
 import cn.org.assembler.utils.操作数元数据类;
@@ -14,14 +15,24 @@ import cn.org.assembler.utils.操作码元数据类;
 
 public class 代码行类 {
 
+  public enum 操作数类型 {
+    立即数,
+    寄存器,
+    内存
+  }
+
   // 只有注释
   public boolean 为空 = false;
   public String 助记符;
 
+  // TODO: 支持2个以外的操作数
   public String 操作数1;
   public String 操作数2;
   public 操作数元数据类 操作数1类型;
   public 操作数元数据类 操作数2类型;
+  
+  public 操作数信息 操作数1信息;
+  public 操作数信息 操作数2信息;
 
   public static 代码行类 分析(String 行) {
     行 = 删除注释(行).trim();
@@ -44,21 +55,33 @@ public class 代码行类 {
       // 语法检查
 
       // TODO: 查找现有助记符,如无匹配,报错
+      操作数信息 操作数2信息 = 取操作数信息(操作数2);
       操作数元数据类 操作数2类型 = 操作数元数据类.取操作数类型(操作数2);
-      if (!操作数2类型.equals(操作数元数据类.不确定)) {
+      if (操作数2信息 != null && !操作数2类型.equals(操作数元数据类.不确定)) {
+        操作数信息 操作数1信息 = 取操作数信息(操作数1);
         操作数元数据类 操作数1类型 = 操作数元数据类.取操作数类型(操作数1);
-        if (!操作数1类型.equals(操作数元数据类.不确定)) {
+        if (操作数1信息 != null && !操作数1类型.equals(操作数元数据类.不确定)) {
           
-          // 如果无法判断类型,如[0], 则采用操作数2的类型
           if(操作数1类型.类型 == null) {
             操作数1类型.类型 = 操作数2类型.类型;
           }
+          
+          // 如果无法判断类型,如[0], 则采用操作数2的类型
+          // TODO: 必需吗?
+          if(操作数1信息.类型 == null) {
+            操作数1信息.类型 = 操作数2信息.类型;
+          }
           代码行类 代码行 = new 代码行类();
           代码行.助记符 = 助记符;
+          
+          // TODO: 操作数信息中已有值, 测试完成后删除
           代码行.操作数1 = 操作数1.lastIndexOf(" ") > 0 ? 操作数1.substring(操作数1.lastIndexOf(" ") + 1) : 操作数1;
           代码行.操作数2 = 操作数2.lastIndexOf(" ") > 0 ? 操作数2.substring(操作数2.lastIndexOf(" ") + 1) : 操作数2;
           代码行.操作数1类型 = 操作数1类型;
           代码行.操作数2类型 = 操作数2类型;
+          
+          代码行.操作数1信息 = 操作数1信息;
+          代码行.操作数2信息 = 操作数2信息;
           return 代码行;
         }
       }
@@ -88,6 +111,70 @@ public class 代码行类 {
       // TODO: shl rax, 5 有c1中两种格式,扩展码为4/6. 在确定区别之前,暂时取第一个
       return 操作码元数据.get(0);
     }
+  }
+
+  public static 操作数信息 取操作数信息(String 操作数) {
+    if (操作数元数据类.为数值(操作数)) {
+      return 取操作数类型(Long.parseLong(操作数));
+    } else if (操作数.startsWith("0x")) {
+      return 取操作数类型(Long.parseLong(操作数.substring(2), 16));
+    } else if (操作数.endsWith("h") && 操作数元数据类.为数值(操作数.substring(0, 操作数.length() - 1))) {
+      return 取操作数类型(Long.parseLong(操作数.substring(0, 操作数.length() - 1), 16));
+    }
+    // TODO: 支持空格之外的间隔符
+    else if (操作数.indexOf(" ") > 0) {
+      String[] 三段 = 操作数.split(" ");
+      String 强制类型 = "";
+      String 操作对象 = "";
+      // TODO: 暂不支持隐藏类型,如add rax, strict 4
+      if (三段.length == 2) {
+        强制类型 = 三段[0];
+        操作对象 = 三段[1];
+      } else if (三段.length == 3 && 三段[0].equals("strict")) {
+        强制类型 = 三段[1];
+        操作对象 = 三段[2];
+      } else {
+        return null;
+      }
+      
+      操作数信息 信息 = new 操作数信息();
+      boolean 为寄存器 = 寄存器常量.取寄存器码(操作对象) != null;
+      boolean 为内存 = 操作对象.startsWith("[") && 操作对象.endsWith("]");
+      if (强制类型.equals("dword")) {
+        信息.位数 = 32;
+      } else if (强制类型.equals("word")) {
+        信息.位数 = 16;
+      } else if (强制类型.equals("byte")) {
+        信息.位数 = 8;
+      }
+      信息.类型 = 为寄存器 ? 操作数类型.寄存器 : 为内存 ? 操作数类型.内存 : 操作数类型.立即数;
+      信息.值 = 操作对象;
+      return 信息;
+    } // TODO: 避免与上重复
+      else if (操作数.startsWith("[") && 操作数.endsWith("]")) {
+        操作数信息 信息 = new 操作数信息();
+        信息.类型 = 操作数类型.内存;
+        信息.值 = 操作数;
+        return 信息;
+    } else {
+      return 寄存器常量.取寄存器信息(操作数);
+    }
+  }
+
+  private static 操作数信息 取操作数类型(long 数值) {
+    操作数信息 信息 = new 操作数信息();
+    信息.类型 = 操作数类型.立即数;
+    信息.值 = Long.toString(数值);
+    if (数值 > 4294967295L) {
+      信息.位数 = 64;
+    } else if (数值 > 32767 || 数值 < -32768) {
+      信息.位数 = 32;
+    } else if (数值 > 127 || 数值 < -128) {
+      信息.位数 = 16;
+    } else {
+      信息.位数 = 8;
+    }
+    return 信息;
   }
 
   /**
