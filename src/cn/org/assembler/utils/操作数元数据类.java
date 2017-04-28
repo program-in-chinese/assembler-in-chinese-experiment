@@ -5,6 +5,8 @@ import java.util.Objects;
 import java.util.Set;
 
 import cn.org.assembler.constants.寄存器常量;
+import cn.org.assembler.模型.代码行类.操作数类型;
+import cn.org.assembler.模型.操作数信息;
 
 public class 操作数元数据类 {
 
@@ -184,5 +186,28 @@ public class 操作数元数据类 {
   private static 操作数元数据类 取操作数类型(long 数值) {
     return 数值 > 4294967295L ? 立即数64 : (数值 > 32767 || 数值 < -32768) ? 立即数32
         : (数值 > 127 || 数值 < -128) ? 单字立即数 : 立即数8_有符号;
+  }
+
+  public boolean 匹配(操作数信息 待操作数信息) {
+    int 位数 = 待操作数信息.位数;
+    操作数类型 待操作数类型 = 待操作数信息.类型;
+ // 匹配立即数
+    if (Objects.equals(寻址方式, 操作数元数据类.寻址方式_立即数)) {
+      return (Objects.equals(待操作数类型, 操作数类型.立即数)
+      // strict word 5 匹配 Ivds
+      && (位数 == 取位数()
+      || (位数 == 16 && 操作数元数据类.类型16_32_可扩展到64.equals(类型))
+      || (位数 == 8 && 
+          (
+              // 0 匹配 Ib
+              操作数元数据类.类型8.equals(类型)
+              // 0 匹配 Ivqp
+              || 操作数元数据类.类型16_32_64.equals(类型)))
+      || (位数 == 32 && 操作数元数据类.类型16_32_64.equals(类型))));
+    } else if (操作数类型.寄存器.equals(待操作数类型) && 寄存器寻址方式.contains(寻址方式)){
+      return 位数 <= 取位数();
+    } else {
+      return Objects.equals(待操作数信息.值, 显式名称);
+    }
   }
 }

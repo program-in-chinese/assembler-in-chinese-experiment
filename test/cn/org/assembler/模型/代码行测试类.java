@@ -9,9 +9,18 @@ import java.util.List;
 import org.junit.Test;
 
 import cn.org.assembler.汇编器类;
+import cn.org.assembler.模型.代码行类.操作数类型;
 import cn.org.assembler.测试资源.测试资源处理类;
 
 public class 代码行测试类 {
+
+  @Test
+  public void 取操作数信息() {
+    assertEquals(new 操作数信息(操作数类型.寄存器, 8, "AL"), 代码行类.取操作数信息("al"));
+    assertEquals(new 操作数信息(操作数类型.立即数, 8, "0"), 代码行类.取操作数信息("0"));
+    assertEquals(new 操作数信息(操作数类型.内存, 0, "[0]"), 代码行类.取操作数信息("[0]"));
+    assertEquals(new 操作数信息(操作数类型.内存, 32, "[0]"), 代码行类.取操作数信息("dword [0]"));
+  }
 
   @Test
   public void 行分析() {

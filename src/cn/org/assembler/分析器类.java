@@ -10,6 +10,7 @@ import cn.org.assembler.utils.操作数元数据类;
 import cn.org.assembler.utils.操作码元数据处理类;
 import cn.org.assembler.utils.操作码元数据类;
 import cn.org.assembler.模型.代码行类;
+import cn.org.assembler.模型.操作数信息;
 
 public class 分析器类 {
 
@@ -67,5 +68,15 @@ public class 分析器类 {
         return 待匹配操作数.equals(目标操作数类型.显式名称);
       }
     } 
+  }
+
+  public static boolean 操作数类型匹配(操作数信息 待操作数信息, 操作数元数据类 目标操作数类型) {
+    String 操作数值 = 待操作数信息.值;
+    if (目标操作数类型.寻址方式.startsWith("r")) {
+      String 寄存器名 = 目标操作数类型.寻址方式.substring(1);
+      return 操作数值.equalsIgnoreCase(寄存器名) || 操作数值.substring(1).equalsIgnoreCase(寄存器名);
+    } else {
+      return 目标操作数类型.匹配(待操作数信息);
+    }
   }
 }
