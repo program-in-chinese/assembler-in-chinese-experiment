@@ -9,6 +9,7 @@ import cn.org.assembler.utils.操作码元数据类;
 import cn.org.assembler.模型.ModRM;
 import cn.org.assembler.模型.SIB;
 import cn.org.assembler.模型.代码行类;
+import cn.org.assembler.模型.代码行类.操作数类型;
 import cn.org.assembler.模型.指令类;
 
 public class 汇编器类 {
@@ -28,7 +29,6 @@ public class 汇编器类 {
   }
 
   public static List<String> 指令汇编(代码行类 代码行) {
-    String 操作数1 = 代码行.操作数1;
     String 操作数2 = 代码行.操作数2;
 
     操作码元数据类 操作码 = 代码行.查找操作码();
@@ -47,7 +47,7 @@ public class 汇编器类 {
 
     switch (操作数1类型.寻址方式) {
       case 操作数元数据类.寻址方式_寄存器:
-        指令.set操作码(操作码.值 + 寄存器常量.取寄存器码(操作数1));
+        指令.set操作码(操作码.值 + 寄存器常量.取寄存器码(代码行.操作数1信息.值));
         指令.模式 = 代码行.操作数1类型.取位数();
         break;
       case 操作数元数据类.寻址方式_寄存器_ModRM:
@@ -55,12 +55,11 @@ public class 汇编器类 {
 
         指令.modRM = new ModRM();
         // TODO: 避免重复词法分析
-        if (操作数1.startsWith("[") && 操作数1.endsWith("]")) {
+        if (代码行.操作数1信息.类型 == 操作数类型.内存) {
           指令.modRM.mod = 0b00;
-          操作数1 = 操作数1.substring(1, 操作数1.length() - 1);
           // TODO: 仅支持直接寻址
           指令.modRM.rm = 0b110;
-          指令.displacement = 操作数1;
+          指令.displacement = 代码行.操作数1信息.值;
           // TODO: 确认displacement是否允许超过单字节
           指令.displacement类型 = 操作数元数据类.单字节内存;
           指令.sib = new SIB();
@@ -70,7 +69,7 @@ public class 汇编器类 {
           if (!操作码.指令元数据.get(0).无扩展码()) {
             指令.modRM.reg = 操作码.指令元数据.get(0).扩展码;
           }
-          指令.modRM.rm = 寄存器常量.取寄存器码(操作数1);
+          指令.modRM.rm = 寄存器常量.取寄存器码(代码行.操作数1信息.值);
         }
         指令.模式 = 代码行.操作数1类型.取位数();
         break;

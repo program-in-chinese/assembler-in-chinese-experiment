@@ -148,13 +148,13 @@ public class 代码行类 {
         信息.位数 = 8;
       }
       信息.类型 = 为寄存器 ? 操作数类型.寄存器 : 为内存 ? 操作数类型.内存 : 操作数类型.立即数;
-      信息.值 = 操作对象.toUpperCase();
+      信息.值 = 为内存 ? 操作对象.substring(1, 操作对象.length() - 1) : 操作对象.toUpperCase();
       return 信息;
     } // TODO: 避免与上重复
       else if (操作数.startsWith("[") && 操作数.endsWith("]")) {
         操作数信息 信息 = new 操作数信息();
         信息.类型 = 操作数类型.内存;
-        信息.值 = 操作数;
+        信息.值 = 操作数.substring(1, 操作数.length() - 1);
         return 信息;
     } else {
       return 寄存器常量.取寄存器信息(操作数);
