@@ -79,10 +79,10 @@ nomem64.asm:3 mov ax, 5 --> [66, b8, 05, 00]
 opersize.asm:4 mov ax, bx --> [66, 89, c0]
 opsize-err.asm:1 mov ax,1 --> [b8, 01, 00]
 overflow.asm:3 mov ax, 0x1ffff --> [66, b8, ff, ff]
-riprel1.asm:6 mov rax, dword val		; 32-bit imm --> [48, b8]
+riprel1.asm:13 mov rax, [val]			; 48 8b ... (32-bit disp) --> [48, 8b]
 segoff.asm:5 mov ax,[foo] --> [8b]
 strict-err.asm:2 add [rax], dword 4		; illegal; must use dword [eax], 4 --> [66, 05, 04, 00]
 vmx-err.asm:6 vmread [rax], eax --> [66, 78, 06, 00]
 vmx.asm:8 vmread [ebx], ecx --> [78, 06, 00]
 xchg64.asm:3 xchg ax, bx --> [66, 87]
-编译正确代码行数: 67 已识别代码行数: 415
+编译正确代码行数: 67 已识别代码行数: 409

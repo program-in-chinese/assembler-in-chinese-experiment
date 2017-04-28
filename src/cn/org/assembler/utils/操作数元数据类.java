@@ -147,7 +147,9 @@ public class 操作数元数据类 {
   public static boolean 为数值(String 字符串) {
     return 字符串.matches("[-+]?\\d+");
   }
-
+  public static boolean 为十六进制数值(String 字符串) {
+    return 字符串.matches("[\\da-fA-F]+");
+  }
   /**
    * 将分析得到的操作数类型与指令元数据中的操作数类型进行匹配
    */

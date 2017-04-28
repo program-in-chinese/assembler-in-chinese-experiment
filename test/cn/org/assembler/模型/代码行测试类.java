@@ -21,6 +21,7 @@ public class 代码行测试类 {
     assertEquals(new 操作数信息(操作数类型.寄存器, 64, "RAX"), 代码行类.取操作数信息("rax"));
     assertEquals(new 操作数信息(操作数类型.寄存器, 8, "AL"), 代码行类.取操作数信息("byte al"));
     assertEquals(new 操作数信息(操作数类型.立即数, 8, "0"), 代码行类.取操作数信息("0"));
+    assertEquals(new 操作数信息(操作数类型.立即数, 8, "127"), 代码行类.取操作数信息("strict byte 0x7f"));
     assertEquals(new 操作数信息(操作数类型.立即数, 8, "1"), 代码行类.取操作数信息("1h"));
     assertEquals(new 操作数信息(操作数类型.立即数, 32, "35"), 代码行类.取操作数信息("strict dword 35"));
     assertEquals(new 操作数信息(操作数类型.立即数, 16, "128"), 代码行类.取操作数信息("0x80"));
