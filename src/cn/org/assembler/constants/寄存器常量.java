@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 
-import cn.org.assembler.utils.操作数元数据类;
 import cn.org.assembler.模型.代码行类.操作数类型;
 import cn.org.assembler.模型.操作数信息;
 
@@ -60,20 +59,6 @@ public class 寄存器常量 {
         单字SI寄存器名, 单字目标地址寄存器名));
     单字节寄存器.addAll(Arrays.asList(单字节累加寄存器名, 单字节计数寄存器名, 单字节数据寄存器名, 单字节BX寄存器名, 单字节SP寄存器名, 单字节BP寄存器名,
         单字节SI寄存器名, 单字节目标地址寄存器名));
-  }
-
-  public static 操作数元数据类 取寄存器类型(String 寄存器名) {
-    寄存器名 = 寄存器名.toUpperCase();
-    if (寄存器名.startsWith(四字寄存器前缀) && 单字寄存器.contains(寄存器名.substring(1))) {
-      return 操作数元数据类.寄存器64;
-    } else if (寄存器名.startsWith(双字寄存器前缀) && 单字寄存器.contains(寄存器名.substring(1))) {
-      return 操作数元数据类.双字寄存器;
-    } else if (单字寄存器.contains(寄存器名)) {
-      return 操作数元数据类.单字寄存器;
-    } else if (单字节寄存器.contains(寄存器名)) {
-      return 操作数元数据类.单字节寄存器;
-    }
-    return 操作数元数据类.不确定;
   }
 
   public static 操作数信息 取寄存器信息(String 寄存器名) {
