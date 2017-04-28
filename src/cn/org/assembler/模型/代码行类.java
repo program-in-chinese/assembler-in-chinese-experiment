@@ -26,8 +26,6 @@ public class 代码行类 {
   public String 助记符;
 
   // TODO: 支持2个以外的操作数
-  public String 操作数1;
-  public String 操作数2;
   public 操作数元数据类 操作数1类型;
   public 操作数元数据类 操作数2类型;
   
@@ -75,8 +73,6 @@ public class 代码行类 {
           代码行.助记符 = 助记符;
           
           // TODO: 操作数信息中已有值, 测试完成后删除
-          代码行.操作数1 = 操作数1.lastIndexOf(" ") > 0 ? 操作数1.substring(操作数1.lastIndexOf(" ") + 1) : 操作数1;
-          代码行.操作数2 = 操作数2.lastIndexOf(" ") > 0 ? 操作数2.substring(操作数2.lastIndexOf(" ") + 1) : 操作数2;
           代码行.操作数1类型 = 操作数1类型;
           代码行.操作数2类型 = 操作数2类型;
           
@@ -222,7 +218,7 @@ public class 代码行类 {
 
   @Override
   public String toString() {
-    return "操作符: " + 助记符 + " 操作数1: " + 操作数1 + " 操作数2: " + 操作数2;
+    return "操作符: " + 助记符 + " 操作数1: " + 操作数1信息 + " 操作数2: " + 操作数2信息;
   }
 
   // 选取无扩展码的指令
