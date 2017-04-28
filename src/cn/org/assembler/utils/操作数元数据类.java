@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import cn.org.assembler.constants.寄存器常量;
 import cn.org.assembler.模型.代码行类.操作数类型;
 import cn.org.assembler.模型.操作数信息;
 
@@ -100,47 +99,6 @@ public class 操作数元数据类 {
     return 类型.equals(类型8) || 类型.equals(类型8_有符号) ? 8 : 类型.equals(类型16) ? 16 : 类型.equals(类型16_32_可扩展到64) ? 32 : 64;
   }
 
-  public static 操作数元数据类 取操作数类型(String 操作数) {
-    if (为数值(操作数)) {
-      return 取操作数类型(Long.parseLong(操作数));
-    } else if (操作数.startsWith("0x")) {
-      return 取操作数类型(Long.parseLong(操作数.substring(2), 16));
-    } else if (操作数.endsWith("h") && 为数值(操作数.substring(0, 操作数.length() - 1))) {
-      return 取操作数类型(Long.parseLong(操作数.substring(0, 操作数.length() - 1), 16));
-    }
-    // TODO: 支持空格之外的间隔符
-    else if (操作数.indexOf(" ") > 0) {
-      String[] 三段 = 操作数.split(" ");
-      String 强制类型 = "";
-      String 操作对象 = "";
-      // TODO: 暂不支持隐藏类型,如add rax, strict 4
-      if (三段.length == 2) {
-        强制类型 = 三段[0];
-        操作对象 = 三段[1];
-      } else if (三段.length == 3 && 三段[0].equals("strict")) {
-        强制类型 = 三段[1];
-        操作对象 = 三段[2];
-      } else {
-        return 不确定;
-      }
-      boolean 为寄存器 = 寄存器常量.取寄存器码(操作对象) != null;
-      boolean 为内存 = 操作对象.startsWith("[") && 操作对象.endsWith("]");
-      if (强制类型.equals("dword")) {
-        return 为寄存器 ? 双字寄存器 : 为内存 ? 双字内存 : 立即数32;
-      } else if (强制类型.equals("word")) {
-        return 为寄存器 ? 单字寄存器 : 为内存 ? 单字内存 : 单字立即数;
-      } else if (强制类型.equals("byte")) {
-        return 为寄存器 ? 单字节寄存器 : 为内存 ? 单字节内存 : 立即数8_有符号;
-      }
-    } // TODO: 避免与上重复
-      else if (操作数.startsWith("[") && 操作数.endsWith("]")) {
-        return 内存;
-    } else {
-      return 寄存器常量.取寄存器类型(操作数);
-    }
-    return 不确定;
-  }
-
   /**
    * 正负十进制数,不包含小数点
    */
@@ -155,11 +113,6 @@ public class 操作数元数据类 {
   public boolean equals(Object 对象) {
     return 对象 instanceof 操作数元数据类 && Objects.equals(类型, ((操作数元数据类) 对象).类型)
         && Objects.equals(寻址方式, ((操作数元数据类) 对象).寻址方式);
-  }
-
-  private static 操作数元数据类 取操作数类型(long 数值) {
-    return 数值 > 4294967295L ? 立即数64 : (数值 > 32767 || 数值 < -32768) ? 立即数32
-        : (数值 > 127 || 数值 < -128) ? 单字立即数 : 立即数8_有符号;
   }
 
   /**
