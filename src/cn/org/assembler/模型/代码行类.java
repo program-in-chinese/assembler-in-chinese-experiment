@@ -95,15 +95,8 @@ public class 代码行类 {
   }
 
   public static 操作数信息 取操作数信息(String 操作数) {
-    if (操作数元数据类.为数值(操作数)) {
-      return 取操作数类型(Long.parseLong(操作数));
-    } else if (操作数.startsWith("0x") && 操作数元数据类.为十六进制数值(操作数.substring(2))) {
-      return 取操作数类型(Long.parseLong(操作数.substring(2), 16));
-    } else if (操作数.endsWith("h") && 操作数元数据类.为数值(操作数.substring(0, 操作数.length() - 1))) {
-      return 取操作数类型(Long.parseLong(操作数.substring(0, 操作数.length() - 1), 16));
-    }
     // TODO: 支持空格之外的间隔符
-    else if (操作数.indexOf(" ") > 0) {
+    if (操作数.indexOf(" ") > 0) {
       String[] 三段 = 操作数.split(" ");
       String 强制类型 = "";
       String 操作对象 = "";
@@ -118,31 +111,27 @@ public class 代码行类 {
         return null;
       }
       
-      操作数信息 信息 = new 操作数信息();
-      boolean 为寄存器 = 寄存器常量.取寄存器码(操作对象) != null;
-      boolean 为内存 = 操作对象.startsWith("[") && 操作对象.endsWith("]");
+      int 位数 = 0;
       if (强制类型.equals("dword")) {
-        信息.位数 = 32;
+        位数 = 32;
       } else if (强制类型.equals("word")) {
-        信息.位数 = 16;
+        位数 = 16;
       } else if (强制类型.equals("byte")) {
-        信息.位数 = 8;
+        位数 = 8;
       }
-      信息.类型 = 为寄存器 ? 操作数类型.寄存器 : 为内存 ? 操作数类型.内存 : 操作数类型.立即数;
-      
-      // TODO: 用递归避免重复
-      if (信息.类型 == 操作数类型.立即数) {
-        操作数信息 立即数信息 = 取操作数信息(操作对象);
-        if (立即数信息 == null) {
-          return null;
-        }
-        立即数信息.位数 = 信息.位数;
-        return 立即数信息;
+      操作数信息 操作对象信息 = 取操作数信息(操作对象);
+      if (操作对象信息 == null) {
+        return null;
       }
-      信息.值 = 为内存 ? 操作对象.substring(1, 操作对象.length() - 1) : 操作对象.toUpperCase();
-      return 信息;
-    } // TODO: 避免与上重复. 需用递归
-      else if (操作数.startsWith("[") && 操作数.endsWith("]")) {
+      操作对象信息.位数 = 位数;
+      return 操作对象信息;
+    } else if (操作数元数据类.为数值(操作数)) {
+      return 取操作数类型(Long.parseLong(操作数));
+    } else if (操作数.startsWith("0x") && 操作数元数据类.为十六进制数值(操作数.substring(2))) {
+      return 取操作数类型(Long.parseLong(操作数.substring(2), 16));
+    } else if (操作数.endsWith("h") && 操作数元数据类.为数值(操作数.substring(0, 操作数.length() - 1))) {
+      return 取操作数类型(Long.parseLong(操作数.substring(0, 操作数.length() - 1), 16));
+    } else if (操作数.startsWith("[") && 操作数.endsWith("]")) {
         操作数信息 信息 = new 操作数信息();
         信息.类型 = 操作数类型.内存;
         信息.值 = 操作数.substring(1, 操作数.length() - 1);
