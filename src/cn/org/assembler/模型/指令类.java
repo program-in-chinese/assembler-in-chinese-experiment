@@ -16,7 +16,7 @@ public class 指令类 {
   public SIB sib;
 
   public String displacement;
-  public 操作数元数据类 displacement类型;
+  public int displacement位数;
   public String 立即数;
   public 操作数元数据类 立即数类型;
   
@@ -38,7 +38,7 @@ public class 指令类 {
       二进制码.add(sib.生成二进制码());
     }
     if (displacement !=null) {
-      二进制码.addAll(生成二进制码(displacement, displacement类型.取位数()));
+      二进制码.addAll(生成二进制码(displacement, displacement位数));
     }
     if (立即数 != null && 立即数类型 != null) {
       int 立即数位数 = 立即数类型.取位数();
