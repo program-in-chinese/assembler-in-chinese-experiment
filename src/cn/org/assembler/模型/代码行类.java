@@ -129,6 +129,8 @@ public class 代码行类 {
       return 取操作数类型(Long.parseLong(操作数));
     } else if (操作数.startsWith("0x") && 操作数元数据类.为十六进制数值(操作数.substring(2))) {
       return 取操作数类型(Long.parseLong(操作数.substring(2), 16));
+    } else if (操作数.startsWith("-0x") && 操作数元数据类.为十六进制数值(操作数.substring(3))) {
+      return 取操作数类型(-Long.parseLong(操作数.substring(3), 16));
     } else if (操作数.endsWith("h") && 操作数元数据类.为数值(操作数.substring(0, 操作数.length() - 1))) {
       return 取操作数类型(Long.parseLong(操作数.substring(0, 操作数.length() - 1), 16));
     } else if (操作数.startsWith("[") && 操作数.endsWith("]")) {
