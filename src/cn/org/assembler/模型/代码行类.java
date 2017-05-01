@@ -25,8 +25,6 @@ public class 代码行类 {
   public boolean 为空 = false;
   public String 助记符;
 
-  public 操作数信息 操作数1信息;
-  public 操作数信息 操作数2信息;
   public List<操作数信息> 操作数信息 = new ArrayList<>();
 
   public static 代码行类 分析(String 行) {
@@ -64,8 +62,6 @@ public class 代码行类 {
           代码行类 代码行 = new 代码行类();
           代码行.助记符 = 助记符;
           
-          代码行.操作数1信息 = 操作数1信息;
-          代码行.操作数2信息 = 操作数2信息;
           代码行.操作数信息.add(操作数1信息);
           代码行.操作数信息.add(操作数2信息);
           return 代码行;
@@ -81,7 +77,7 @@ public class 代码行类 {
         代码行类 代码行 = new 代码行类();
         代码行.助记符 = 助记符;
         
-        代码行.操作数1信息 = 操作数1信息;
+        //代码行.操作数1信息 = 操作数1信息;
         代码行.操作数信息.add(操作数1信息);
         return 代码行;
       }
@@ -224,7 +220,11 @@ public class 代码行类 {
 
   @Override
   public String toString() {
-    return "操作符: " + 助记符 + " 操作数1: " + 操作数1信息 + " 操作数2: " + 操作数2信息;
+    String 文本 = "操作符: " + 助记符;
+    for (int i = 0; i < 操作数信息.size(); i++) {
+      文本 += "操作数" + i + ":" + 操作数信息.get(i);
+    }
+    return 文本;
   }
 
   // 选取无扩展码的指令

@@ -89,4 +89,4 @@ strict-err.asm:2 add [rax], dword 4		; illegal; must use dword [eax], 4 --> [66,
 vmx-err.asm:6 vmread [rax], eax --> [66, 78, 06, 00]
 vmx.asm:8 vmread [ebx], ecx --> [78, 06, 00]
 xchg64.asm:3 xchg ax, bx --> [66, 87]
-编译正确代码行数: 67 已识别代码行数: 453
+编译正确代码行数: 67 已识别代码行数: 6529
