@@ -25,7 +25,7 @@ public class 代码行类 {
   public boolean 为空 = false;
   public String 助记符;
 
-  public List<操作数信息> 操作数信息 = new ArrayList<>();
+  public List<操作数信息类> 操作数信息 = new ArrayList<>();
 
   public static 代码行类 分析(String 行) {
     行 = 删除注释(行).trim();
@@ -50,9 +50,9 @@ public class 代码行类 {
       // 语法检查
 
       // TODO: 查找现有助记符,如无匹配,报错
-      操作数信息 操作数2信息 = 取操作数信息(操作数2);
+      操作数信息类 操作数2信息 = 取操作数信息(操作数2);
       if (操作数2信息 != null) {
-        操作数信息 操作数1信息 = 取操作数信息(操作数1);
+        操作数信息类 操作数1信息 = 取操作数信息(操作数1);
         if (操作数1信息 != null) {
           // 如果无法判断位数,如[0], 则采用操作数2的位数
           // TODO: 必需吗?
@@ -72,7 +72,7 @@ public class 代码行类 {
     if (匹配器.find()) {
       String 助记符 = 匹配器.group(1);
       String 操作数1 = 匹配器.group(2);
-      操作数信息 操作数1信息 = 取操作数信息(操作数1);
+      操作数信息类 操作数1信息 = 取操作数信息(操作数1);
       if (操作数1信息 != null) {
         代码行类 代码行 = new 代码行类();
         代码行.助记符 = 助记符;
@@ -116,7 +116,7 @@ public class 代码行类 {
     }
   }
 
-  public static 操作数信息 取操作数信息(String 操作数) {
+  public static 操作数信息类 取操作数信息(String 操作数) {
     // TODO: 支持空格之外的间隔符
     if (操作数.indexOf(" ") > 0) {
       String[] 三段 = 操作数.split(" ");
@@ -141,7 +141,7 @@ public class 代码行类 {
       } else if (强制类型.equals("byte")) {
         位数 = 8;
       }
-      操作数信息 操作对象信息 = 取操作数信息(操作对象);
+      操作数信息类 操作对象信息 = 取操作数信息(操作对象);
       if (操作对象信息 == null) {
         return null;
       }
@@ -156,7 +156,7 @@ public class 代码行类 {
     } else if (操作数.endsWith("h") && 操作数元数据类.为数值(操作数.substring(0, 操作数.length() - 1))) {
       return 取操作数类型(Long.parseLong(操作数.substring(0, 操作数.length() - 1), 16));
     } else if (操作数.startsWith("[") && 操作数.endsWith("]")) {
-        操作数信息 信息 = new 操作数信息();
+        操作数信息类 信息 = new 操作数信息类();
         信息.类型 = 操作数类型.内存;
         信息.值 = 操作数.substring(1, 操作数.length() - 1);
         return 信息;
@@ -165,8 +165,8 @@ public class 代码行类 {
     }
   }
 
-  private static 操作数信息 取操作数类型(long 数值) {
-    操作数信息 信息 = new 操作数信息();
+  private static 操作数信息类 取操作数类型(long 数值) {
+    操作数信息类 信息 = new 操作数信息类();
     信息.类型 = 操作数类型.立即数;
     信息.值 = Long.toString(数值);
     if (数值 > 4294967295L) {
@@ -210,7 +210,7 @@ public class 代码行类 {
 
   public int 取有效操作码长度() {
     int 最大位数 = 0;
-    for (操作数信息 某操作数信息 : 操作数信息) {
+    for (操作数信息类 某操作数信息 : 操作数信息) {
       if (某操作数信息.位数 > 最大位数) {
         最大位数 = 某操作数信息.位数;
       }

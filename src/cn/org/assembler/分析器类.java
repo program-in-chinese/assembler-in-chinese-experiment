@@ -9,7 +9,7 @@ import cn.org.assembler.utils.操作数元数据类;
 import cn.org.assembler.utils.操作码元数据处理类;
 import cn.org.assembler.utils.操作码元数据类;
 import cn.org.assembler.模型.代码行类;
-import cn.org.assembler.模型.操作数信息;
+import cn.org.assembler.模型.操作数信息类;
 
 public class 分析器类 {
 
@@ -53,7 +53,7 @@ public class 分析器类 {
     return 操作码元数据;
   }
 
-  public static boolean 操作数类型匹配(操作数信息 待操作数信息, 操作数元数据类 目标操作数类型) {
+  public static boolean 操作数类型匹配(操作数信息类 待操作数信息, 操作数元数据类 目标操作数类型) {
     /*
      *  A.2.3 Register Codes
      *      When an opcode requires a specific register as an operand, the register is identified by name (for example, AX, CL,

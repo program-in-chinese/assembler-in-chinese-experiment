@@ -11,7 +11,7 @@ import cn.org.assembler.模型.SIB;
 import cn.org.assembler.模型.代码行类;
 import cn.org.assembler.模型.代码行类.操作数类型;
 import cn.org.assembler.模型.指令类;
-import cn.org.assembler.模型.操作数信息;
+import cn.org.assembler.模型.操作数信息类;
 
 public class 汇编器类 {
 
@@ -40,8 +40,8 @@ public class 汇编器类 {
     操作数元数据类 操作数1类型 = 操作码.指令元数据.get(0).格式.get(0).操作数.get(0);
     操作数元数据类 操作数2类型 = 操作码.指令元数据.get(0).格式.get(0).操作数.get(1);
 
-    操作数信息 操作数1信息 = 代码行.操作数信息.get(0);
-    操作数信息 操作数2信息 = 代码行.操作数信息.get(1);
+    操作数信息类 操作数1信息 = 代码行.操作数信息.get(0);
+    操作数信息类 操作数2信息 = 代码行.操作数信息.get(1);
     指令类 指令 = new 指令类();
     指令.模式 = 操作数1信息.位数;
     

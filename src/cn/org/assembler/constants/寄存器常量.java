@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 import cn.org.assembler.模型.代码行类.操作数类型;
-import cn.org.assembler.模型.操作数信息;
+import cn.org.assembler.模型.操作数信息类;
 
 public class 寄存器常量 {
 
@@ -61,9 +61,9 @@ public class 寄存器常量 {
         单字节SI寄存器名, 单字节目标地址寄存器名));
   }
 
-  public static 操作数信息 取寄存器信息(String 寄存器名) {
+  public static 操作数信息类 取寄存器信息(String 寄存器名) {
     寄存器名 = 寄存器名.toUpperCase();
-    操作数信息 信息 = new 操作数信息();
+    操作数信息类 信息 = new 操作数信息类();
     信息.类型 = 操作数类型.寄存器;
     信息.值 = 寄存器名;
     if (寄存器名.startsWith(四字寄存器前缀) && 单字寄存器.contains(寄存器名.substring(1))) {

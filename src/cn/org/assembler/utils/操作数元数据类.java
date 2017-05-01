@@ -5,7 +5,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import cn.org.assembler.模型.代码行类.操作数类型;
-import cn.org.assembler.模型.操作数信息;
+import cn.org.assembler.模型.操作数信息类;
 
 public class 操作数元数据类 {
 
@@ -114,7 +114,7 @@ public class 操作数元数据类 {
   /**
    * 将分析得到的操作数信息与指令元数据中的操作数类型进行匹配
    */
-  public boolean 匹配(操作数信息 待操作数信息) {
+  public boolean 匹配(操作数信息类 待操作数信息) {
     int 位数 = 待操作数信息.位数;
     操作数类型 待操作数类型 = 待操作数信息.类型;
     // 匹配立即数
