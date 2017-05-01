@@ -33,6 +33,7 @@ public class 代码行测试类 {
 
   @Test
   public void 行分析() {
+    assertEquals("mov", 代码行类.分析("mov rax, 0x1122334455667788").助记符);
     代码行类 代码行 = 代码行类.分析("mov al, 0");
     assertEquals("mov", 代码行.助记符);
     代码行 = 代码行类.分析("mov byte al, 0");
@@ -75,6 +76,12 @@ public class 代码行测试类 {
         if (代码行 != null) {
           // 跳过注释行/空行
           if (代码行.为空) {
+            continue;
+          }
+          
+          // TODO: 支持2个之外的操作数
+          if (代码行.操作数信息.size() != 2) {
+            已识别代码行数++;
             continue;
           }
           List<String> 二进制码 = 汇编器类.指令汇编(代码行, 默认操作数长度);

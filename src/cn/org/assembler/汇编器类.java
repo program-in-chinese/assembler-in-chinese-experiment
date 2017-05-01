@@ -31,7 +31,9 @@ public class 汇编器类 {
   public static List<String> 指令汇编(代码行类 代码行) {
 
     操作码元数据类 操作码 = 代码行.查找操作码();
-    if(操作码 == null) {
+    
+    // TODO: 支持两个以外操作数
+    if(操作码 == null || 代码行.操作数信息.size() != 2) {
       return new ArrayList<>();
     }
     操作数元数据类 操作数1类型 = 操作码.指令元数据.get(0).格式.get(0).操作数.get(0);
