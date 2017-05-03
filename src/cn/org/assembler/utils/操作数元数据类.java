@@ -114,20 +114,32 @@ public class 操作数元数据类 {
   /**
    * 将分析得到的操作数信息与指令元数据中的操作数类型进行匹配
    */
-  public boolean 匹配(操作数信息类 待操作数信息) {
+  public boolean 操作数类型匹配(操作数信息类 待操作数信息) {
+    /*
+     *  A.2.3 Register Codes
+     *      When an opcode requires a specific register as an operand, the register is identified by name (for example, AX, CL,
+            or ESI). The name indicates whether the register is 64, 32, 16, or 8 bits wide.
+            A register identifier of the form eXX or rXX is used when register width depends on the operand-size attribute. eXX
+            is used when 16 or 32-bit sizes are possible; rXX is used when 16, 32, or 64-bit sizes are possible.
+     */
+        // AX,EAX,RAX - rAX
+    String 操作数值 = 待操作数信息.值;
     int 位数 = 待操作数信息.位数;
     操作数类型 待操作数类型 = 待操作数信息.类型;
-    // 匹配立即数
-    if (Objects.equals(寻址方式, 操作数元数据类.寻址方式_立即数) && 类型 != null) {
+    if (寻址方式.startsWith("r")) {
+      String 寄存器名 = 寻址方式.substring(1);
+      return 操作数值.equalsIgnoreCase(寄存器名) || 操作数值.substring(1).equalsIgnoreCase(寄存器名);
+    } // 匹配立即数
+    else if (Objects.equals(寻址方式, 操作数元数据类.寻址方式_立即数) && 类型 != null) {
       return (Objects.equals(待操作数类型, 操作数类型.立即数)
-      // strict word 5 匹配 Ivds
-      && (位数 == 取位数()
-      || (位数 == 16 && 操作数元数据类.类型16_32_可扩展到64.equals(类型))
-      || (// 0 匹配 Ivqp
-          位数 == 8 && 操作数元数据类.类型16_32_64.equals(类型))
-      || (位数 == 32 && 操作数元数据类.类型16_32_64.equals(类型))));
+        // strict word 5 匹配 Ivds
+        && (位数 == 取位数()
+        || (位数 == 16 && 操作数元数据类.类型16_32_可扩展到64.equals(类型))
+        || (// 0 匹配 Ivqp
+            位数 == 8 && 操作数元数据类.类型16_32_64.equals(类型))
+        || (位数 == 32 && 操作数元数据类.类型16_32_64.equals(类型))));
     } else if ((操作数类型.内存.equals(待操作数类型) && 寻址方式_寄存器_ModRM.equals(寻址方式)) 
-        || (操作数类型.寄存器.equals(待操作数类型) && 寄存器寻址方式.contains(寻址方式))){
+          || (操作数类型.寄存器.equals(待操作数类型) && 寄存器寻址方式.contains(寻址方式))){
       return 位数 <= 取位数();
     } else {
       return Objects.equals(待操作数信息.值, 显式名称);

@@ -94,25 +94,6 @@ public class 分析器类 {
     return null;
   }
 
-  // public仅为测试
-  public static boolean 操作数类型匹配(操作数信息类 待操作数信息, 操作数元数据类 目标操作数类型) {
-    /*
-     *  A.2.3 Register Codes
-     *      When an opcode requires a specific register as an operand, the register is identified by name (for example, AX, CL,
-            or ESI). The name indicates whether the register is 64, 32, 16, or 8 bits wide.
-            A register identifier of the form eXX or rXX is used when register width depends on the operand-size attribute. eXX
-            is used when 16 or 32-bit sizes are possible; rXX is used when 16, 32, or 64-bit sizes are possible.
-     */
-        // AX,EAX,RAX - rAX
-    String 操作数值 = 待操作数信息.值;
-    if (目标操作数类型.寻址方式.startsWith("r")) {
-      String 寄存器名 = 目标操作数类型.寻址方式.substring(1);
-      return 操作数值.equalsIgnoreCase(寄存器名) || 操作数值.substring(1).equalsIgnoreCase(寄存器名);
-    } else {
-      return 目标操作数类型.匹配(待操作数信息);
-    }
-  }
-
   // TODO: 优化 - 避免线性查找
   // TODO: 不仅返回操作码元数据, 还有操作数的信息(立即数位数, 寄存器值, 等等)
   private static List<操作码元数据类> 查找操作码(代码行类 代码行) {
@@ -131,7 +112,7 @@ public class 分析器类 {
           if (助记符名.toUpperCase().equals(格式.助记符) && 格式.操作数.size() == 代码行.操作数信息.size()) {
             boolean 匹配 = true;
             for (int i = 代码行.操作数信息.size() - 1; i >= 0 ; i-- ) {
-              匹配 = 操作数类型匹配(代码行.操作数信息.get(i), 格式.操作数.get(i));
+              匹配 = 格式.操作数.get(i).操作数类型匹配(代码行.操作数信息.get(i));
               if (!匹配) {
                 break;
               }
