@@ -1,6 +1,5 @@
 package cn.org.assembler.模型;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -8,47 +7,11 @@ import java.util.List;
 
 import org.junit.Test;
 
+import cn.org.assembler.分析器类;
 import cn.org.assembler.汇编器类;
-import cn.org.assembler.模型.代码行类.操作数类型;
 import cn.org.assembler.测试资源.测试资源处理类;
 
 public class 代码行测试类 {
-
-  @Test
-  public void 取操作数信息() {
-    assertEquals(new 操作数信息类(操作数类型.寄存器, 8, "AL"), 代码行类.取操作数信息("al"));
-    assertEquals(new 操作数信息类(操作数类型.寄存器, 16, "AX"), 代码行类.取操作数信息("ax"));
-    assertEquals(new 操作数信息类(操作数类型.寄存器, 64, "RAX"), 代码行类.取操作数信息("rax"));
-    assertEquals(new 操作数信息类(操作数类型.寄存器, 8, "AL"), 代码行类.取操作数信息("byte al"));
-    assertEquals(new 操作数信息类(操作数类型.立即数, 8, "0"), 代码行类.取操作数信息("0"));
-    assertEquals(new 操作数信息类(操作数类型.立即数, 8, "127"), 代码行类.取操作数信息("strict byte 0x7f"));
-    assertEquals(new 操作数信息类(操作数类型.立即数, 8, "1"), 代码行类.取操作数信息("1h"));
-    assertEquals(new 操作数信息类(操作数类型.立即数, 32, "35"), 代码行类.取操作数信息("strict dword 35"));
-    assertEquals(new 操作数信息类(操作数类型.立即数, 16, "128"), 代码行类.取操作数信息("0x80"));
-    assertEquals(new 操作数信息类(操作数类型.立即数, 64, "1234605616436508552"), 代码行类.取操作数信息("0x1122334455667788"));
-    assertEquals(new 操作数信息类(操作数类型.内存, 0, "0"), 代码行类.取操作数信息("[0]"));
-    assertEquals(new 操作数信息类(操作数类型.内存, 8, "0"), 代码行类.取操作数信息("byte [0]"));
-    assertEquals(new 操作数信息类(操作数类型.内存, 32, "0"), 代码行类.取操作数信息("dword [0]"));
-  }
-
-  @Test
-  public void 行分析() {
-    assertEquals("mov", 代码行类.分析("mov rax, 0x1122334455667788").助记符);
-    代码行类 代码行 = 代码行类.分析("mov al, 0");
-    assertEquals("mov", 代码行.助记符);
-    代码行 = 代码行类.分析("mov byte al, 0");
-    assertEquals("mov", 代码行.助记符);
-    代码行 = 代码行类.分析("xchg ax, ax");
-    assertEquals("xchg", 代码行.助记符);
-    代码行 = 代码行类.分析("lar ax, bx");
-    assertEquals("lar", 代码行.助记符);
-    代码行 = 代码行类.分析("mov byte [0], 0");
-    assertEquals("mov", 代码行.助记符);
-    assertEquals("mov", 代码行类.分析("mov [0], word 0").助记符);
-    assertEquals("mov", 代码行类.分析("mov dword [0], dword 0").助记符);
-    assertEquals("mov", 代码行类.分析("mov eax, 0").助记符);
-    assertEquals("mov", 代码行类.分析("mov bx, 1h").助记符);
-  }
 
   @Test
   public void 全部指令() {
@@ -72,7 +35,7 @@ public class 代码行测试类 {
         if (位数关键词索引 == 0 || 位数关键词索引 == 1) {
           默认操作数长度 = Integer.parseInt(单行.substring(位数关键词索引 + 5, 位数关键词索引 + 7));
         }
-        代码行类 代码行 = 代码行类.分析代码(单行);
+        代码行类 代码行 = 分析器类.分析代码(单行);
         if (代码行 != null) {
           // 跳过注释行/空行
           if (代码行.为空) {

@@ -18,24 +18,24 @@ public class 分析器测试类 {
 
   @Test
   public void 查找操作码() {
-    验证操作码("b8", 代码行类.分析("mov rax, 0x1122334455667788"));
-    验证操作码("c7", 代码行类.分析("mov rax, 0x1000"));
+    验证操作码("b8", "mov rax, 0x1122334455667788");
+    验证操作码("c7", "mov rax, 0x1000");
 
-    验证操作码("05", 代码行类.分析("add rax, 0x1000"));
-    验证操作码("83", 代码行类.分析("add eax, 4"));
-    验证操作码("25", 代码行类.分析("and eax, 3584"));
-    验证操作码("05", 代码行类.分析("add ax,strict word 5"));
-    验证操作码("b0", 代码行类.分析("mov al, 0"));
-    验证操作码("b0", 代码行类.分析("mov byte al, 0"));
-    验证操作码("90", 代码行类.分析("xchg ax, ax"));
-    验证操作码("c1", 代码行类.分析("shl rax, 5"));
-    验证操作码("02", 代码行类.分析("lar ax, bx"));
-    验证操作码("d0", 代码行类.分析("shl al, 1"));
-    验证操作码("c6", 代码行类.分析("mov byte [0], 0"));
-    验证操作码("c7", 代码行类.分析("mov [0], word 0"));
-    验证操作码("c7", 代码行类.分析("mov dword [0], dword 0"));
-    验证操作码("b8", 代码行类.分析("mov eax, 0"));
-    验证操作码("b8", 代码行类.分析("mov eax, dword 0"));
+    验证操作码("05", "add rax, 0x1000");
+    验证操作码("83", "add eax, 4");
+    验证操作码("25", "and eax, 3584");
+    验证操作码("05", "add ax,strict word 5");
+    验证操作码("b0", "mov al, 0");
+    验证操作码("b0", "mov byte al, 0");
+    验证操作码("90", "xchg ax, ax");
+    验证操作码("c1", "shl rax, 5");
+    验证操作码("02", "lar ax, bx");
+    验证操作码("d0", "shl al, 1");
+    验证操作码("c6", "mov byte [0], 0");
+    验证操作码("c7", "mov [0], word 0");
+    验证操作码("c7", "mov dword [0], dword 0");
+    验证操作码("b8", "mov eax, 0");
+    验证操作码("b8", "mov eax, dword 0");
     
     
     
@@ -44,13 +44,49 @@ public class 分析器测试类 {
   }
 
   @Test
+  public void 行分析() {
+    验证助记符("mov", "mov rax, 0x1122334455667788");
+    验证助记符("mov", "mov al, 0");
+    验证助记符("mov", "mov byte al, 0");
+    验证助记符("xchg", "xchg ax, ax");
+    验证助记符("lar", "lar ax, bx");
+    验证助记符("mov", "mov byte [0], 0");
+    验证助记符("mov", "mov [0], word 0");
+    验证助记符("mov", "mov dword [0], dword 0");
+    验证助记符("mov", "mov eax, 0");
+    验证助记符("mov", "mov bx, 1h");
+  }
+
+  @Test
+  public void 取操作数信息() {
+    assertEquals(new 操作数信息类(操作数类型.寄存器, 8, "AL"), 分析器类.取操作数信息("al"));
+    assertEquals(new 操作数信息类(操作数类型.寄存器, 16, "AX"), 分析器类.取操作数信息("ax"));
+    assertEquals(new 操作数信息类(操作数类型.寄存器, 64, "RAX"), 分析器类.取操作数信息("rax"));
+    assertEquals(new 操作数信息类(操作数类型.寄存器, 8, "AL"), 分析器类.取操作数信息("byte al"));
+    assertEquals(new 操作数信息类(操作数类型.立即数, 8, "0"), 分析器类.取操作数信息("0"));
+    assertEquals(new 操作数信息类(操作数类型.立即数, 8, "127"), 分析器类.取操作数信息("strict byte 0x7f"));
+    assertEquals(new 操作数信息类(操作数类型.立即数, 8, "1"), 分析器类.取操作数信息("1h"));
+    assertEquals(new 操作数信息类(操作数类型.立即数, 32, "35"), 分析器类.取操作数信息("strict dword 35"));
+    assertEquals(new 操作数信息类(操作数类型.立即数, 16, "128"), 分析器类.取操作数信息("0x80"));
+    assertEquals(new 操作数信息类(操作数类型.立即数, 64, "1234605616436508552"), 分析器类.取操作数信息("0x1122334455667788"));
+    assertEquals(new 操作数信息类(操作数类型.内存, 0, "0"), 分析器类.取操作数信息("[0]"));
+    assertEquals(new 操作数信息类(操作数类型.内存, 8, "0"), 分析器类.取操作数信息("byte [0]"));
+    assertEquals(new 操作数信息类(操作数类型.内存, 32, "0"), 分析器类.取操作数信息("dword [0]"));
+  }
+
+  @Test
   public void 匹配操作数信息() {
     assertTrue(分析器类.操作数类型匹配(new 操作数信息类(操作数类型.寄存器, 64, "RAX"), new 操作数元数据类(false, "vqs", "rAX", null)));
     assertTrue(分析器类.操作数类型匹配(new 操作数信息类(操作数类型.寄存器, 16, "AX"), new 操作数元数据类(false, "vqp", "rAX", null)));
   }
 
-  private void 验证操作码(String 操作码值, 代码行类 代码行) {
-    操作码元数据类 操作码元数据 = 代码行.查找操作码();
+  private void 验证助记符(String 助记符, String 行) {
+    assertEquals(助记符, 分析器类.分析(行).助记符);
+  }
+  
+  private void 验证操作码(String 操作码值, String 行) {
+    代码行类 代码行 = 分析器类.分析代码(行);
+    操作码元数据类 操作码元数据 = 代码行.操作码;
     assertNotNull(操作码元数据);
     assertEquals(操作码值, 指令类.生成操作码(操作码元数据.值));
   }
