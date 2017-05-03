@@ -25,7 +25,22 @@ public class 代码行类 {
   public boolean 为空 = false;
   public String 助记符;
 
+  public 操作码元数据类 操作码;
+  
   public List<操作数信息类> 操作数信息 = new ArrayList<>();
+
+  public static 代码行类 分析代码(String 行) {
+    代码行类 代码行 = 分析(行);
+    if (代码行 == null || 代码行.助记符 == null) {
+      return 代码行;
+    }
+    操作码元数据类 操作码 = 代码行.查找操作码();
+    if (操作码 == null) {
+      return null;
+    }
+    代码行.操作码 = 操作码;
+    return 代码行;
+  }
 
   public static 代码行类 分析(String 行) {
     行 = 删除注释(行).trim();

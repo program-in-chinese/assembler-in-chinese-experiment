@@ -39,10 +39,10 @@ public class 汇编器测试类 {
   }
 
   private void 验证二进制码(String 代码行, List<String> 二进制码) {
-    assertEquals(二进制码, 汇编器类.指令汇编(代码行类.分析(代码行)));
+    assertEquals(二进制码, 汇编器类.指令汇编(代码行类.分析代码(代码行)));
   }
 
   private void 验证二进制码(String 代码行, int 有效操作数长度, List<String> 二进制码) {
-    assertEquals(二进制码, 汇编器类.指令汇编(代码行类.分析(代码行), 有效操作数长度));
+    assertEquals(二进制码, 汇编器类.指令汇编(代码行类.分析代码(代码行), 有效操作数长度));
   }
 }
