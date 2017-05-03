@@ -58,23 +58,6 @@ public class 分析器测试类 {
   }
 
   @Test
-  public void 取操作数信息() {
-    assertEquals(new 操作数信息类(操作数类型.寄存器, 8, "AL"), 分析器类.取操作数信息("al"));
-    assertEquals(new 操作数信息类(操作数类型.寄存器, 16, "AX"), 分析器类.取操作数信息("ax"));
-    assertEquals(new 操作数信息类(操作数类型.寄存器, 64, "RAX"), 分析器类.取操作数信息("rax"));
-    assertEquals(new 操作数信息类(操作数类型.寄存器, 8, "AL"), 分析器类.取操作数信息("byte al"));
-    assertEquals(new 操作数信息类(操作数类型.立即数, 8, "0"), 分析器类.取操作数信息("0"));
-    assertEquals(new 操作数信息类(操作数类型.立即数, 8, "127"), 分析器类.取操作数信息("strict byte 0x7f"));
-    assertEquals(new 操作数信息类(操作数类型.立即数, 8, "1"), 分析器类.取操作数信息("1h"));
-    assertEquals(new 操作数信息类(操作数类型.立即数, 32, "35"), 分析器类.取操作数信息("strict dword 35"));
-    assertEquals(new 操作数信息类(操作数类型.立即数, 16, "128"), 分析器类.取操作数信息("0x80"));
-    assertEquals(new 操作数信息类(操作数类型.立即数, 64, "1234605616436508552"), 分析器类.取操作数信息("0x1122334455667788"));
-    assertEquals(new 操作数信息类(操作数类型.内存, 0, "0"), 分析器类.取操作数信息("[0]"));
-    assertEquals(new 操作数信息类(操作数类型.内存, 8, "0"), 分析器类.取操作数信息("byte [0]"));
-    assertEquals(new 操作数信息类(操作数类型.内存, 32, "0"), 分析器类.取操作数信息("dword [0]"));
-  }
-
-  @Test
   public void 匹配操作数信息() {
     assertTrue(分析器类.操作数类型匹配(new 操作数信息类(操作数类型.寄存器, 64, "RAX"), new 操作数元数据类(false, "vqs", "rAX", null)));
     assertTrue(分析器类.操作数类型匹配(new 操作数信息类(操作数类型.寄存器, 16, "AX"), new 操作数元数据类(false, "vqp", "rAX", null)));
