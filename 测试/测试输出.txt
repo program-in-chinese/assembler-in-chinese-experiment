@@ -75,6 +75,7 @@ larlsl.asm:2 lar ax, bx --> [02]
 mem64-err.asm:4 mov ax, [ax] --> [66, 8b]
 mem64hi32.asm:2 adc byte [eax], 12h --> [80, 06, 00, 12]
 mem64rip.asm:2 mov eax, [rip] --> [66, 8b]
+negequ.asm:7 mov	[ebp-off], eax --> [89, 06, 00]
 nomem64.asm:3 mov ax, 5 --> [66, b8, 05, 00]
 opersize.asm:4 mov ax, bx --> [66, 89, c0]
 opsize-err.asm:1 mov ax,1 --> [b8, 01, 00]
@@ -85,4 +86,4 @@ strict-err.asm:2 add [rax], dword 4		; illegal; must use dword [eax], 4 --> [66,
 vmx-err.asm:6 vmread [rax], eax --> [66, 78, 06, 00]
 vmx.asm:8 vmread [ebx], ecx --> [78, 06, 00]
 xchg64.asm:3 xchg ax, bx --> [66, 87]
-编译正确代码行数: 67 已识别代码行数: 272
+编译正确代码行数: 67 已识别代码行数: 274

@@ -34,7 +34,6 @@ public class 分析器测试类 {
     验证操作码("b8", "mov eax, dword 0");
     
     
-    
     // TODO: 需要强制汇编?
     // 验证操作码("05", 代码行类.分析("add rax, 0x1122334455667788"));
   }
@@ -51,6 +50,8 @@ public class 分析器测试类 {
     验证助记符("mov", "mov dword [0], dword 0");
     验证助记符("mov", "mov eax, 0");
     验证助记符("mov", "mov bx, 1h");
+    验证助记符("idiv", "idiv al");
+    验证助记符("idiv", "idiv al      ; F6 F8");
   }
 
   private void 验证助记符(String 助记符, String 行) {

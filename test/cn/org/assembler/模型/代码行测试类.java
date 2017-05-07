@@ -42,11 +42,17 @@ public class 代码行测试类 {
             continue;
           }
           
-          // TODO: 支持2个之外的操作数
-          if (代码行.操作数信息.size() != 2) {
-            已识别代码行数++;
-            continue;
-          }
+          // TODO: 适当log
+          /*int 操作数个数 = 代码行.操作数信息.size();
+          if ( 操作数个数 != 2) {
+            if (操作数个数 == 3) {
+              System.out.println("3操作数: " + 代码行);
+            } else if (操作数个数 == 1) {
+              System.out.println("单操作数: " + 代码行);
+            } else if (操作数个数 == 0) {
+              System.out.println("无操作数: " + 代码行);
+            }
+          }*/
           List<String> 二进制码 = 汇编器类.指令汇编(代码行, 默认操作数长度);
 
           // 按照源码行顺序,比较二进制码. 一旦发现不匹配,停止比较.
@@ -69,6 +75,7 @@ public class 代码行测试类 {
         }
         // 如果代码分析跳行了,直接中止比较
         else {
+          System.out.println("分析失败: " + 单行);
           if (已有匹配) {
             比较中止 = true;
           }
