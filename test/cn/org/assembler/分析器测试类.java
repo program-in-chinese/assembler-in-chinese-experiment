@@ -52,6 +52,7 @@ public class 分析器测试类 {
     验证助记符("mov", "mov bx, 1h");
     验证助记符("idiv", "idiv al");
     验证助记符("idiv", "idiv al      ; F6 F8");
+    验证助记符("shrd", "shrd cx, dx, cl");
   }
 
   private void 验证助记符(String 助记符, String 行) {
