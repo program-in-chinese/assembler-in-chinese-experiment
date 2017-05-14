@@ -1,6 +1,6 @@
 package cn.org.assembler.pe;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -86,4 +86,14 @@ public class Pe文件处理 {
     空文件.delete();
   }
 
+  @Test
+  public void 比较PE文件() throws IOException {
+    String 文件名1 = "测试/PE/mov.exe";
+    String 文件名2 = "测试/PE/你好.exe";
+    PE 小pe = PEParser.parse(文件名1);
+    PE 大pe = PEParser.parse(文件名2);
+    
+    // TODO: 比较每个变量
+    assertArrayEquals(小pe.getDosHeader().getReserved(), 大pe.getDosHeader().getReserved());
+  }
 }
