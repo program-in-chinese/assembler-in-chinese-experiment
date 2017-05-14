@@ -21,15 +21,38 @@ public class Pe文件处理 {
 
   @Test
   public void 解析后生成() throws IOException {
-    PE pe = PEParser.parse("测试/PE/mov.exe");
-    PEAssembler.write(pe, "测试/PE/mov_gen.exe");
+    String 源文件名 = "测试/PE/mov.exe";
+    String 目标文件名 = "测试/PE/mov_gen.exe";
+    PE pe = PEParser.parse(源文件名);
+    PEAssembler.write(pe, 目标文件名);
 
+    File 目标文件 = new File(目标文件名);
+    
     // TODO: 两个文件应该完全相同
+    assertTrue(目标文件.exists() && (new File(源文件名)).length() == 目标文件.length());
+    
+    目标文件.delete();
   }
 
   @Test
+  public void 解析后生成你好() {
+    String 源文件名 = "测试/PE/你好.exe";
+    String 目标文件名 = "测试/PE/你也好.exe";
+    try {
+      PE 格式信息 = PEParser.parse(源文件名);
+      PEAssembler.write(格式信息, 目标文件名);
+
+      File 目标文件 = new File(目标文件名);
+      目标文件.delete();
+    } catch (Exception 异常) {
+      System.out.println("请先按照‘你好.asm'注释生成源exe文件");
+    }
+  }
+  
+  @Test
   public void 生成空PE文件() throws IOException {
 
+    String 空文件名 = "测试/PE/empty.exe";
     PE pe = new PE();
     DOSHeader dh = new DOSHeader();
     int[] reserved = new int[0];
@@ -54,13 +77,13 @@ public class Pe文件处理 {
     
     pe.setSectionTable(new SectionTable());
     
-    PEAssembler.write(pe, "测试/PE/empty.exe");
+    PEAssembler.write(pe, 空文件名);
     
-    File file = new File("测试/PE/empty.exe");
-    assertTrue(file.exists() && file.isFile() && file.length() > 0);
+    File 空文件 = new File(空文件名);
+    assertTrue(空文件.exists() && 空文件.isFile() && 空文件.length() > 0);
     
-    // TODO: 清理文件
-    file.delete();
+    // 清理文件
+    空文件.delete();
   }
 
 }
