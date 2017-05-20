@@ -60,6 +60,9 @@ public class Pe文件处理 {
     assertEquals(0x8664, 小pe.getCoffHeader().getMachine());
     assertEquals(0x20b, 小pe.getOptionalHeader().getMagic());
     
+    assertEquals(1, 小pe.getSectionTable().getNumberOfSections());
+    assertTrue(小pe.getSectionTable().getSection(0).getData().length > 0);
+    
     File 空文件 = new File(空文件名);
     assertTrue(空文件.exists() && 空文件.isFile() && 空文件.length() > 0);
     
