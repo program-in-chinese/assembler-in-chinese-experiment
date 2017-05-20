@@ -56,7 +56,7 @@ public class Pe文件处理 {
     PE 小pe = PEParser.parse(空文件名);
     
     // TODO: 现在是最宽松的检验.
-    assertEquals(128, 小pe.getDosHeader().getAddressOfNewExeHeader());
+    assertEquals(1, 小pe.getCoffHeader().getNumberOfSections());
     
     File 空文件 = new File(空文件名);
     assertTrue(空文件.exists() && 空文件.isFile() && 空文件.length() > 0);

@@ -35,17 +35,17 @@ public class 生成器类 {
     // TODO: 暂时借用参照PE文件的dosheader
     DOSHeader dh = new DOSHeader();
     dh.setAddressOfNewExeHeader(128);
-    dh.setAddressOfRelocationTable(64);
+    /*dh.setAddressOfRelocationTable(64);
     dh.setFileSizeInPages(1);
     dh.setHeaderSizeInParagraphs(4);
-    dh.setInitialSP(320);
+    dh.setInitialSP(320);*/
     dh.setMagic(23117);
-    dh.setMaxExtraParagraphs(65535);
-    dh.setMinExtraParagraphs(16);
+    //dh.setMaxExtraParagraphs(65535);
+    //dh.setMinExtraParagraphs(16);
     dh.setReserved(new int[4]);
     dh.setReserved2(new int[10]);
-    dh.setStubSize(64);
-    dh.setUsedBytesInLastPage(128);
+    //dh.setStubSize(64);
+    //dh.setUsedBytesInLastPage(128);
     pe.setDosHeader(dh);//参照PE.getDosHeader());
 
     /**
