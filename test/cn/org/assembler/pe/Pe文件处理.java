@@ -1,21 +1,18 @@
 package cn.org.assembler.pe;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
 
-import org.boris.pecoff4j.COFFHeader;
-import org.boris.pecoff4j.DOSHeader;
-import org.boris.pecoff4j.DOSStub;
-import org.boris.pecoff4j.ImageDataDirectory;
-import org.boris.pecoff4j.OptionalHeader;
 import org.boris.pecoff4j.PE;
-import org.boris.pecoff4j.PESignature;
-import org.boris.pecoff4j.SectionTable;
 import org.boris.pecoff4j.io.PEAssembler;
 import org.boris.pecoff4j.io.PEParser;
 import org.junit.Test;
+
+import cn.org.assembler.生成器类;
 
 public class Pe文件处理 {
 
@@ -53,31 +50,13 @@ public class Pe文件处理 {
   public void 生成空PE文件() throws IOException {
 
     String 空文件名 = "测试/PE/empty.exe";
-    PE pe = new PE();
-    DOSHeader dh = new DOSHeader();
-    int[] reserved = new int[0];
-    dh.setReserved(reserved);
-    dh.setReserved2(reserved);
-    pe.setDosHeader(dh);
-
-    DOSStub stub = new DOSStub();
-    stub.setStub(new byte[0]);
-    pe.setStub(stub);
-
-    PESignature signature = new PESignature();
-    signature.setSignature(new byte[0]);
-    pe.setSignature(signature);
-
-    COFFHeader ch = new COFFHeader();
-    pe.setCoffHeader(ch);
+    PE pe = 生成器类.新建PE结构();
     
-    OptionalHeader oh = new OptionalHeader();
-    oh.setDataDirectories(new ImageDataDirectory[0]);
-    pe.setOptionalHeader(oh);
+    生成器类.新建PE文件(pe, 空文件名);
+    PE 小pe = PEParser.parse(空文件名);
     
-    pe.setSectionTable(new SectionTable());
-    
-    PEAssembler.write(pe, 空文件名);
+    // TODO: 现在是最宽松的检验.
+    assertEquals(1, 小pe.getCoffHeader().getNumberOfSections());
     
     File 空文件 = new File(空文件名);
     assertTrue(空文件.exists() && 空文件.isFile() && 空文件.length() > 0);
