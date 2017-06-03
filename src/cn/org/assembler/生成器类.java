@@ -41,6 +41,7 @@ public class 生成器类 {
     dh.setFileSizeInPages(1);
     dh.setHeaderSizeInParagraphs(4);
     dh.setInitialSP(320);*/
+    // https://stackoverflow.com/questions/957057/what-is-the-mz-signature-in-a-pe-file-for. 4D 5A is "MZ"
     dh.setMagic(23117);
     //dh.setMaxExtraParagraphs(65535);
     //dh.setMinExtraParagraphs(16);
