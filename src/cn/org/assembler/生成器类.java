@@ -4,13 +4,14 @@ import java.io.IOException;
 
 import org.boris.pecoff4j.COFFHeader;
 import org.boris.pecoff4j.DOSHeader;
+import org.boris.pecoff4j.OptionalHeader;
 import org.boris.pecoff4j.PE;
 import org.boris.pecoff4j.PESignature;
 import org.boris.pecoff4j.io.PEAssembler;
 import org.boris.pecoff4j.io.PEParser;
 
 /**
- * 按照官方格式"Microsoft Portable Executable and Common Object File Format Specification"
+ * 按照官方格式"Microsoft Portable Executable and Common Object File Format Specification"(下面简称为"官方PE文档")
  * 生成PE文件
  *
  */
@@ -104,8 +105,7 @@ public class 生成器类 {
      * first byte after the headers. Make sure to use the size of the optional header as specified 
      * in the file header.
      */
-    // TODO: 获取optional header长度
-    coff头.setSizeOfOptionalHeader(参照PE.getCoffHeader().getSizeOfOptionalHeader());
+    coff头.setSizeOfOptionalHeader(取optionalHeader长度(pe.getOptionalHeader()));
     
     /* characteristics 
       IMAGE_FILE_RELOCS_STRIPPED   0x0001  Image only, Windows CE, and Microsoft Windows NT® and later. This indicates that the file does not contain base relocations and must therefore be loaded at its preferred base address. If the base address is not available, the loader reports an error. The default behavior of the linker is to strip base relocations from executable (EXE) files.
@@ -132,7 +132,18 @@ public class 生成器类 {
     // TODO: 暂时借用参照PE文件的section table
     pe.setSectionTable(参照PE.getSectionTable());
 
+    // 总生成64位文件
+    pe.set64(true);
     return pe;
+  }
+
+  public static int 取optionalHeader长度(OptionalHeader oh) {
+    return
+    // image data directory 每个8字节(两个DWORD). 个数是NumberOfRvaAndSizes(见官方PE文档)
+    oh.getNumberOfRvaAndSizes() * 8
+        // ImageBase/SizeOfStackReserve/SizeOfStackCommit/SizeOfHeapReserve/SizeOfHeapCommit
+        // 在64位时, 是8字节, 并且没有BaseOfData.虽然暂时只支持生成64位文件,还是保留了32位的逻辑.
+        + (oh.isPE32plus() ? 112 : 96);
   }
 
   public static void 新建PE文件(PE pe, String 文件名) {

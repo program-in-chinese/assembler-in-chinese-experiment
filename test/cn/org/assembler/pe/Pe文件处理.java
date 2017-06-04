@@ -66,8 +66,7 @@ public class Pe文件处理 {
     File 空文件 = new File(空文件名);
     assertTrue(空文件.exists() && 空文件.isFile() && 空文件.length() > 0);
     
-    // 清理文件
-    空文件.delete();
+    // TODO: 清理文件. 空文件.delete()无用
   }
 
   @Test
@@ -79,5 +78,12 @@ public class Pe文件处理 {
     
     // TODO: 比较每个变量
     assertArrayEquals(小pe.getDosHeader().getReserved(), 大pe.getDosHeader().getReserved());
+  }
+  
+  @Test
+  public void 取optionalHeader长度() throws IOException {
+    String 文件名 = "测试/PE/mov.exe";
+    PE pe = PEParser.parse(文件名);
+    assertEquals(240, 生成器类.取optionalHeader长度(pe.getOptionalHeader()));
   }
 }
