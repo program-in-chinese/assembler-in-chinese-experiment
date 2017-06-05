@@ -1,12 +1,18 @@
 package cn.org.assembler;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import org.boris.pecoff4j.COFFHeader;
 import org.boris.pecoff4j.DOSHeader;
 import org.boris.pecoff4j.OptionalHeader;
 import org.boris.pecoff4j.PE;
 import org.boris.pecoff4j.PESignature;
+import org.boris.pecoff4j.RVAConverter;
+import org.boris.pecoff4j.SectionData;
+import org.boris.pecoff4j.SectionHeader;
+import org.boris.pecoff4j.SectionTable;
+import org.boris.pecoff4j.constant.SectionFlag;
 import org.boris.pecoff4j.io.PEAssembler;
 import org.boris.pecoff4j.io.PEParser;
 
@@ -129,12 +135,46 @@ public class 生成器类 {
     coff头.setCharacteristics(characteristics);
     pe.setCoffHeader(coff头);
 
-    // TODO: 暂时借用参照PE文件的section table
-    pe.setSectionTable(参照PE.getSectionTable());
+    pe.setSectionTable(创建SectionTable());
 
     // 总生成64位文件
     pe.set64(true);
     return pe;
+  }
+
+  public static SectionTable 创建SectionTable() {
+    String 伪数据 = "48b88877665544332211c3";
+    SectionTable 段落表 = new SectionTable();
+    SectionHeader 段落头 = new SectionHeader();
+    段落头.setName("random");
+
+    // TODO: 根据数据长度赋值
+    段落头.setVirtualSize(伪数据.length()/2);
+
+    // TODO: 提取所有绝对数. 另外, 为何是512?
+    段落头.setVirtualAddress(4096);
+    段落头.setSizeOfRawData(512);
+    段落头.setPointerToRawData(512);
+    段落头.setPointerToRelocations(0);
+    段落头.setPointerToLineNumbers(0);
+    段落头.setNumberOfRelocations(0);
+    段落头.setNumberOfLineNumbers(0);
+
+    // Section Flag由高位到低位
+    段落头.setCharacteristics(SectionFlag.IMAGE_SCN_MEM_WRITE + SectionFlag.IMAGE_SCN_MEM_READ
+        + SectionFlag.IMAGE_SCN_MEM_EXECUTE + SectionFlag.IMAGE_SCN_CNT_INITIALIZED_DATA
+        + SectionFlag.IMAGE_SCN_CNT_CODE);
+    段落表.add(段落头);
+
+    RVAConverter 转换器 = new RVAConverter(new int[] {4096}, new int[] {512});
+    段落表.setRvaConverter(转换器);
+
+    SectionData 段落数据 = new SectionData();
+    // TODO: 填入真实数据
+    段落数据.setData(Arrays.copyOf(hexStringToByteArray(伪数据), 512));
+
+    段落表.put(0, 段落数据);
+    return 段落表;
   }
 
   public static int 取optionalHeader长度(OptionalHeader oh) {
@@ -159,4 +199,13 @@ public class 生成器类 {
     return 字符串.getBytes();
   }
 
+  private static byte[] hexStringToByteArray(String s) {
+    int len = s.length();
+    byte[] data = new byte[len / 2];
+    for (int i = 0; i < len; i += 2) {
+        data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)
+                             + Character.digit(s.charAt(i+1), 16));
+    }
+    return data;
+}
 }

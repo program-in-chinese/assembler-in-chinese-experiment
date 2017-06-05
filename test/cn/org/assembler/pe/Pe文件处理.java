@@ -63,6 +63,8 @@ public class Pe文件处理 {
     assertEquals(1, 小pe.getSectionTable().getNumberOfSections());
     assertTrue(小pe.getSectionTable().getSection(0).getData().length > 0);
     
+    // TODO: 检验section data
+    
     File 空文件 = new File(空文件名);
     assertTrue(空文件.exists() && 空文件.isFile() && 空文件.length() > 0);
     
