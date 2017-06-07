@@ -5,6 +5,7 @@ import java.util.Arrays;
 
 import org.boris.pecoff4j.COFFHeader;
 import org.boris.pecoff4j.DOSHeader;
+import org.boris.pecoff4j.ImageDataDirectory;
 import org.boris.pecoff4j.OptionalHeader;
 import org.boris.pecoff4j.PE;
 import org.boris.pecoff4j.PESignature;
@@ -84,8 +85,7 @@ public class 生成器类 {
     signature.setSignature(签名);
     pe.setSignature(signature);
 
-    // TODO: 暂时借用参照PE文件的option header
-    pe.setOptionalHeader(参照PE.getOptionalHeader());
+    pe.setOptionalHeader(创建optionalHeader());
 
     COFFHeader coff头 = new COFFHeader();
     // machine类型为x64
@@ -140,6 +140,65 @@ public class 生成器类 {
     // 总生成64位文件
     pe.set64(true);
     return pe;
+  }
+
+  private static OptionalHeader 创建optionalHeader() {
+    // 此部分是必需的,由此取名
+    OptionalHeader 必需头 = new OptionalHeader();
+    
+    // PE32+可执行文件
+    必需头.setMagic(OptionalHeader.MAGIC_PE32plus);
+    
+    // TODO: 没有注释的部分需要挨个推敲,并添加注释
+    必需头.setMajorLinkerVersion(1);
+    必需头.setMinorLinkerVersion(71);
+    必需头.setSizeOfCode(512);
+    必需头.setSizeOfInitializedData(512);
+    必需头.setSizeOfUninitializedData(0);
+    必需头.setAddressOfEntryPoint(4096);
+    必需头.setBaseOfCode(4096);
+    
+    // PE32+不需BaseOfData
+    必需头.setBaseOfData(0);
+    
+    // Windows NT/2000/xp/95/98/Me
+    必需头.setImageBase(0x400000);
+    
+    必需头.setSectionAlignment(4096);
+    必需头.setFileAlignment(512);
+    必需头.setMajorOperatingSystemVersion(1);
+    必需头.setMinorOperatingSystemVersion(0);
+    必需头.setMajorImageVersion(0);
+    必需头.setMinorImageVersion(0);
+    必需头.setMajorSubsystemVersion(5);
+    必需头.setMinorSubsystemVersion(0);
+    必需头.setWin32VersionValue(0);
+    必需头.setSizeOfImage(8192);
+    必需头.setSizeOfHeaders(512);
+    必需头.setCheckSum(15189);
+    必需头.setSubsystem(3);
+    必需头.setDllCharacteristics(0);
+    必需头.setSizeOfStackReserve(4096);
+    必需头.setSizeOfStackCommit(4096);
+    必需头.setSizeOfHeapReserve(65536);
+    必需头.setSizeOfHeapCommit(0);
+    
+    // 保留,必须为0
+    必需头.setLoaderFlags(0);
+    
+    必需头.setNumberOfRvaAndSizes(16);
+    
+    // TODO: 暂时置零
+    ImageDataDirectory[] 数据映像 = new ImageDataDirectory[16];
+    for (int i = 0; i < 数据映像.length; i++) {
+      ImageDataDirectory 映像 = new ImageDataDirectory();
+      映像.setSize(0);
+      映像.setVirtualAddress(0);
+      数据映像[i] = 映像;
+    }
+    必需头.setDataDirectories(数据映像);
+    
+    return 必需头;
   }
 
   public static SectionTable 创建SectionTable() {
