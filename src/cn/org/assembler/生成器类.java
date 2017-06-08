@@ -13,6 +13,8 @@ import org.boris.pecoff4j.RVAConverter;
 import org.boris.pecoff4j.SectionData;
 import org.boris.pecoff4j.SectionHeader;
 import org.boris.pecoff4j.SectionTable;
+import org.boris.pecoff4j.constant.Characteristics;
+import org.boris.pecoff4j.constant.MachineType;
 import org.boris.pecoff4j.constant.SectionFlag;
 import org.boris.pecoff4j.io.PEAssembler;
 import org.boris.pecoff4j.io.PEParser;
@@ -89,7 +91,7 @@ public class 生成器类 {
 
     COFFHeader coff头 = new COFFHeader();
     // machine类型为x64
-    coff头.setMachine(0x8664);
+    coff头.setMachine(MachineType.IMAGE_FILE_MACHINE_AMD64);
     // section数暂为1
     coff头.setNumberOfSections(1);
     // timestamp为文件生成的时间戳(秒),尽可能在此方法最后取时间,以接近文件产生时间. 如1494046181
@@ -131,7 +133,7 @@ public class 生成器类 {
       IMAGE_FILE_UP_SYSTEM_ONLY   0x4000  The file should be run only on a uniprocessor machine.
       IMAGE_FILE_BYTES_REVERSED_HI    0x8000  Big endian: the MSB precedes the LSB in memory. This flag is deprecated and should be zero.
      */
-    int characteristics = 0x1 + 0x2 + 0x20;
+    int characteristics = Characteristics.IMAGE_FILE_RELOCS_STRIPPED + Characteristics.IMAGE_FILE_EXECUTABLE_IMAGE + Characteristics.IMAGE_FILE_LARGE_ADDRESS_AWARE;
     coff头.setCharacteristics(characteristics);
     pe.setCoffHeader(coff头);
 
