@@ -88,4 +88,8 @@ public class 汇编器类 {
     
     return 指令.生成二进制码();
   }
+  
+  public static String 指令汇编为字符串(代码行类 代码行) {
+    return String.join("", 指令汇编(代码行));
+  }
 }
