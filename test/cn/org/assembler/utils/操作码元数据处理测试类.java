@@ -1,6 +1,6 @@
 package cn.org.assembler.utils;
 
-import static org.junit.Assert.assertEquals;
+import static com.github.programinchinese.断言.相等;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -16,7 +16,7 @@ public class 操作码元数据处理测试类 {
   @Test
   public void 单操作码() {
     List<操作码元数据类> 操作码元数据 = 操作码元数据处理类.提取操作码信息("资源/测试单操作码元数据.xml");
-    assertEquals("指令信息不应为空", 2, 操作码元数据.size());
+    相等("指令信息不应为空", 2, 操作码元数据.size());
 
     for (操作码元数据类 某操作码元数据 : 操作码元数据) {
       assertTrue(某操作码元数据.值 >= 0);
@@ -29,7 +29,7 @@ public class 操作码元数据处理测试类 {
   @Test
   public void 全部操作码() {
     List<操作码元数据类> 操作码元数据 = 操作码元数据处理类.操作码元数据表;
-    assertEquals("指令信息不应为空", 451, 操作码元数据.size());
+    相等("指令信息不应为空", 451, 操作码元数据.size());
 
     int 正确操作符计数 = 0;
     for (操作码元数据类 元数据 : 操作码元数据) {
@@ -49,11 +49,11 @@ public class 操作码元数据处理测试类 {
             // TODO: 将所有待验证指令置于对应表中
             if (某指令元数据.扩展码 == -1 && 指令类.生成操作码(元数据.值).equals("b8") && 某格式.助记符.equals("MOV")) {
               List<操作数元数据类> 操作数 = 某格式.操作数;
-              assertEquals(2, 操作数.size());
+              相等(2, 操作数.size());
 
-              assertEquals(new 操作数元数据类(false, 操作数元数据类.类型16_32_64, 操作数元数据类.寻址方式_寄存器, null),
+              相等(new 操作数元数据类(false, 操作数元数据类.类型16_32_64, 操作数元数据类.寻址方式_寄存器, null),
                   操作数.get(0));
-              assertEquals(new 操作数元数据类(true, 操作数元数据类.类型16_32_64, 操作数元数据类.寻址方式_立即数, null),
+              相等(new 操作数元数据类(true, 操作数元数据类.类型16_32_64, 操作数元数据类.寻址方式_立即数, null),
                   操作数.get(1));
 
               正确操作符计数++;
@@ -61,42 +61,42 @@ public class 操作码元数据处理测试类 {
             if (某指令元数据.扩展码 == -1 && 指令类.生成操作码(元数据.值).equals("05") && 某格式.助记符.equals("ADD")) {
 
               List<操作数元数据类> 操作数 = 某格式.操作数;
-              assertEquals(2, 操作数.size());
+              相等(2, 操作数.size());
 
-              assertEquals(new 操作数元数据类(false, 操作数元数据类.类型16_32_64, "rAX", null), 操作数.get(0));
-              assertEquals(new 操作数元数据类(true, 操作数元数据类.类型16_32_可扩展到64, 操作数元数据类.寻址方式_立即数, null), 操作数.get(1));
+              相等(new 操作数元数据类(false, 操作数元数据类.类型16_32_64, "rAX", null), 操作数.get(0));
+              相等(new 操作数元数据类(true, 操作数元数据类.类型16_32_可扩展到64, 操作数元数据类.寻址方式_立即数, null), 操作数.get(1));
 
               正确操作符计数++;
             }
             if (某指令元数据.扩展码 == -1 && 指令类.生成操作码(元数据.值).equals("25") && 某格式.助记符.equals("AND")) {
 
               List<操作数元数据类> 操作数 = 某格式.操作数;
-              assertEquals(2, 操作数.size());
+              相等(2, 操作数.size());
 
-              assertEquals(new 操作数元数据类(false, 操作数元数据类.类型16_32_64, "rAX", null), 操作数.get(0));
-              assertEquals(new 操作数元数据类(true, 操作数元数据类.类型16_32_可扩展到64, 操作数元数据类.寻址方式_立即数, null), 操作数.get(1));
+              相等(new 操作数元数据类(false, 操作数元数据类.类型16_32_64, "rAX", null), 操作数.get(0));
+              相等(new 操作数元数据类(true, 操作数元数据类.类型16_32_可扩展到64, 操作数元数据类.寻址方式_立即数, null), 操作数.get(1));
 
               正确操作符计数++;
             }
             if (某指令元数据.扩展码 == 4 && 指令类.生成操作码(元数据.值).equals("81") && 某格式.助记符.equals("AND")) {
 
               List<操作数元数据类> 操作数 = 某格式.操作数;
-              assertEquals(2, 操作数.size());
+              相等(2, 操作数.size());
 
-              assertEquals(new 操作数元数据类(false, 操作数元数据类.类型16_32_64, 操作数元数据类.寻址方式_寄存器_ModRM, null),
+              相等(new 操作数元数据类(false, 操作数元数据类.类型16_32_64, 操作数元数据类.寻址方式_寄存器_ModRM, null),
                   操作数.get(0));
-              assertEquals(new 操作数元数据类(true, 操作数元数据类.类型16_32_可扩展到64, 操作数元数据类.寻址方式_立即数, null), 操作数.get(1));
+              相等(new 操作数元数据类(true, 操作数元数据类.类型16_32_可扩展到64, 操作数元数据类.寻址方式_立即数, null), 操作数.get(1));
 
               正确操作符计数++;
             }
             if (某指令元数据.扩展码 == 0 && 指令类.生成操作码(元数据.值).equals("81") && 某格式.助记符.equals("ADD")) {
 
               List<操作数元数据类> 操作数 = 某格式.操作数;
-              assertEquals(2, 操作数.size());
+              相等(2, 操作数.size());
 
-              assertEquals(new 操作数元数据类(false, 操作数元数据类.类型16_32_64, 操作数元数据类.寻址方式_寄存器_ModRM, null),
+              相等(new 操作数元数据类(false, 操作数元数据类.类型16_32_64, 操作数元数据类.寻址方式_寄存器_ModRM, null),
                   操作数.get(0));
-              assertEquals(new 操作数元数据类(true, 操作数元数据类.类型16_32_可扩展到64, 操作数元数据类.寻址方式_立即数, null), 操作数.get(1));
+              相等(new 操作数元数据类(true, 操作数元数据类.类型16_32_可扩展到64, 操作数元数据类.寻址方式_立即数, null), 操作数.get(1));
 
               正确操作符计数++;
             }
@@ -129,6 +129,6 @@ public class 操作码元数据处理测试类 {
 
       }
     }
-    assertEquals(7, 正确操作符计数);
+    相等(7, 正确操作符计数);
   }
 }

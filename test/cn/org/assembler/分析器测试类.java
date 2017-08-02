@@ -1,6 +1,6 @@
 package cn.org.assembler;
 
-import static org.junit.Assert.assertEquals;
+import static com.github.programinchinese.断言.相等;
 import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
@@ -56,13 +56,13 @@ public class 分析器测试类 {
   }
 
   private void 验证助记符(String 助记符, String 行) {
-    assertEquals(助记符, 分析器类.分析(行).助记符);
+    相等(助记符, 分析器类.分析(行).助记符);
   }
   
   private void 验证操作码(String 操作码值, String 行) {
     代码行类 代码行 = 分析器类.分析代码(行);
     操作码元数据类 操作码元数据 = 代码行.操作码;
     assertNotNull(操作码元数据);
-    assertEquals(操作码值, 指令类.生成操作码(操作码元数据.值));
+    相等(操作码值, 指令类.生成操作码(操作码元数据.值));
   }
 }

@@ -1,7 +1,7 @@
 package cn.org.assembler.pe;
 
+import static com.github.programinchinese.断言.相等;
 import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
@@ -56,11 +56,11 @@ public class Pe文件处理 {
     PE 小pe = PEParser.parse(空文件名);
     
     // TODO: 添加更多检验.
-    assertEquals(1, 小pe.getCoffHeader().getNumberOfSections());
-    assertEquals(0x8664, 小pe.getCoffHeader().getMachine());
-    assertEquals(0x20b, 小pe.getOptionalHeader().getMagic());
+    相等(1, 小pe.getCoffHeader().getNumberOfSections());
+    相等(0x8664, 小pe.getCoffHeader().getMachine());
+    相等(0x20b, 小pe.getOptionalHeader().getMagic());
     
-    assertEquals(1, 小pe.getSectionTable().getNumberOfSections());
+    相等(1, 小pe.getSectionTable().getNumberOfSections());
     assertTrue(小pe.getSectionTable().getSection(0).getData().length > 0);
     
     // TODO: 检验section data
@@ -86,6 +86,6 @@ public class Pe文件处理 {
   public void 取optionalHeader长度() throws IOException {
     String 文件名 = "测试/PE/mov.exe";
     PE pe = PEParser.parse(文件名);
-    assertEquals(240, 生成器类.取optionalHeader长度(pe.getOptionalHeader()));
+    相等(240, 生成器类.取optionalHeader长度(pe.getOptionalHeader()));
   }
 }

@@ -1,5 +1,5 @@
 package cn.org.assembler;
-import static org.junit.Assert.assertEquals;
+import static com.github.programinchinese.断言.相等;
 
 import java.util.Arrays;
 import java.util.List;
@@ -36,10 +36,10 @@ public class 汇编器测试类 {
   }
 
   private void 验证二进制码(String 代码行, List<String> 二进制码) {
-    assertEquals(二进制码, 汇编器类.指令汇编(分析器类.分析代码(代码行)));
+    相等(二进制码, 汇编器类.指令汇编(分析器类.分析代码(代码行)));
   }
 
   private void 验证二进制码(String 代码行, int 有效操作数长度, List<String> 二进制码) {
-    assertEquals(二进制码, 汇编器类.指令汇编(分析器类.分析代码(代码行), 有效操作数长度));
+    相等(二进制码, 汇编器类.指令汇编(分析器类.分析代码(代码行), 有效操作数长度));
   }
 }
