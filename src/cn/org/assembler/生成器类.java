@@ -138,13 +138,16 @@ public class 生成器类 {
     coff头.setCharacteristics(characteristics);
     pe.setCoffHeader(coff头);
 
-    pe.setSectionTable(创建SectionTable());
 
     // 总生成64位文件
     pe.set64(true);
     return pe;
   }
 
+  public static void set数据区(PE pe, String 数据) {
+    pe.setSectionTable(创建SectionTable(数据));
+  }
+  
   private static OptionalHeader 创建optionalHeader() {
     // 此部分是必需的,由此取名
     OptionalHeader 必需头 = new OptionalHeader();
@@ -221,14 +224,14 @@ public class 生成器类 {
     return 必需头;
   }
 
-  public static SectionTable 创建SectionTable() {
-    String 伪数据 = "48b88877665544332211c3";
+  public static SectionTable 创建SectionTable(String 数据) {
+    
     SectionTable 段落表 = new SectionTable();
     SectionHeader 段落头 = new SectionHeader();
     段落头.setName("random");
 
-    // TODO: 根据数据长度赋值
-    段落头.setVirtualSize(伪数据.length()/2);
+    // 根据数据长度赋值
+    段落头.setVirtualSize(数据.length()/2);
 
     // TODO: 提取所有绝对数. 另外, 为何是512?
     段落头.setVirtualAddress(4096);
@@ -250,7 +253,7 @@ public class 生成器类 {
 
     SectionData 段落数据 = new SectionData();
     // TODO: 填入真实数据
-    段落数据.setData(Arrays.copyOf(hexStringToByteArray(伪数据), 512));
+    段落数据.setData(Arrays.copyOf(hexStringToByteArray(数据), 512));
 
     段落表.put(0, 段落数据);
     return 段落表;

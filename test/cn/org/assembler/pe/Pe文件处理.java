@@ -51,6 +51,8 @@ public class Pe文件处理 {
 
     String 空文件名 = "测试/PE/empty.exe";
     PE pe = 生成器类.新建PE结构();
+    String 伪数据 = "48b88877665544332211c3";
+    生成器类.set数据区(pe, 伪数据);
     
     生成器类.新建PE文件(pe, 空文件名);
     PE 小pe = PEParser.parse(空文件名);
