@@ -7,10 +7,10 @@
 
  **04/29/2017 进度小结** 
 - 暂时设计:
-![暂时设计草图](https://git.oschina.net/uploads/images/2017/0430/070018_cfe80105_384016.png "在这里输入图片标题")
+![暂时设计草图](https://github.com/program-in-chinese/assembler-in-chinese-experiment/blob/master/文档/汇编器设计草图.png "在这里输入图片标题")
 
 - 以这个mov指令举例:
-![过程示例](https://git.oschina.net/uploads/images/2017/0430/072528_e0f290cb_384016.png "在这里输入图片标题")
+![过程示例](https://github.com/program-in-chinese/assembler-in-chinese-experiment/blob/master/%E6%96%87%E6%A1%A3/%E6%B1%87%E7%BC%96%E5%99%A8%E8%AE%BE%E8%AE%A1%E8%8D%89%E5%9B%BE-%E7%A4%BA%E4%BE%8B.png "在这里输入图片标题")
 
  **04/29/2017 当前进度** 
 - 仅支持两个操作数的部分指令, 第二个操作数仅支持立即数
