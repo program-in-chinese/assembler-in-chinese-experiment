@@ -18,6 +18,10 @@
 - 支持强制类型,如add ax,strict word 5
 - [缺失] 生成可执行文件(PE)
 
+### 接口测试
+- [指令分析测试](https://github.com/program-in-chinese/assembler-in-chinese-experiment/blob/master/test/cn/org/assembler/%E5%88%86%E6%9E%90%E5%99%A8%E6%B5%8B%E8%AF%95%E7%B1%BB.java)
+- [生成二进制码测试](https://github.com/program-in-chinese/assembler-in-chinese-experiment/blob/master/test/cn/org/assembler/%E6%B1%87%E7%BC%96%E5%99%A8%E6%B5%8B%E8%AF%95%E7%B1%BB.java)
+- [生成PE文件测试](https://github.com/program-in-chinese/assembler-in-chinese-experiment/blob/master/test/cn/org/assembler/pe/Pe%E6%96%87%E4%BB%B6%E5%A4%84%E7%90%86.java#L50)
 
  **使用外部资源**
 - x86操作码元数据: https://github.com/Barebit/x86reference
