@@ -1,5 +1,5 @@
 package cn.org.assembler;
-import static com.github.programinchinese.断言.相等;
+import static com.github.program_in_chinese.junit4_in_chinese.断言.相等;
 
 import java.util.Arrays;
 import java.util.List;

@@ -1,6 +1,6 @@
 package cn.org.assembler.模型;
 
-import static com.github.programinchinese.断言.相等;
+import static com.github.program_in_chinese.junit4_in_chinese.断言.相等;
 
 import org.junit.Test;
 

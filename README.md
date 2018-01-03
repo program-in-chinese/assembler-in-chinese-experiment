@@ -19,6 +19,10 @@
 - [缺失] 生成可执行文件(PE)
 
 ### 接口测试
+运行`mvn test`之前, 请先安装pecoff4j库:
+```
+mvn install:install-file -Dfile=libs/pecoff4j-0.0.2.1.jar -DgroupId=org.boris -DartifactId=pecoff4j -Dversion=0.0.2 -Dpackaging=jar
+```
 - [指令分析测试](https://github.com/program-in-chinese/assembler-in-chinese-experiment/blob/master/test/cn/org/assembler/%E5%88%86%E6%9E%90%E5%99%A8%E6%B5%8B%E8%AF%95%E7%B1%BB.java)
 - [生成二进制码测试](https://github.com/program-in-chinese/assembler-in-chinese-experiment/blob/master/test/cn/org/assembler/%E6%B1%87%E7%BC%96%E5%99%A8%E6%B5%8B%E8%AF%95%E7%B1%BB.java)
 - [生成PE文件测试](https://github.com/program-in-chinese/assembler-in-chinese-experiment/blob/master/test/cn/org/assembler/pe/Pe%E6%96%87%E4%BB%B6%E5%A4%84%E7%90%86.java#L50)
